@@ -9,8 +9,8 @@ voisins <- matrix(0, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
-list_fichier = list.files("Data/RATP_GTFS_METRO_1")
 for (dir in list.dirs("Data/",recursive = FALSE)){
+    try(dir.create(sub("Data", "Data projet", dir)))
     list_fichier = list.files(dir)
     for (i in list_fichier){
         assign(x = gsub(".txt", "", i),
@@ -47,11 +47,23 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
             voisins[from, to] <- transfer_time
             voisins_type[from, to] <- trips3$route_long_name
         }
+        stop_times3 <- stop_times3[,c("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", 
+                                       "stop_name", "stop_desc", "stop_lat", "stop_lon", 
+                                      "route_id", "service_id", "route_short_name", 
+                                      "route_long_name", "route_color")]
+        write.table(stop_times3, 
+                    file = paste0(sub("Data", "Data projet", dir), "/","route_",i,".txt"),
+                    sep = "\t",
+                    row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
+        try(file.copy(paste0(dir,"/", "stops.txt"), 
+                  paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
+                  overwrite = FALSE))
+        
     }
 }
-write.table(voisins, file = "Data/voisin.txt", sep = "\t",
+write.table(voisins, file = "Data projet/voisin.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
-write.table(voisins_type, file = "Data/voisin.txt", sep = "\t",
+write.table(voisins_type, file = "Data projet/voisin_type.txt", sep = "\t",
             row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
 
 

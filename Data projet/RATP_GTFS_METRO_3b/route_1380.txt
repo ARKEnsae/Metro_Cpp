@@ -1,0 +1,5 @@
+"trip_id"	"stop_id"	"arrival_time"	"departure_time"	"stop_sequence"	"stop_name"	"stop_desc"	"stop_lat"	"stop_lon"	"route_id"	"service_id"	"route_short_name"	"route_long_name"	"route_color"
+10027732720651522	2539	"16:31:00"	"16:31:00"	1	"Gambetta"	"Père-Lachaise - 75120"	48.8650342980182	2.39854148691224	708899	2773272	"3B"	"(PORTE DES LILAS <-> GAMBETTA) - Retour"	"FFFFFF"
+10027732720651522	2393	"16:32:00"	"16:32:00"	2	"Pelleport"	"Paul Signac (place, en face du 125 avenue Gambetta) - 75120"	48.8682233476073	2.4013243805441	708899	2773272	"3B"	"(PORTE DES LILAS <-> GAMBETTA) - Retour"	"FFFFFF"
+10027732720651522	2463	"16:34:00"	"16:34:00"	3	"Saint-Fargeau"	"112 avenue Gambetta - 75120"	48.8716998109711	2.40429872420218	708899	2773272	"3B"	"(PORTE DES LILAS <-> GAMBETTA) - Retour"	"FFFFFF"
+10027732720651522	2430	"16:35:00"	"16:35:00"	4	"Porte des Lilas"	"Rue de Belleville - 75120"	48.8769382235089	2.40637656692978	708899	2773272	"3B"	"(PORTE DES LILAS <-> GAMBETTA) - Retour"	"FFFFFF"
