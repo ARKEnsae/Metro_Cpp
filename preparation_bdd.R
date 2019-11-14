@@ -28,14 +28,22 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
         voisins_type[from, to] <- "transfer"
     }
     
+    stop_times$order <- seq_len(nrow(stop_times))
+
     stop_times2 <- merge(stop_times, stops, by = "stop_id", sort = FALSE)
+    stop_times2 <- stop_times2[order(stop_times2$order),]
     trips2 <- merge(trips, routes, by = "route_id")
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
     
     for (i in i_unique_route_id){
         trips3 <- trips2[i, ]
         stop_times3 <- merge(stop_times2, trips3, by = "trip_id")
-        stop_times3 <- stop_times3[order(stop_times3$route_id, stop_times3$departure_time),]
+        stop_times3 <- stop_times3[order(stop_times3$order),]
+        if (any(duplicated(stop_times3$stop_sequence))){
+            remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
+            stop_times3 <- stop_times3[-remove_i,]
+        }
+        
         for(j in seq_len(nrow(stop_times3) - 1)){
             from = as.character(stop_times3[j, "stop_id"])
             to = as.character(stop_times3[j + 1, "stop_id"])
