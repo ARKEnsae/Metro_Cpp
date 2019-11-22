@@ -36,37 +36,38 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
     
     for (i in i_unique_route_id){
-        trips3 <- trips2[i, ]
-        stop_times3 <- merge(stop_times2, trips3, by = "trip_id")
-        stop_times3 <- stop_times3[order(stop_times3$order),]
-        if (any(duplicated(stop_times3$stop_sequence))){
-            remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
-            stop_times3 <- stop_times3[-remove_i,]
-        }
-        
-        for(j in seq_len(nrow(stop_times3) - 1)){
-            from = as.character(stop_times3[j, "stop_id"])
-            to = as.character(stop_times3[j + 1, "stop_id"])
+        if (!(i == 1807 & dir == "Data//RATP_GTFS_METRO_10")){
+            trips3 <- trips2[i, ]
+            stop_times3 <- merge(stop_times2, trips3, by = "trip_id")
+            stop_times3 <- stop_times3[order(stop_times3$order),]
+            if (any(duplicated(stop_times3$stop_sequence))){
+                remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
+                stop_times3 <- stop_times3[-remove_i,]
+            }
             
-            from_time = as.POSIXlt(stop_times3[j,"arrival_time"], format="%H:%M:%S")
-            to_time = as.POSIXlt(stop_times3[j+1,"arrival_time"], format="%H:%M:%S")
-            transfer_time = as.numeric(difftime(to_time,from_time,units="secs"))
-            
-            voisins[from, to] <- transfer_time
-            voisins_type[from, to] <- trips3$route_long_name
+            for(j in seq_len(nrow(stop_times3) - 1)){
+                from = as.character(stop_times3[j, "stop_id"])
+                to = as.character(stop_times3[j + 1, "stop_id"])
+                
+                from_time = as.POSIXlt(stop_times3[j,"arrival_time"], format="%H:%M:%S")
+                to_time = as.POSIXlt(stop_times3[j+1,"arrival_time"], format="%H:%M:%S")
+                transfer_time = as.numeric(difftime(to_time,from_time,units="secs"))
+                
+                voisins[from, to] <- transfer_time
+                voisins_type[from, to] <- trips3$route_long_name
+            }
+            stop_times3 <- stop_times3[,c("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", 
+                                          "stop_name", "stop_desc", "stop_lat", "stop_lon", 
+                                          "route_id", "service_id", "route_short_name", 
+                                          "route_long_name", "route_color")]
+            write.table(stop_times3, 
+                        file = paste0(sub("Data", "Data projet", dir), "/","route_",i,".txt"),
+                        sep = "\t",
+                        row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
+            try(file.copy(paste0(dir,"/", "stops.txt"), 
+                          paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
+                          overwrite = FALSE))
         }
-        stop_times3 <- stop_times3[,c("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", 
-                                       "stop_name", "stop_desc", "stop_lat", "stop_lon", 
-                                      "route_id", "service_id", "route_short_name", 
-                                      "route_long_name", "route_color")]
-        write.table(stop_times3, 
-                    file = paste0(sub("Data", "Data projet", dir), "/","route_",i,".txt"),
-                    sep = "\t",
-                    row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
-        try(file.copy(paste0(dir,"/", "stops.txt"), 
-                  paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
-                  overwrite = FALSE))
-        
     }
 }
 write.table(voisins, file = "Data projet/voisin.txt", sep = "\t",
