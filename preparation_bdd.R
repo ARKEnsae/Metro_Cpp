@@ -5,6 +5,7 @@ stops_id <- unlist(lapply(list.dirs("Data/",recursive = FALSE),function(dir){
                       stringsAsFactors = FALSE)
     stops$stop_id
 }))
+stops_id <- stops_id[stops_id != 2371]
 voisins <- matrix(0, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
