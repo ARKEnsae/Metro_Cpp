@@ -1,0 +1,45 @@
+# depslib dependency file v1.0
+1575671763 source:w:\bureau\projetcpp\projetc\code\ratp\src\arret.cpp
+	"Arret.h"
+	<iostream>
+
+1575671832 w:\bureau\projetcpp\projetc\code\ratp\include\arret.h
+	<iostream>
+
+1575672419 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
+	<iostream>
+	<string>
+	<vector>
+	<iomanip>
+	<fstream>
+	"Arret.h"
+	<sstream>
+
+1575665426 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
+	"itineraire.h"
+	<iostream>
+
+1575665401 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
+	<vector>
+	"Arret.h"
+	<iostream>
+
+1575665508 source:w:\bureau\projetcpp\projetc\code\ratp\src\ligne.cpp
+	"ligne.h"
+	<iostream>
+
+1575665495 w:\bureau\projetcpp\projetc\code\ratp\include\ligne.h
+	"Arret.h"
+	<vector>
+	<iostream>
+
+1575666583 source:w:\bureau\projetcpp\projetc\code\ratp\src\metro.cpp
+	"metro.h"
+	<iostream>
+
+1575666316 w:\bureau\projetcpp\projetc\code\ratp\include\metro.h
+	<vector>
+	<iostream>
+	"Arret.h"
+	"ligne.h"
+
