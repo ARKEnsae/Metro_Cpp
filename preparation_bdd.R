@@ -9,6 +9,7 @@ voisins <- matrix(0, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
+dir = list.dirs("Data/",recursive = FALSE)[1]
 for (dir in list.dirs("Data/",recursive = FALSE)){
     try(dir.create(sub("Data", "Data projet", dir)))
     list_fichier = list.files(dir)
@@ -44,6 +45,11 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
                 stop_times3 <- stop_times3[-remove_i,]
             }
+            if(i == 4123 & dir == "Data//RATP_GTFS_METRO_1"){
+                stop_times3$stop_sequence <- seq(nrow(stop_times3), 1, -1)
+                stop_times3<- stop_times3[stop_times3$stop_sequence,]
+            }
+            
             
             for(j in seq_len(nrow(stop_times3) - 1)){
                 from = as.character(stop_times3[j, "stop_id"])
@@ -53,7 +59,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 to_time = as.POSIXlt(stop_times3[j+1,"arrival_time"], format="%H:%M:%S")
                 transfer_time = as.numeric(difftime(to_time,from_time,units="secs"))
                 
-                voisins[from, to] <- transfer_time
+                voisins[from, to] <- abs(transfer_time)
                 voisins_type[from, to] <- trips3$route_long_name
             }
             stop_times3 <- stop_times3[,c("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", 
