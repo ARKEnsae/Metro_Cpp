@@ -1,14 +1,11 @@
-#include "ligne.h"
+#include "Ligne.h"
 
-#include <iostream>
-using namespace std;
-
-ligne::ligne()
+Ligne::Ligne()
 {
     //ctor
 }
 
-ligne::~ligne()
+Ligne::~Ligne()
 {
     //dtor
 }
