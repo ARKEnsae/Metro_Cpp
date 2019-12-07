@@ -36,7 +36,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     stop_times2 <- stop_times2[order(stop_times2$order),]
     trips2 <- merge(trips, routes, by = "route_id")
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
-    
+    i_export = 0
     for (i in i_unique_route_id){
         if (!(i == 1807 & dir == "Data//RATP_GTFS_METRO_10")){
             trips3 <- trips2[i, ]
@@ -67,8 +67,9 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                                           "stop_name", "stop_desc", "stop_lat", "stop_lon", 
                                           "route_id", "service_id", "route_short_name", 
                                           "route_long_name", "route_color")]
+            i_export = i_export + 1
             write.table(stop_times3, 
-                        file = paste0(sub("Data", "Data projet", dir), "/","route_",i,".txt"),
+                        file = paste0(sub("Data", "Data projet", dir), "/","route_",i_export,".txt"),
                         sep = "\t",
                         row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
             try(file.copy(paste0(dir,"/", "stops.txt"), 
