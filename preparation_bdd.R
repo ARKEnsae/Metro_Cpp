@@ -78,10 +78,15 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
             
         }
     }
-    liste_arrets <- split(stops,stops$stop_name)
-    # for (i in seq_along(liste_arrets)){
-    #     if(nrow(liste_arrets[[i]]))
-    # }
+    liste_arrets <- split(stops$stop_id,stops$stop_name)
+    for (i in seq_along(liste_arrets)){
+        if(length(liste_arrets[[i]]) == 2){
+            from <- as.character(liste_arrets[[i]][1])
+            to <- as.character(liste_arrets[[i]][1])
+            voisins[from, to] <- voisins[to, from]  <- 0
+            voisins_type[from, to] <- voisins_type[to, from] <- "meme_ligne"
+        }
+    }
 }
 voisins["1945","2201"]
 write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
