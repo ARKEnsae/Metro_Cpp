@@ -7,7 +7,7 @@ class Arret
 {
     public:
         Arret(int id, string nom, string adresse, float x, float y);
-
+        virtual void affiche();
     protected:
     private:
         int stop_id;

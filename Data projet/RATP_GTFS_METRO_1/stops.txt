@@ -1,4 +1,4 @@
-stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,location_type,parent_station
+﻿stop_id,stop_code,stop_name,stop_desc,stop_lat,stop_lon,location_type,parent_station
 2371,,"Nation","Terre-plein face au 3 place de la Nation - 75112",48.84811123157566,2.3980040127977436,0,
 1832,,"Nation","Terre-plein face au 3 place de la Nation - 75112",48.84811123157566,2.3980040127977436,0,
 2170,,"Concorde","Place de la Concorde - 75108",48.86567809641779,2.321193771801867,0,

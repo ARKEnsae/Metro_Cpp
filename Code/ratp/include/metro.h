@@ -1,9 +1,11 @@
 #ifndef METRO_H
 #define METRO_H
-
+#include <vector>
 #include <iostream>
-using namespace std;
+#include "Arret.h"
+#include "ligne.h"
 
+using namespace std;
 
 class metro
 {
@@ -14,6 +16,8 @@ class metro
     protected:
 
     private:
+        vector<Arret> liste_arrets;
+        vector<ligne> liste_lignes;
 };
 
 #endif // METRO_H
