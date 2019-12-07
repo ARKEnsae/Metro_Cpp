@@ -21,6 +21,9 @@ Arret::Arret(string id, string nom, string adresse, string x, string y)
     this->nom = nom;
     this->adresse = adresse;
 }
+void Arret::associeLigne(Ligne* ligne){
+    this->lignes.push_back(ligne);
+}
 
 void Arret::affiche()
 {
@@ -37,4 +40,7 @@ string Arret::getNom(){
 }
 string Arret::getAdresse(){
     return(adresse);
+}
+vector<Ligne*> Arret::getLigne(){
+    return(lignes);
 }

@@ -16,7 +16,8 @@ class itineraire
     protected:
 
     private:
-        vector<Arret> liste_arrets;
+        vector<Arret*> liste_arrets;
+
 };
 
 #endif // ITINERAIRE_H

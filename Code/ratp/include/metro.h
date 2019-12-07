@@ -13,17 +13,22 @@ class Metro
     public:
         Metro();
         virtual ~Metro();
-        void ajouteArret(Arret arret);
-        void ajouteStopTxt(string path_fichier);
-        void ajouteTousStopTxt(string wd);
-        Arret getArret(int stop_id);
-        Arret getArret(string stop_id);
+        void chargeDonnees(string wd);
+        Arret* getArret(int stop_id);
+        Arret* getArret(string stop_id);
+        Ligne* getLigne(int route_id);
+        Ligne* getLigne(string route_id);
     protected:
 
     private:
-        vector<Arret> liste_arrets;
+        void ajouteToutesLignes(string wd);
+        void ajouteTousStopTxt(string wd);
+        vector<Arret*> liste_arrets;
         vector<string> liste_noms_arrets;
-        vector<Ligne> liste_lignes;
+        vector<Ligne*> liste_lignes;
+        void ajouteStopTxt(string path_fichier);
+        void ajouteArret(Arret* arret);
+        bool ajouteLigne(string path_fichier);
 };
 
 #endif // METRO_H
