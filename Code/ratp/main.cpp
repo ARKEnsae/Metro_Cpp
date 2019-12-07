@@ -24,7 +24,17 @@ int main()
 {
     Metro metro;
     string project_directory = "W:/Bureau/ProjetCpp/ProjetC";
-    metro.ajouteTousStopTxt(project_directory);
-    metro.getArret("2271").affiche();
+    metro.chargeDonnees(project_directory);
+    //metro.getArret("2271").affiche();
+
+    cout << metro.getArret("2035")->getLigne()[1]->getNom()<<endl;
+    cout << metro.getArret("2067")->getLigne()[0]->getNom()<<endl;
+
+    cout << "arret : " << metro.getArret("2271")->getNom() <<
+     " ligne : "<< metro.getArret("2271")->getLigne()[0]->getNumero()<< " " <<
+     metro.getArret("2271")->getLigne()[0]->getNom();
+     //cout << "arret : " << metro.getArret("2271")->getNom() <<
+     //" ligne : "<< metro.getArret("2271")->getLigne()[1]->getNumero()<< " " <<
+     //metro.getArret("2271")->getLigne()[1]->getNom();
     return 0;
 }
