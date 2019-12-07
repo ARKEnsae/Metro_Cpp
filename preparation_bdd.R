@@ -5,8 +5,8 @@ stops_id <- unlist(lapply(list.dirs("Data/",recursive = FALSE),function(dir){
                       stringsAsFactors = FALSE)
     stops$stop_id
 }))
-stops_id <- stops_id[stops_id != 2371]
-voisins <- matrix(0, nrow = length(stops_id), ncol = length(stops_id),
+stops_id <- stops_id
+voisins <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
@@ -26,8 +26,8 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     for(i in seq_len(nrow(transfers))){
         from <- as.character(transfers[i, "from_stop_id"])
         to <- as.character(transfers[i, "to_stop_id"])
-        voisins[from, to] <- transfers[i, "min_transfer_time"]
-        voisins_type[from, to] <- "transfer"
+        voisins[from, to] <- voisins[to, from]  <- transfers[i, "min_transfer_time"]
+        voisins_type[from, to] <- voisins_type[to, from] <- "transfer"
     }
     
     stop_times$order <- seq_len(nrow(stop_times))
@@ -68,19 +68,25 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                                           "route_id", "service_id", "route_short_name", 
                                           "route_long_name", "route_color")]
             i_export = i_export + 1
-            write.table(stop_times3, 
-                        file = paste0(sub("Data", "Data projet", dir), "/","route_",i_export,".txt"),
-                        sep = "\t",
-                        row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
-            try(file.copy(paste0(dir,"/", "stops.txt"), 
-                          paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
-                          overwrite = FALSE))
+            # write.table(stop_times3, 
+            #             file = paste0(sub("Data", "Data projet", dir), "/","route_",i_export,".txt"),
+            #             sep = "\t",
+            #             row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
+            # try(file.copy(paste0(dir,"/", "stops.txt"), 
+            #               paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
+            #               overwrite = FALSE))
+            
         }
     }
+    liste_arrets <- split(stops,stops$stop_name)
+    # for (i in seq_along(liste_arrets)){
+    #     if(nrow(liste_arrets[[i]]))
+    # }
 }
-write.table(voisins, file = "Data projet/voisin.txt", sep = "\t",
+voisins["1945","2201"]
+write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
-write.table(voisins_type, file = "Data projet/voisin_type.txt", sep = "\t",
+write.table(voisins_type, file = "Data projet/voisins_type.txt", sep = "\t",
             row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
 
 
