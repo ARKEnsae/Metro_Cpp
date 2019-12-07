@@ -82,8 +82,8 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     for (i in seq_along(liste_arrets)){
         if(length(liste_arrets[[i]]) == 2){
             from <- as.character(liste_arrets[[i]][1])
-            to <- as.character(liste_arrets[[i]][1])
-            voisins[from, to] <- voisins[to, from]  <- 0
+            to <- as.character(liste_arrets[[i]][2])
+            voisins[from, to] <- voisins[to, from]  <- 10
             voisins_type[from, to] <- voisins_type[to, from] <- "meme_ligne"
         }
     }
@@ -93,7 +93,13 @@ write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
 write.table(voisins_type, file = "Data projet/voisins_type.txt", sep = "\t",
             row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
+voisins["2253","2252"]
 
+voisins["2252","2253"]
+voisins["2252","1928"]
+
+voisins["1928","2253"]
+voisins["2253","1928"]
 
 # 
 # ?read.csv
