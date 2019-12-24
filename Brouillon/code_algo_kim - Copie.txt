@@ -1,33 +1,147 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <iomanip>
 #include <fstream>
-#include "Arret.h"
-#include "metro.h"
-#include "Node.h"
-#include "Edge.h"
-#include <sstream> //Pour transformation
-
-
+#include <vector>
+#include <string>
 #include <string.h>
 #include <stdio.h>
+//#include <cstdlib>
 #include <sstream>
 #include <algorithm> //??
 
-
 #define INT_MAX 10000000
+#define nb_noeuds 4
 
 using namespace std;
 
-
-// a effacer plus tard...
+void DijkstrasTest();
+class Node;
+class Edge;
+void Dijkstras();
+vector<Node*>* AdjacentRemainingNodes(Node* node);
+Node* ExtractSmallest(vector<Node*>& nodes);
+int Distance(Node* node1, Node* node2);
+bool Contains(vector<Node*>& nodes, Node* node);
+void PrintShortestRouteTo(Node* destination);
 vector<Node*> nodes;
-//vector<Edge*> edges;
-Edge** edges;
+vector<Edge*> edges;
+
+class Node
+{
+public:
+    Node(std::string id)
+        : id(id), previous(NULL), distanceFromStart(INT_MAX)
+    {
+        nodes.push_back(this);
+    }
+
+        Node() //NEW CONSTRUCTEUR KIM
+        : id("abc"), previous(NULL), distanceFromStart(INT_MAX)
+    {
+        nodes.push_back(this);
+    }
+
+public:
+    std::string id; //char
+    Node* previous;
+    int distanceFromStart;
+   // std::string getid(){return id;} //KIM
 
 
-// Fonctions Kim
+};
+class Edge
+{
+public:
+    Edge(Node* node1, Node* node2, int distance)
+        : node1(node1), node2(node2), distance(distance)
+    {
+        edges.push_back(this);
+    }
+    Edge()//NEW CONSTRUCTEUR KIM
+        : distance(0)
+    {
+        Node* n1;
+        node1 = n1;
+        Node* n2;
+        node2 = n2;
+        edges.push_back(this);
+    }
+
+    bool Connects(Node* node1, Node* node2)
+    {
+        return (
+                   (node1 == this->node1 &&
+                    node2 == this->node2)
+                    //|| //dans le mauvais sens ?
+                   //(node1 == this->node2 &&
+                    //node2 == this->node1)
+                )
+                    ;
+    }
+public:
+    Node* node1;
+    Node* node2;
+    int distance;
+};
+///////////////////
+void DijkstrasTest()
+{
+    std::string aa = "a";
+    std::string bb = "b";
+    std::string cc = "c";
+    std::string dd = "d";
+    std::string ee = "e";
+    std::string ff = "f";
+    std::string gg = "g";
+
+    Node* a = new Node(aa);
+    Node* b = new Node(bb);
+    Node* c = new Node(cc);
+    Node* d = new Node(dd);
+    Node* e = new Node(dd);
+    Node* f = new Node(ff);
+    Node* g = new Node(gg);
+    Edge* e1 = new Edge(a, c, 4);
+    Edge* e2 = new Edge(a, d, 2);
+    Edge* e3 = new Edge(b, c, 2);
+    Edge* e4 = new Edge(c, d, 1);
+    Edge* e5 = new Edge(b, f, 3);
+    Edge* e6 = new Edge(c, e, 3);
+    Edge* e7 = new Edge(e, f, 2);
+    Edge* e8 = new Edge(d, g, 1);
+    Edge* e9 = new Edge(d, g, 1);
+    Edge* e10 = new Edge(g, f, 1);
+    Edge* e11 = new Edge(c, a, 1);
+    a->distanceFromStart = 0; // set start node
+    Dijkstras();
+    PrintShortestRouteTo(c);
+}
+///////////////////
+void Dijkstras()
+{
+    while (nodes.size() > 0)
+    {
+        Node* smallest = ExtractSmallest(nodes);
+        vector<Node*>* adjacentNodes =
+            AdjacentRemainingNodes(smallest);
+        const int size = adjacentNodes->size();
+        for (int i=0; i<size; ++i)
+        {
+            Node* adjacent = adjacentNodes->at(i);
+            int distance = Distance(smallest, adjacent) +
+                           smallest->distanceFromStart;
+
+            if (distance < adjacent->distanceFromStart)
+            {
+                adjacent->distanceFromStart = distance;
+                adjacent->previous = smallest;
+            }
+        }
+        delete adjacentNodes;
+    }
+}
+
+
 // Find the node with the smallest distance,
 // remove it, and return it.
 Node* ExtractSmallest(vector<Node*>& nodes)
@@ -45,28 +159,13 @@ Node* ExtractSmallest(vector<Node*>& nodes)
         {
             smallest = current;
             smallestPosition = i;
-        }//
+        }
     }
     nodes.erase(nodes.begin() + smallestPosition);
     return smallest;
 }
-
-// Does the 'nodes' vector contain 'node'
-bool Contains(vector<Node*>& nodes, Node* node)
-{
-    const int size = nodes.size();
-    for(int i=0; i<size; ++i)
-    {
-        if (node == nodes.at(i))
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
 // Return all nodes adjacent to 'node' which are still
-// in the 'nodes' collectiovector<Edge*>& Edgesn.
+// in the 'nodes' collection.
 vector<Node*>* AdjacentRemainingNodes(Node* node)
 {
     vector<Node*>* adjacentNodes = new vector<Node*>();
@@ -90,9 +189,6 @@ vector<Node*>* AdjacentRemainingNodes(Node* node)
     }
     return adjacentNodes;
 }
-
-
-
 // Return distance between two connected nodes
 int Distance(Node* node1, Node* node2)
 {
@@ -107,7 +203,19 @@ int Distance(Node* node1, Node* node2)
     }
     return -1; // should never happen
 }
-
+// Does the 'nodes' vector contain 'node'
+bool Contains(vector<Node*>& nodes, Node* node)
+{
+    const int size = nodes.size();
+    for(int i=0; i<size; ++i)
+    {
+        if (node == nodes.at(i))
+        {
+            return true;
+        }
+    }
+    return false;
+}
 ///////////////////
 void PrintShortestRouteTo(Node* destination)
 {
@@ -121,31 +229,6 @@ void PrintShortestRouteTo(Node* destination)
     }
     cout << endl;
 }
-
-void Dijkstras()
-{
-    while (nodes.size() > 0)
-    {
-        Node* smallest = ExtractSmallest(nodes);
-        vector<Node*>* adjacentNodes =
-            AdjacentRemainingNodes(smallest);
-        const int size = adjacentNodes->size();
-        for (int i=0; i<size; ++i)
-        {
-            Node* adjacent = adjacentNodes->at(i);
-            int distance = Distance(smallest, adjacent) +
-                           smallest->distanceFromStart;
-//vector<Edge*>& Edges
-            if (distance < adjacent->distanceFromStart)
-            {
-                adjacent->distanceFromStart = distance;
-                adjacent->previous = smallest;
-            }
-        }
-        delete adjacentNodes;
-    }
-}
-
 
 
 
@@ -218,11 +301,11 @@ std::vector<std::string> split(std::string str,std::string sep)
     return arr;
 }
 
-void charger_nodes(char* chemin){ //vector<Node*>
+vector<Node*> charger_nodes(char* chemin){
     std::string chaine;
     std::ifstream fichier(chemin); // acquisition
     int nligne = 0;
-    //vector<Node*> nodes;
+    vector<Node*> noeuds;
     string ligne;
     getline(fichier,ligne);
     std::vector<std::string> identifiants_ligne;
@@ -241,18 +324,18 @@ void charger_nodes(char* chemin){ //vector<Node*>
         for (int i=0; i<identifiants_ligne.size(); i++)
             {
                 Node* noeud = new Node(identifiants_ligne[i]);
-                nodes.push_back(noeud);
+                noeuds.push_back(noeud);
             }
     fichier.close();
-    //return(nodes);
+    return(noeuds);
 }
 
-void charger_edges(char* chemin){ //avant : Edge** dedans : vector<Node*> noeuds
+Edge** charger_edges(char* chemin, vector<Node*> noeuds){
     std::string chaine;
     std::ifstream fichier(chemin); // acquisition
     int nligne = 0;
-     //Edge** edges = 0;
-    // edges = new Edge*[nodes.size()]; //test const
+     Edge** edges = 0;
+     edges = new Edge*[noeuds.size()]; //test const
 
     do
     {
@@ -266,23 +349,23 @@ void charger_edges(char* chemin){ //avant : Edge** dedans : vector<Node*> noeuds
         }
         else   // Je recupere les coordonnées
         {
-            //edges[nligne-1] = new Edge[nodes.size()]; //test const
+            edges[nligne-1] = new Edge[noeuds.size()]; //test const
+
             std::vector<string> distances;
             distances=split(ligne,"\t");
 
 
 
 
-            for (int i=1; i<nodes.size()+1; i++) //test const
+            for (int i=1; i<noeuds.size()+1; i++) //test const
             {
              stringstream geek(distances[i]);
              int num = 0;
              geek >> num;
              if (num!=(-1))
              {
-                Edge edge(nodes[nligne-1],nodes[i-1],num) ;
-                edges.push_back(edge);
-                //edges[nligne-1][i-1] = edge;
+                Edge edge(noeuds[nligne-1],noeuds[i-1],num) ;
+                edges[nligne-1][i-1] = edge;
              }
             }
         }
@@ -295,7 +378,7 @@ void charger_edges(char* chemin){ //avant : Edge** dedans : vector<Node*> noeuds
     while ( nligne< 759 ); //BUG
 
     fichier.close(); // relâchement
-    //        return(edges);
+            return(edges);
 }
 
 DijkstrasFinal(vector<Node*> nodes, Edge** edges, std::string entree,std::string sortie){ //vector<Node*> nodes, Edge** edges,
@@ -309,27 +392,11 @@ PrintShortestRouteTo(nodes[sortie_int]);
 
 }
 
-// Fonction Alain
-
-
-int nombre_lignes(const char* chemin){
-    ifstream file(chemin);
-    int nb_lignes = 0;
-    string line;
-    while (getline(file, line))
-	{
-		nb_lignes++;
-	}
-  file.close();
-    return(nb_lignes);
-}
-
 int main()
 {
 
-    //Kim
-vector<Node*> nodes_loaded = charger_nodes("W:/Documents/Cplusplus/Projet/ProjetC/Data projet/voisins.txt");
-Edge** edges_loaded = charger_edges("W:/Documents/Cplusplus/Projet/ProjetC/Data projet/voisins.txt",nodes_loaded);
+vector<Node*> nodes_loaded = charger_nodes("W:/Bureau/voisins.txt");
+Edge** edges_loaded = charger_edges("W:/Bureau/voisins.txt",nodes_loaded);
 vector<Node*> nodes;
 Edge** edges;
 
@@ -338,20 +405,9 @@ nodes = nodes_loaded;
 edges = edges_loaded;
 DijkstrasFinal(nodes, edges, "1804","1948");
 
-    // Alain
-    Metro metro;
-    string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC";
-    metro.chargeDonnees(project_directory);
-    //metro.getArret("2271").affiche();
+nodes = nodes_loaded;
+edges = edges_loaded;
+DijkstrasFinal(nodes, edges, "1804","1948");
 
-    cout << metro.getArret("2035")->getLigne()[1]->getNom()<<endl;
-    cout << metro.getArret("2067")->getLigne()[0]->getNom()<<endl;
 
-    cout << "arret : " << metro.getArret("2271")->getNom() <<
-     " ligne : "<< metro.getArret("2271")->getLigne()[0]->getNumero()<< " " <<
-     metro.getArret("2271")->getLigne()[0]->getNom();
-     //cout << "arret : " << metro.getArret("2271")->getNom() <<
-     //" ligne : "<< metro.getArret("2271")->getLigne()[1]->getNumero()<< " " <<
-     //metro.getArret("2271")->getLigne()[1]->getNom();
-    return 0;
 }

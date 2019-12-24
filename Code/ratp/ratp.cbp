@@ -35,11 +35,15 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="include/Arret.h" />
+		<Unit filename="include/Edge.h" />
+		<Unit filename="include/Node.h" />
 		<Unit filename="include/itineraire.h" />
 		<Unit filename="include/ligne.h" />
 		<Unit filename="include/metro.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Arret.cpp" />
+		<Unit filename="src/Edge.cpp" />
+		<Unit filename="src/Node.cpp" />
 		<Unit filename="src/itineraire.cpp" />
 		<Unit filename="src/ligne.cpp" />
 		<Unit filename="src/metro.cpp" />
