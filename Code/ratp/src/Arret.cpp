@@ -1,7 +1,10 @@
 #include "Arret.h"
 #include <iostream>
 #include <sstream>
+#include <vector>
+#include <algorithm>
 using namespace std;
+
 
 Arret::Arret(int id, string nom, string adresse, float x, float y)
 {
@@ -44,3 +47,39 @@ string Arret::getAdresse(){
 vector<Ligne*> Arret::getLigne(){
     return(lignes);
 }
+bool Arret::memeArret (Arret* arret){
+    //return(this->nom == arret->getNom());
+    return(this->lignes == arret->getLigne());
+}
+bool Arret::memeLigne (Arret* arret){
+    bool resultat = false;
+    vector<Ligne*> autres_lignes = arret->getLigne();
+    for(int i=0; i < lignes.size(); ++i){
+        for (int j = 0; j< autres_lignes.size(); j++){
+            resultat = lignes[i]->getNumero() == autres_lignes[j]->getNumero();
+            if(resultat)
+                break;
+        }
+    }
+    return(resultat);
+}
+Ligne* Arret::getLigne(Arret* arret){
+    Ligne* result;
+    vector<Arret*> arrets;
+    vector<Arret*>::iterator it_actuel;
+    vector<Arret*>::iterator it_destination;
+
+    for(int i=0; i < lignes.size(); ++i){
+        arrets = lignes[i]->getArrets();
+        it_actuel = std::find (arrets.begin(), arrets.end(), this);
+        it_destination = std::find (arrets.begin(), arrets.end(), arret);
+        if(it_destination!=arrets.end() & it_actuel < it_destination){
+            result = lignes[i];
+            break;
+        }
+    }
+    return(result);
+}
+
+
+

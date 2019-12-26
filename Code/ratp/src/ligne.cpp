@@ -20,6 +20,7 @@ Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string cou
     this->nom_trajet = nom_trajet;
     this->couleur = couleur;
     size_t aller = nom_trajet.find("Aller");
+    this->direction = nom_trajet;
     if (aller!=std::string::npos){
         //this->direction =  std::regex_replace(nom_trajet, std::regex(R"(^<)|( <-.*)"), "");;
     } else {
@@ -48,4 +49,7 @@ string Ligne::getCouleur(){
 }
 string Ligne::getDirection(){
     return(direction);
+}
+vector<Arret*> Ligne::getArrets(){
+    return(liste_arrets);
 }

@@ -31,6 +31,8 @@ charger_edges("W:/Documents/Cplusplus/Projet/ProjetC/Data projet/voisins.txt");*
     metro.chargeDonnees(project_directory);
     //Itineraire itineraire;
     //itineraire.chargerDonnees(project_directory);
+    cout << metro.getArret("1804")->getNom()<<endl;
+    cout << metro.getArret("1948")->getNom()<<endl;
     metro.itineraire->DijkstrasFinal("1804","1948");
 
 // Faire les trois étapes sinon on écrase mal ce qui est fait avant...

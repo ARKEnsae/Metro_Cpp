@@ -157,7 +157,7 @@ void Metro::chargeDonnees(string wd)
 {
     this->ajouteTousStopTxt(wd);
     this->ajouteToutesLignes(wd);
-    itineraire->chargerDonnees(wd, *this);
+    itineraire->chargerDonnees(wd, this);
 }
 
 Arret* Metro::getArret(int stop_id)

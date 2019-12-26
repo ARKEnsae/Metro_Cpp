@@ -17,6 +17,9 @@ class Arret
         string getNom();
         string getAdresse();
         void associeLigne(Ligne* ligne);
+        bool memeLigne (Arret* arret);
+        bool memeArret (Arret* arret);
+        Ligne* getLigne(Arret* arret);
     protected:
     private:
         int stop_id;

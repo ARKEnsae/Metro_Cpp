@@ -92,7 +92,7 @@ int Itineraire::Distance(Node* node1, Node* node2)
 
 void Itineraire::PrintShortestRouteTo(Node* destination)
 {
-    Node* previous = destination;
+     Node* previous = destination;
     cout << "Temps de trajet : "
          << destination->distanceFromStart << endl;
     while (previous)
@@ -100,6 +100,75 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         cout << previous->getNom() << " (" << previous->getId() << ") ";
         previous = previous->previous;
     }
+    cout << endl;
+/*
+    Node* previous = destination;
+    Node* next = previous->previous;
+    Ligne* ligne;
+    bool depart = true;
+    cout << "Temps de trajet : "
+         << destination->distanceFromStart << endl;
+    vector<Node*> it_simplifie;
+    it_simplifie.push_back(previous);
+    while (previous)
+    {
+        next = previous->previous;
+        if(next){
+            if(!previous->memeArret(next) & !previous->memeLigne(next) ){
+                it_simplifie.push_back(previous);
+            }
+        }
+        previous = next;
+    }
+    //it_simplifie.push_back(destination);
+    cout << "Ok vecteur taille " << it_simplifie.size();
+    cout << "A " <<  destination->getNom() << " prendre la ligne ";
+    ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
+    cout << "Ok getLigne";
+    cout << ligne->getNumero() << " direction "
+                    << ligne->getDirection() << " jusqu a l arret ";
+
+    for(int i=1; i < (it_simplifie.size()-1); ++i){
+        cout << it_simplifie[i]->getNom();
+        cout << ", puis prendre la ligne ";
+        //ligne = it_simplifie[i]->getLigne(it_simplifie[i+1]);
+        //cout << ligne->getNumero() << " direction "
+        //            << ligne->getDirection() << " jusqu a l arret ";
+    }
+
+    /*while (previous)
+    {
+        next = previous->previous;
+        if(previous->memeArret(next))
+            break;
+        previous = next;
+    }
+    ligne = previous->getLigne(next);
+
+    cout << "A " << previous->getNom() << " prendre la ligne ";
+    /*cout << ligne->getNumero() << " direction "
+                    << ligne->getDirection() << " jusqu a l arret ";*/
+    /*/
+    while (previous)
+    {
+        next = previous->previous;
+        if(next){
+            if(!previous->memeArret(next)){
+                // Ce n'est pas le même arrêt
+                if (!previous->memeLigne(next)){
+                    //Changement de ligne
+                    ligne = previous->getLigne(next);
+                    cout << previous->getNom();
+                    cout << ", puis rendre la ligne " << ligne->getNumero() << " direction "
+                    << ligne->getDirection() << " jusqu a l arret ";
+                }
+            }
+
+        }else{ // fin du trajet
+            cout << previous->getArret()->getNom();
+        }
+        previous = next;
+    }*/
     cout << endl;
 }
 
@@ -198,11 +267,16 @@ int entree_int = getIndiceFromNode(entree,nodes);
 int sortie_int = getIndiceFromNode(sortie,nodes);
 
 nodes[entree_int]->distanceFromStart = 0; // set start node
+Node* node_fin = nodes[sortie_int];
+//cout << nodes[entree_int]->getId() <<nodes[entree_int]->getNom() << endl;
+//cout << nodes[sortie_int]->getId() <<nodes[sortie_int]->getNom() << endl;
 Dijkstras();
-PrintShortestRouteTo(nodes[sortie_int]);
+//cout << nodes[entree_int]->getId() <<nodes[entree_int]->getNom() << endl;
+//cout << nodes[sortie_int]->getId() << nodes[sortie_int]->getNom() << endl;
+PrintShortestRouteTo(node_fin);
 }
 
-void Itineraire::chargerNodes(string chemin, Metro metro){ //vector<Node*>
+void Itineraire::chargerNodes(string chemin, Metro* metro){ //vector<Node*>
     string chaine;
     const char* chemin_char = chemin.c_str();
     ifstream fichier(chemin_char);
@@ -270,7 +344,7 @@ void Itineraire::chargerEdges(string chemin){
     fichier.close(); // relâchement
 }
 
-void Itineraire::chargerDonnees(string wd, Metro metro){ //vector<Node*>
+void Itineraire::chargerDonnees(string wd, Metro* metro){ //vector<Node*>
     chargerNodes(wd + "/Data projet/voisins.txt", metro);
     chargerEdges(wd + "/Data projet/voisins.txt");
 }

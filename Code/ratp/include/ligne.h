@@ -20,6 +20,7 @@ class Ligne
         string getNom();
         string getCouleur();
         string getDirection();
+        vector<Arret*> getArrets();
     private:
         vector<Arret*> liste_arrets;
         int route_id;

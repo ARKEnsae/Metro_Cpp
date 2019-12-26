@@ -27,16 +27,15 @@ class Itineraire
         void RemoveEdge(vector<Edge*>& edges, Edge* edge);
         int getIndiceFromNode(std::string identifiant ,vector<Node*> les_noeuds);
         void DijkstrasFinal(std::string entree,std::string sortie);
-        void chargerDonnees(string wd, Metro metro);
+        void chargerDonnees(string wd, Metro* metro);
 
     protected:
 
     private:
         vector<Arret*> liste_arrets;
         vector<Node*> nodes;
-        //vector<Edge*> edges;
         vector<Edge*> edges;
-        void chargerNodes(string chemin, Metro metro);
+        void chargerNodes(string chemin, Metro* metro);
         void chargerEdges(string chemin);
 
 };
