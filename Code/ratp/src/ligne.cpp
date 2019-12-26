@@ -22,9 +22,11 @@ Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string cou
     size_t aller = nom_trajet.find("Aller");
     this->direction = nom_trajet;
     if (aller!=std::string::npos){
-        //this->direction =  std::regex_replace(nom_trajet, std::regex(R"(^<)|( <-.*)"), "");;
+        this->direction =  nom_trajet.substr(1, nom_trajet.find(" <->"));
     } else {
-
+        string direction = nom_trajet.substr(nom_trajet.find(" <->")+5, nom_trajet.size());
+        direction = direction.substr(0, direction.find("Retour")-4);
+        this->direction = direction;
     }
 }
 

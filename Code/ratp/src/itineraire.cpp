@@ -11,6 +11,7 @@ using namespace std;
 #include <algorithm> //??
 #include "Node.h"
 #include "Edge.h"
+#include <math.h>
 
 Itineraire::itineraire()
 {
@@ -103,10 +104,8 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     cout << endl;*/
 
     Node* previous = destination;
-    Node* next = previous->previous;
+    Node* next;
     Ligne* ligne;
-    cout << "Temps de trajet : "
-         << destination->distanceFromStart << endl;
     vector<Node*> it_simplifie ;
     it_simplifie.push_back(previous);
     while (previous)
@@ -122,9 +121,14 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         previous = next;
     }
     std::reverse(it_simplifie.begin(),it_simplifie.end());
-    //it_simplifie.push_back(destination);
+
+    float temps_min = destination->distanceFromStart;
+    temps_min = round(temps_min/60 * 100)/100;
+    cout << "Temps de trajet minimum : "
+         << temps_min << " minutes" << endl;
+
     ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
-    cout << "A " <<  destination->getNom() << " prendre la ligne ";
+    cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
     cout << ligne->getNumero() << " direction "
                     << ligne->getDirection() << " jusqu a l arret ";
 
@@ -136,40 +140,7 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
                     << ligne->getDirection() << " jusqu a l arret ";
     }
 
-    cout << "A " <<  it_simplifie[it_simplifie.size()-1]->getNom();
-    /*while (previous)
-    {
-        next = previous->previous;
-        if(previous->memeArret(next))
-            break;
-        previous = next;
-    }
-    ligne = previous->getLigne(next);
-
-    cout << "A " << previous->getNom() << " prendre la ligne ";
-    /*cout << ligne->getNumero() << " direction "
-                    << ligne->getDirection() << " jusqu a l arret ";*/
-    /*/
-    while (previous)
-    {
-        next = previous->previous;
-        if(next){
-            if(!previous->memeArret(next)){
-                // Ce n'est pas le même arrêt
-                if (!previous->memeLigne(next)){
-                    //Changement de ligne
-                    ligne = previous->getLigne(next);
-                    cout << previous->getNom();
-                    cout << ", puis rendre la ligne " << ligne->getNumero() << " direction "
-                    << ligne->getDirection() << " jusqu a l arret ";
-                }
-            }
-
-        }else{ // fin du trajet
-            cout << previous->getArret()->getNom();
-        }
-        previous = next;
-    }*/
+    cout << "A " <<  it_simplifie[it_simplifie.size()-1]->getNom() << endl << endl;
     cout << endl;
 }
 

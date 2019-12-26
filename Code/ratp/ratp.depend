@@ -10,7 +10,7 @@
 	<iostream>
 	"Ligne.h"
 
-1577364708 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
+1577384396 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
 	<iostream>
 	<string>
 	<vector>
@@ -24,7 +24,7 @@
 	<sstream>
 	<algorithm>
 
-1577364586 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
+1577386471 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
 	"itineraire.h"
 	"Metro.h"
 	<vector>
@@ -37,6 +37,7 @@
 	<algorithm>
 	"Node.h"
 	"Edge.h"
+	<math.h>
 
 1577358851 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
 	"itineraire.h"
@@ -47,7 +48,7 @@
 	"Edge.h"
 	"Metro.h"
 
-1577353433 source:w:\bureau\projetcpp\projetc\code\ratp\src\ligne.cpp
+1577385721 source:w:\bureau\projetcpp\projetc\code\ratp\src\ligne.cpp
 	"Ligne.h"
 	<iostream>
 	<sstream>
