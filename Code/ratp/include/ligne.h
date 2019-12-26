@@ -19,12 +19,14 @@ class Ligne
         int getNumero();
         string getNom();
         string getCouleur();
+        string getDirection();
     private:
         vector<Arret*> liste_arrets;
         int route_id;
         int numero_ligne;
         string nom_trajet;
         string couleur;
+        string direction;
 };
 
 #endif // LIGNE_H

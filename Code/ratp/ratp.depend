@@ -8,36 +8,54 @@
 	<iostream>
 	"Ligne.h"
 
-1575740373 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
+1577319088 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
 	<iostream>
 	<string>
 	<vector>
 	<iomanip>
 	<fstream>
-	"Arret.h"
 	"metro.h"
-	<sstream>
-
-1575665426 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
 	"itineraire.h"
-	<iostream>
+	<sstream>
+	<string.h>
+	<stdio.h>
+	<sstream>
+	<algorithm>
 
-1575717931 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
+1577319909 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
+	"itineraire.h"
+	"Metro.h"
+	<vector>
+	<iostream>
+	<stdio.h>
+	<string.h>
+	<iomanip>
+	<fstream>
+	<sstream>
+	<algorithm>
+	"Node.h"
+	"Edge.h"
+
+1577319595 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
+	"itineraire.h"
 	<vector>
 	"Arret.h"
 	<iostream>
+	"Node.h"
+	"Edge.h"
+	"Metro.h"
 
 1575735866 source:w:\bureau\projetcpp\projetc\code\ratp\src\ligne.cpp
 	"Ligne.h"
 	<iostream>
 	<sstream>
 
-1575735772 w:\bureau\projetcpp\projetc\code\ratp\include\ligne.h
+1577320430 w:\bureau\projetcpp\projetc\code\ratp\include\ligne.h
 	<vector>
 	"Arret.h"
 	<iostream>
 
-1575736125 source:w:\bureau\projetcpp\projetc\code\ratp\src\metro.cpp
+1577319562 source:w:\bureau\projetcpp\projetc\code\ratp\src\metro.cpp
 	"Metro.h"
 	<iomanip>
 	<fstream>
@@ -45,9 +63,10 @@
 	<sstream>
 	<algorithm>
 
-1575740385 w:\bureau\projetcpp\projetc\code\ratp\include\metro.h
+1577319038 w:\bureau\projetcpp\projetc\code\ratp\include\metro.h
 	"Arret.h"
 	"Ligne.h"
+	"itineraire.h"
 	<vector>
 	<iostream>
 
@@ -121,4 +140,19 @@
 	<stdio.h>
 	<sstream>
 	<algorithm>
+
+1577317284 source:w:\bureau\projetcpp\projetc\code\ratp\src\edge.cpp
+	"Edge.h"
+
+1577318170 w:\bureau\projetcpp\projetc\code\ratp\include\edge.h
+	"Node.h"
+
+1577319760 w:\bureau\projetcpp\projetc\code\ratp\include\node.h
+	<iostream>
+	"Arret.h"
+	"Metro.h"
+
+1577319927 source:w:\bureau\projetcpp\projetc\code\ratp\src\node.cpp
+	"Node.h"
+	<iostream>
 

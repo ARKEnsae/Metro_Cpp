@@ -1,6 +1,7 @@
 #include "Ligne.h"
 #include <iostream>
 #include <sstream>
+#include <string>
 using namespace std;
 
 Ligne::Ligne(int route_id, int numero_ligne, string nom_trajet, string couleur)
@@ -18,6 +19,12 @@ Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string cou
     temp_num >> this->numero_ligne;
     this->nom_trajet = nom_trajet;
     this->couleur = couleur;
+    size_t aller = nom_trajet.find("Aller");
+    if (aller!=std::string::npos){
+        //this->direction =  std::regex_replace(nom_trajet, std::regex(R"(^<)|( <-.*)"), "");;
+    } else {
+
+    }
 }
 
 Ligne::~Ligne()
@@ -38,4 +45,7 @@ string Ligne::getNom(){
 }
 string Ligne::getCouleur(){
     return(couleur);
+}
+string Ligne::getDirection(){
+    return(direction);
 }

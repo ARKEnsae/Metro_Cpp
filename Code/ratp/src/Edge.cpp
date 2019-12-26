@@ -20,6 +20,10 @@ Edge::~Edge()
     //dtor
 }
 
+int Edge::getDistance(){
+    return(distance);
+}
+
  bool Edge::Connects(Node* node1, Node* node2)
     {
         return (
