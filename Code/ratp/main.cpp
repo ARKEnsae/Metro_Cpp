@@ -31,8 +31,8 @@ charger_edges("W:/Documents/Cplusplus/Projet/ProjetC/Data projet/voisins.txt");*
     metro.chargeDonnees(project_directory);
     //Itineraire itineraire;
     //itineraire.chargerDonnees(project_directory);
-    cout << metro.getArret("1804")->getNom()<<endl;
-    cout << metro.getArret("1948")->getNom()<<endl;
+    cout << "Depart : " << metro.getArret("1804")->getNom()<<endl;
+    cout <<  "Arrivee : " << metro.getArret("1948")->getNom()<<endl;
     metro.itineraire->DijkstrasFinal("1804","1948");
 
 // Faire les trois étapes sinon on écrase mal ce qui est fait avant...
@@ -41,12 +41,12 @@ charger_edges("W:/Documents/Cplusplus/Projet/ProjetC/Data projet/voisins.txt");*
 
     //metro.getArret("2271").affiche();
 
-    cout << metro.getArret("2035")->getLigne()[1]->getNom()<<endl;
+    /*cout << metro.getArret("2035")->getLigne()[1]->getNom()<<endl;
     cout << metro.getArret("2067")->getLigne()[0]->getNom()<<endl;
 
     cout << "arret : " << metro.getArret("2271")->getNom() <<
      " ligne : "<< metro.getArret("2271")->getLigne()[0]->getNumero()<< " " <<
-     metro.getArret("2271")->getLigne()[0]->getNom();
+     metro.getArret("2271")->getLigne()[0]->getNom();*/
      //cout << "arret : " << metro.getArret("2271")->getNom() <<
      //" ligne : "<< metro.getArret("2271")->getLigne()[1]->getNumero()<< " " <<
      //metro.getArret("2271")->getLigne()[1]->getNom();

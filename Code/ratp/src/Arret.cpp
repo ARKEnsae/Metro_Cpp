@@ -52,16 +52,16 @@ bool Arret::memeArret (Arret* arret){
     return((this->nom == arret->getNom()) &(this->lignes == arret->getLigne()));
 }
 bool Arret::memeLigne (Arret* arret){
-    bool resultat = false;
     vector<Ligne*> autres_lignes = arret->getLigne();
+    /*bool resultat = false;
     for(int i=0; i < lignes.size(); ++i){
         for (int j = 0; j< autres_lignes.size(); j++){
             resultat = lignes[i]->getNumero() == autres_lignes[j]->getNumero();
             if(resultat)
                 break;
         }
-    }
-    return(resultat);
+    }*/
+    return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
 }
 Ligne* Arret::getLigne(Arret* arret){
     Ligne* result;
@@ -71,13 +71,14 @@ Ligne* Arret::getLigne(Arret* arret){
 
     for(int i=0; i < lignes.size(); ++i){
         arrets = lignes[i]->getArrets();
-        it_actuel = std::find (arrets.begin(), arrets.end(), this);
-        it_destination = std::find (arrets.begin(), arrets.end(), arret);
+        it_actuel = std::find(arrets.begin(), arrets.end(), this);
+        it_destination = std::find(arrets.begin(), arrets.end(), arret);
         if(it_destination!=arrets.end() & it_actuel < it_destination){
             result = lignes[i];
             break;
         }
     }
+    result = lignes[0];
     return(result);
 }
 
