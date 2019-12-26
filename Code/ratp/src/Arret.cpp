@@ -49,7 +49,7 @@ vector<Ligne*> Arret::getLigne(){
 }
 bool Arret::memeArret (Arret* arret){
     //return(this->nom == arret->getNom());
-    return(this->lignes == arret->getLigne());
+    return((this->nom == arret->getNom()) &(this->lignes == arret->getLigne()));
 }
 bool Arret::memeLigne (Arret* arret){
     bool resultat = false;
