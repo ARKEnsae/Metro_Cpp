@@ -47,7 +47,10 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
                 stop_times3 <- stop_times3[-remove_i,]
             }
-            if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") | (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b")){
+            if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") || 
+               (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b") ||
+               (i == 3565 & dir == "Data//RATP_GTFS_METRO_4")
+               ){
                 stop_times3$stop_sequence <- seq(nrow(stop_times3), 1, -1)
                 stop_times3<- stop_times3[stop_times3$stop_sequence,]
             }
@@ -90,7 +93,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
 }
 voisins["2075",voisins["2075",]>=0]
 voisins["1659",voisins["1659",]>=0]
-
+voisins[voisins< (-1)]
 write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
 write.table(voisins_type, file = "Data projet/voisins_type.txt", sep = "\t",
