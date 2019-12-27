@@ -2,11 +2,13 @@
 #define METRO_H
 #include "Arret.h"
 #include "Ligne.h"
+#include "itineraire.h"
 #include <vector>
 
 #include <iostream>
 using namespace std;
 
+class Itineraire;
 
 class Metro
 {
@@ -18,6 +20,8 @@ class Metro
         Arret* getArret(string stop_id);
         Ligne* getLigne(int route_id);
         Ligne* getLigne(string route_id);
+        vector<Ligne*> getLignes(); //KIM
+        Itineraire* itineraire;
     protected:
 
     private:

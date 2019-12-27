@@ -1,7 +1,10 @@
 #include "Arret.h"
 #include <iostream>
 #include <sstream>
+#include <vector>
+#include <algorithm>
 using namespace std;
+
 
 Arret::Arret(int id, string nom, string adresse, float x, float y)
 {
@@ -31,6 +34,7 @@ void Arret::affiche()
     " ; adresse "  << adresse << " ; coord : [" <<
     stop_lon << ","  << stop_lat <<"]" << endl;
 }
+
 int Arret::getId(){
     return(stop_id);
 }
@@ -43,4 +47,66 @@ string Arret::getAdresse(){
 }
 vector<Ligne*> Arret::getLigne(){
     return(lignes);
+}
+bool Arret::memeArret (Arret* arret){
+    //return(this->nom == arret->getNom());
+    return((this->nom == arret->getNom()) &(this->lignes == arret->getLigne()));
+}
+bool Arret::memeLigne (Arret* arret){
+    vector<Ligne*> autres_lignes = arret->getLigne();
+    /*bool resultat = false;
+    for(int i=0; i < lignes.size(); ++i){
+        for (int j = 0; j< autres_lignes.size(); j++){
+            resultat = lignes[i]->getNumero() == autres_lignes[j]->getNumero();
+            if(resultat)
+                break;
+        }
+    }*/
+    return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
+}
+
+
+int getIndArret(vector<Arret*> liste_arrets, Arret* arret){ //NEW ALAIN
+    int i=0;
+    for(i; i < liste_arrets.size(); ++i){
+        if(arret->getNom() == liste_arrets[i]->getNom())
+            break;
+    }
+    return(i);
+}
+
+// Nouvelle proposition d'Alain ne marche pas.
+/*Ligne* Arret::getLigne(Arret* arret){
+    Ligne* result;
+    vector<Arret*> arrets;
+
+    for(int i=0; i < lignes.size(); ++i){
+        arrets = lignes[i]->getArrets();
+        int j=getIndArret(arrets, this);
+        int k = getIndArret(arrets, arret);
+        if(k<arrets.size() && j < k){
+            return(lignes[i]);
+        }
+    }
+    return(result);
+}*/
+
+Ligne* Arret::getLigne(Arret* arret){
+    Ligne* result;
+    vector<Arret*> arrets;
+    vector<Arret*>::iterator it_actuel;
+    vector<Arret*>::iterator it_destination;
+
+    for(int i=0; i < lignes.size(); ++i){
+        arrets = lignes[i]->getArrets();
+        it_actuel = std::find(arrets.begin(), arrets.end(), this);
+        it_destination = std::find(arrets.begin(), arrets.end(), arret);
+        if(it_destination!=arrets.end() & it_actuel < it_destination){
+            result = lignes[i];
+            break;
+        }
+    }
+    result = lignes[0];
+
+    return(result);
 }

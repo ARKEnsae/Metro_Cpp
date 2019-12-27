@@ -7,6 +7,7 @@
 Metro::Metro()
 {
     //ctor
+    itineraire = new Itineraire();
 }
 
 Metro::~Metro()
@@ -30,7 +31,7 @@ void Metro::ajouteStopTxt(string path_fichier)
      parent_station, location_type,
      stop_lat_s, stop_lon_s, stop_id_s;
     string str;
-    getline(fichier, str); /*On enlève la première ligne*/
+    getline(fichier, str); /*On enlÃ¨ve la premiÃ¨re ligne*/
     while( getline(fichier, str) )
     {
         stringstream ligne_fichier(str);
@@ -62,7 +63,7 @@ bool Metro::ajouteLigne(string path_fichier){
         stop_name,stop_desc, stop_lat, stop_lon, route_id, service_id,
         route_short_name, route_long_name, route_color;
         string str;
-        getline(fichier, str); /*On enlève la première ligne*/
+        getline(fichier, str); /*On enlÃ¨ve la premiÃ¨re ligne*/
         getline(fichier, str);
         stringstream ligne_fichier(str);
 
@@ -92,7 +93,9 @@ bool Metro::ajouteLigne(string path_fichier){
         this->getArret(stop_id)->associeLigne(this->getLigne(route_id));
         while( getline(fichier, str) )
         {
+           // str.replace(str.find("a"),0,"e"); //kim
             stringstream ligne_fichier(str);
+
 
             getline(ligne_fichier, trip_id, '\t');
             getline(ligne_fichier, stop_id, '\t');
@@ -123,7 +126,7 @@ void Metro::ajouteTousStopTxt(string wd)
      for (int i = 0; i < 16; i++){
         char chemin[100];
         sprintf(chemin,
-             "%s/Data projet/RATP_GTFS_METRO_%s/stops.txt",
+             "%s/Data projet/RATP_GTFS_METRO_%s/stops_a.txt", //stops.txt
               working_directory,
               num_lignes[i]);
         string chemin_fichier = chemin;
@@ -155,9 +158,8 @@ void Metro::ajouteToutesLignes(string wd)
 void Metro::chargeDonnees(string wd)
 {
     this->ajouteTousStopTxt(wd);
-    cout << "Arrets charges"<< endl;
     this->ajouteToutesLignes(wd);
-    cout << "Lignes chargees"<< endl;
+    itineraire->chargerDonnees(wd, this);
 }
 
 Arret* Metro::getArret(int stop_id)
@@ -168,7 +170,7 @@ Arret* Metro::getArret(int stop_id)
             break;
     }
     if(i >=liste_arrets.size())
-        throw runtime_error ("id non trouvé !");
+        throw runtime_error ("id non trouvÃ© !");
 
     return(liste_arrets[i]);
 }
@@ -187,7 +189,7 @@ Ligne* Metro::getLigne(int route_id)
             break;
     }
     if(i >=liste_lignes.size())
-        throw runtime_error ("id non trouvé !");
+        throw runtime_error ("id non trouvÃ© !");
 
     return(liste_lignes[i]);
 }
@@ -199,3 +201,9 @@ Ligne* Metro::getLigne(string route_id)
     return(this->getLigne(route_id_int));
 }
 
+
+// KIM NEW
+vector<Ligne*> Metro::getLignes()
+{
+    return(liste_lignes);
+}
