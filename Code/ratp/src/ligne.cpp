@@ -21,13 +21,15 @@ Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string cou
     this->couleur = couleur;
     size_t aller = nom_trajet.find("Aller");
     this->direction = nom_trajet;
-    if (aller!=std::string::npos){
-        this->direction =  nom_trajet.substr(1, nom_trajet.find(" <->"));
-    } else {
+    if (aller!=std::string::npos){ // NEW ALAIN
         string direction = nom_trajet.substr(nom_trajet.find(" <->")+5, nom_trajet.size());
-        direction = direction.substr(0, direction.find("Retour")-4);
+        direction = direction.substr(0, direction.find("Aller")-4);
         this->direction = direction;
+
+    } else {
+        this->direction =  nom_trajet.substr(1, nom_trajet.find(" <->")-1);
     }
+
 }
 
 Ligne::~Ligne()

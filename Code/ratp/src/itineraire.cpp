@@ -167,16 +167,16 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
 
     ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
     cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
-    cout << ligne->getNumero() << //" direction "
-              //      << ligne->getDirection() <<
+    cout << ligne->getNumero() << " direction "
+                   << ligne->getDirection() <<
     " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
         cout << it_simplifie[i]->getNom();
         cout << ", puis prendre la ligne ";
         ligne = it_simplifie[i]->getLigne(it_simplifie[i+1]);
-        cout << ligne->getNumero() << //" direction "
-                   // << ligne->getDirection() <<
+        cout << ligne->getNumero() << " direction "
+                    << ligne->getDirection() <<
                      " jusqu'a l'arret ";
     }
 

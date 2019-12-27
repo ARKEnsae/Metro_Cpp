@@ -64,6 +64,33 @@ bool Arret::memeLigne (Arret* arret){
     }*/
     return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
 }
+
+
+int getIndArret(vector<Arret*> liste_arrets, Arret* arret){ //NEW ALAIN
+    int i=0;
+    for(i; i < liste_arrets.size(); ++i){
+        if(arret->getNom() == liste_arrets[i]->getNom())
+            break;
+    }
+    return(i);
+}
+
+// Nouvelle proposition d'Alain ne marche pas.
+/*Ligne* Arret::getLigne(Arret* arret){
+    Ligne* result;
+    vector<Arret*> arrets;
+
+    for(int i=0; i < lignes.size(); ++i){
+        arrets = lignes[i]->getArrets();
+        int j=getIndArret(arrets, this);
+        int k = getIndArret(arrets, arret);
+        if(k<arrets.size() && j < k){
+            return(lignes[i]);
+        }
+    }
+    return(result);
+}*/
+
 Ligne* Arret::getLigne(Arret* arret){
     Ligne* result;
     vector<Arret*> arrets;
@@ -80,7 +107,6 @@ Ligne* Arret::getLigne(Arret* arret){
         }
     }
     result = lignes[0];
+
     return(result);
 }
-
-
