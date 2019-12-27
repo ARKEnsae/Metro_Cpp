@@ -4,6 +4,9 @@
 #include "Arret.h"
 #include <sstream>
 #include <algorithm>
+#include <vector>
+#include<limits>
+
 Metro::Metro()
 {
     //ctor
@@ -28,8 +31,8 @@ void Metro::ajouteStopTxt(string path_fichier)
 
     ifstream fichier(chemin);
     string stop_code, stop_name, stop_desc,
-     parent_station, location_type,
-     stop_lat_s, stop_lon_s, stop_id_s;
+           parent_station, location_type,
+           stop_lat_s, stop_lon_s, stop_id_s;
     string str;
     getline(fichier, str); /*On enlève la première ligne*/
     while( getline(fichier, str) )
@@ -48,20 +51,22 @@ void Metro::ajouteStopTxt(string path_fichier)
         //            stop_lat_s, stop_lon_s);
         //arret.affiche();
         this->ajouteArret(new Arret(stop_id_s, stop_name, stop_desc,
-                    stop_lat_s, stop_lon_s));
+                                    stop_lat_s, stop_lon_s));
     }
     fichier.close();
 }
-bool Metro::ajouteLigne(string path_fichier){
+bool Metro::ajouteLigne(string path_fichier)
+{
     bool fileExists = false;
     const char* chemin = path_fichier.c_str();
 
     ifstream fichier(chemin);
-    if(fichier){
+    if(fichier)
+    {
         fileExists = true;
         string trip_id, stop_id, arrival_time, departure_time, stop_sequence,
-        stop_name,stop_desc, stop_lat, stop_lon, route_id, service_id,
-        route_short_name, route_long_name, route_color;
+               stop_name,stop_desc, stop_lat, stop_lon, route_id, service_id,
+               route_short_name, route_long_name, route_color;
         string str;
         getline(fichier, str); /*On enlève la première ligne*/
         getline(fichier, str);
@@ -83,6 +88,7 @@ bool Metro::ajouteLigne(string path_fichier){
         getline(ligne_fichier, route_color, '\t');
 
         route_long_name.erase(remove(route_long_name.begin(), route_long_name.end(), '\"' ),route_long_name.end());
+        route_short_name.erase(remove(route_short_name.begin(), route_short_name.end(), '\"' ),route_short_name.end());
         route_color.erase(remove(route_color.begin(), route_color.end(), '\"' ),route_color.end());
 
         this->liste_lignes.push_back(new Ligne(route_id, route_short_name, route_long_name, route_color));
@@ -93,7 +99,7 @@ bool Metro::ajouteLigne(string path_fichier){
         this->getArret(stop_id)->associeLigne(this->getLigne(route_id));
         while( getline(fichier, str) )
         {
-           // str.replace(str.find("a"),0,"e"); //kim
+            // str.replace(str.find("a"),0,"e"); //kim
             stringstream ligne_fichier(str);
 
 
@@ -122,13 +128,15 @@ void Metro::ajouteTousStopTxt(string wd)
 {
     const char* working_directory = wd.c_str();
     char num_lignes[16][3]= {"1", "2", "3", "3b", "4", "5",
-     "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"};
-     for (int i = 0; i < 16; i++){
+                             "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"
+                            };
+    for (int i = 0; i < 16; i++)
+    {
         char chemin[100];
         sprintf(chemin,
-             "%s/Data projet/RATP_GTFS_METRO_%s/stops_a.txt", //stops.txt
-              working_directory,
-              num_lignes[i]);
+                "%s/Data projet/RATP_GTFS_METRO_%s/stops_a.txt", //stops.txt
+                working_directory,
+                num_lignes[i]);
         string chemin_fichier = chemin;
         this->ajouteStopTxt(chemin_fichier);
     }
@@ -137,21 +145,24 @@ void Metro::ajouteToutesLignes(string wd)
 {
     const char* working_directory = wd.c_str();
     char num_lignes[16][3]= {"1", "2", "3", "3b", "4", "5",
-     "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"};
-     for (int i = 0; i < 16; i++){
+                             "6", "7", "7b", "8", "9", "10", "11", "12", "13", "14"
+                            };
+    for (int i = 0; i < 16; i++)
+    {
         int j = 1;
         char chemin[100];
         sprintf(chemin,
-            "%s/Data projet/RATP_GTFS_METRO_%s/route_%i.txt",
-            working_directory,
-            num_lignes[i], j);
-
-        while(this->ajouteLigne(chemin)){
-            j++;
-            sprintf(chemin,
                 "%s/Data projet/RATP_GTFS_METRO_%s/route_%i.txt",
                 working_directory,
                 num_lignes[i], j);
+
+        while(this->ajouteLigne(chemin))
+        {
+            j++;
+            sprintf(chemin,
+                    "%s/Data projet/RATP_GTFS_METRO_%s/route_%i.txt",
+                    working_directory,
+                    num_lignes[i], j);
         }
     }
 }
@@ -165,7 +176,8 @@ void Metro::chargeDonnees(string wd)
 Arret* Metro::getArret(int stop_id)
 {
     int i=0;
-    for(i; i < liste_arrets.size(); ++i){
+    for(i; i < liste_arrets.size(); ++i)
+    {
         if(stop_id == liste_arrets[i]->getId())
             break;
     }
@@ -184,7 +196,8 @@ Arret* Metro::getArret(string stop_id)
 Ligne* Metro::getLigne(int route_id)
 {
     int i=0;
-    for(i; i < liste_arrets.size(); ++i){
+    for(i; i < liste_arrets.size(); ++i)
+    {
         if(route_id == liste_lignes[i]->getId())
             break;
     }
@@ -206,4 +219,137 @@ Ligne* Metro::getLigne(string route_id)
 vector<Ligne*> Metro::getLignes()
 {
     return(liste_lignes);
+}
+
+bool trier_arrets_alphabet(Arret* arret1, Arret* arret2) {
+    return (arret1->getNom() < arret2->getNom());
+}
+bool is_not_digit(char c)
+{
+    return !std::isdigit(c);
+}
+
+bool numeric_string_compare(const std::string& s1, const std::string& s2)
+{
+    // handle empty strings...
+
+    std::string::const_iterator it1 = s1.begin(), it2 = s2.begin();
+
+    if (std::isdigit(s1[0]) && std::isdigit(s2[0])) {
+        int n1, n2;
+        std::stringstream ss(s1);
+        ss >> n1;
+        ss.clear();
+        ss.str(s2);
+        ss >> n2;
+
+        if (n1 != n2) return n1 < n2;
+
+        it1 = std::find_if(s1.begin(), s1.end(), is_not_digit);
+        it2 = std::find_if(s2.begin(), s2.end(), is_not_digit);
+    }
+
+    return std::lexicographical_compare(it1, s1.end(), it2, s2.end());
+}
+vector<string> Metro::menu()
+{
+
+    cout<<endl<<" ----------------------- MENU -----------------------"<<endl<<endl;
+
+    vector<string> partie_menu;
+    partie_menu.push_back("de depart");
+    partie_menu.push_back("d'arrivee");
+    vector<string> identifiants_depart_arrivee;
+
+    vector<string> id_ligne;
+    for(int i = 0; i < liste_lignes.size(); ++i){
+        id_ligne.push_back(liste_lignes[i]->getNumero());
+    }
+    std::vector<string>::iterator it = std::unique (id_ligne.begin(), id_ligne.end());                                                          //                ^
+    id_ligne.resize(std::distance(id_ligne.begin(),it) );
+
+
+
+    for(int m = 0; m < 2; m++)
+    {
+        vector<Ligne*> lignes_entree;
+        cout<<endl<<"Choisissez votre ligne " << partie_menu[m] <<" parmi les lignes suivantes : " << endl;
+        //cout<< "1, 2, 3, '3B', 4, 5, 6, 7, '7B', 8, 9, 10, 11, 12, 13 et 14" <<endl<<endl;
+        //Ajout Alain
+        cout << id_ligne[0];
+        for(int i = 1; i < (id_ligne.size()-1); ++i){
+            cout << ", " << id_ligne[i];
+        }
+        cout << " et " << id_ligne[id_ligne.size()-1] << endl;
+        //Ajout Alain fin
+        string menu_ligne;
+        cout<<"Ligne " << partie_menu[m] <<" : ";
+        cin>>menu_ligne;
+        while ( find(id_ligne.begin(), id_ligne.end(), menu_ligne) == id_ligne.end() ){
+            cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
+            cin>>menu_ligne;
+        }
+
+        cout<<endl;
+
+        // Recuperation des arrêts de la ligne choisie
+        for(int i=0; i < liste_lignes.size(); ++i)
+        {
+            if(liste_lignes[i]->getNumero()==menu_ligne)
+            {
+                lignes_entree.push_back(liste_lignes[i]);
+            }
+        }
+
+        vector<string> arrets_entree_libelles;
+        vector<Arret*> arrets_entree;
+        for(int i=0; i < lignes_entree.size(); ++i)
+        {
+            for(int j=0; j < lignes_entree[i]->getArrets().size(); ++j)
+            {
+                if (std::find(arrets_entree_libelles.begin(), arrets_entree_libelles.end(), lignes_entree[i]->getArrets()[j]->getNom()) != arrets_entree_libelles.end())
+                {
+
+                }
+                else
+                {
+                    arrets_entree_libelles.push_back(lignes_entree[i]->getArrets()[j]->getNom());
+                    arrets_entree.push_back(lignes_entree[i]->getArrets()[j]);
+                }
+            }
+        }
+        sort(arrets_entree_libelles.begin(),arrets_entree_libelles.end());
+        sort(arrets_entree.begin(),arrets_entree.end(),trier_arrets_alphabet);
+
+        // Choix de l'arrêt
+        cout<<endl<<endl<<"Choisissez votre arret " << partie_menu[m] <<" : " << endl << endl;
+        for (int i = 0; i < arrets_entree_libelles.size(); ++i)
+        {
+            cout<< i << " : " << arrets_entree[i]->getNom()<<endl;
+        }
+        cout<<endl<<endl<<"Arret " << partie_menu[m]<< " : ";
+        int menu_arret_depart;
+        cin>>menu_arret_depart;
+        while(cin.fail()){ //pour eviter bug si on entre une chqine de caracteres
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(),'\n');
+            cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
+            cin>>menu_arret_depart;
+        }
+
+        while(!(menu_arret_depart >=0 & menu_arret_depart <  arrets_entree_libelles.size())){
+            cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
+            cin>>menu_arret_depart;
+        }
+
+        cout<<"("<< arrets_entree[menu_arret_depart]->getNom() <<")";
+        cout<<endl;
+        stringstream ss;
+        ss << arrets_entree[menu_arret_depart]->getId();
+        string str = ss.str();
+        identifiants_depart_arrivee.push_back(str);
+    }
+
+    cout<< endl << endl;
+    return(identifiants_depart_arrivee);
 }

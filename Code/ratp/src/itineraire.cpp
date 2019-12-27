@@ -129,7 +129,7 @@ void conversion_secondes(int n)
 
 void Itineraire::PrintShortestRouteTo(Node* destination)
 {
-    /*Node* previous = destination;
+    Node* previous = destination;
     cout << "Temps de trajet : "
          << destination->distanceFromStart << endl;
     while (previous)
@@ -137,9 +137,9 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         cout << previous->getNom() << " (" << previous->getId() << ") ";
         previous = previous->previous;
     }
-    cout << endl;*/
+    cout << endl;
 
-    Node* previous = destination;
+    //Node* previous = destination;
     Node* next;
     Ligne* ligne;
     vector<Node*> it_simplifie ;
@@ -184,7 +184,7 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     cout <<  it_simplifie[it_simplifie.size()-1]->getNom() << endl << endl;
 
 
-    cout << endl  << "Temps de trajet : ";
+    cout << endl  << "Temps de trajet minimum : ";
     conversion_secondes(temps_min);
     cout << endl;
 
@@ -270,7 +270,6 @@ void Itineraire::Dijkstras()
             Node* adjacent = adjacentNodes->at(i);
             int distance = Distance(smallest, adjacent) +
                            smallest->distanceFromStart;
-//vector<Edge*>& Edges
             if (distance < adjacent->distanceFromStart)
             {
                 adjacent->distanceFromStart = distance;
@@ -286,7 +285,7 @@ void Itineraire::DijkstrasFinal(std::string entree,std::string sortie){ //vector
 
     nodes[entree_int]->distanceFromStart = 0; // set start node
     Node* node_fin = nodes[sortie_int];
-
+    Node* node_entree = nodes[entree_int];
     Dijkstras();
     PrintShortestRouteTo(node_fin);
 }
