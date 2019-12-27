@@ -38,19 +38,19 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
     i_export = 0
     for (i in i_unique_route_id){
-        if (!(i == 1807 & dir == "Data//RATP_GTFS_METRO_10")){
+        if (!(i %in% c(1807, 1808) & dir == "Data//RATP_GTFS_METRO_10")){
             trips3 <- trips2[i, ]
-            stop_times3 <- merge(stop_times2, trips3, by = "trip_id")
+            #stop_times3 <- stop_times2[stop_times2$trip_id == trips3$trip_id,]
+            stop_times3 <- merge(stop_times2, trips3, by = "trip_id",sort = F)
             stop_times3 <- stop_times3[order(stop_times3$order),]
             if (any(duplicated(stop_times3$stop_sequence))){
                 remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
                 stop_times3 <- stop_times3[-remove_i,]
             }
-            if(i == 4123 & dir == "Data//RATP_GTFS_METRO_1"){
+            if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") | (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b")){
                 stop_times3$stop_sequence <- seq(nrow(stop_times3), 1, -1)
                 stop_times3<- stop_times3[stop_times3$stop_sequence,]
             }
-            
             
             for(j in seq_len(nrow(stop_times3) - 1)){
                 from = as.character(stop_times3[j, "stop_id"])
@@ -68,13 +68,13 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                                           "route_id", "service_id", "route_short_name", 
                                           "route_long_name", "route_color")]
             i_export = i_export + 1
-            # write.table(stop_times3, 
-            #             file = paste0(sub("Data", "Data projet", dir), "/","route_",i_export,".txt"),
-            #             sep = "\t",
-            #             row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
-            # try(file.copy(paste0(dir,"/", "stops.txt"), 
-            #               paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
-            #               overwrite = FALSE))
+            write.table(stop_times3,
+                        file = paste0(sub("Data", "Data projet", dir), "/","route_",i_export,".txt"),
+                        sep = "\t",
+                        row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8")
+            try(file.copy(paste0(dir,"/", "stops.txt"),
+                          paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
+                          overwrite = FALSE))
             
         }
     }
@@ -88,7 +88,9 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
         }
     }
 }
-voisins["1945","2201"]
+voisins["2075",voisins["2075",]>=0]
+voisins["1659",voisins["1659",]>=0]
+
 write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
 write.table(voisins_type, file = "Data projet/voisins_type.txt", sep = "\t",
