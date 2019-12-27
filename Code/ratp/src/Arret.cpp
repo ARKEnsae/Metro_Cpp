@@ -66,7 +66,7 @@ bool Arret::memeLigne (Arret* arret){
 }
 
 
-int getIndArret(vector<Arret*> liste_arrets, Arret* arret){ //NEW ALAIN
+int getIndArret(vector<Arret*> liste_arrets, Arret* arret){
     int i=0;
     for(i; i < liste_arrets.size(); ++i){
         if(arret->getNom() == liste_arrets[i]->getNom())
@@ -74,23 +74,33 @@ int getIndArret(vector<Arret*> liste_arrets, Arret* arret){ //NEW ALAIN
     }
     return(i);
 }
-
-// Nouvelle proposition d'Alain ne marche pas.
-/*Ligne* Arret::getLigne(Arret* arret){
-    Ligne* result;
+Ligne* Arret::getLigne(Arret* arret){
     vector<Arret*> arrets;
 
     for(int i=0; i < lignes.size(); ++i){
         arrets = lignes[i]->getArrets();
         int j=getIndArret(arrets, this);
         int k = getIndArret(arrets, arret);
+        //cout << lignes[i]->getNom() << endl;
+        //cout << j << " et " << k << "et " << arrets.size() << (k<arrets.size() && j < k) << endl;
         if(k<arrets.size() && j < k){
             return(lignes[i]);
         }
     }
-    return(result);
-}*/
-
+    vector<Ligne*> autres_lignes = arret->getLigne();
+    for(int i=0; i < autres_lignes.size(); ++i){
+        arrets = autres_lignes[i]->getArrets();
+        int j=getIndArret(arrets, this);
+        int k = getIndArret(arrets, arret);
+        //cout << lignes[i]->getNom() << endl;
+        //cout << j << " et " << k << "et " << arrets.size() << (k<arrets.size() && j < k) << endl;
+        if(k<arrets.size() && j < k){
+            return(lignes[i]);
+        }
+    }
+    return(lignes[0]);
+}
+/*
 Ligne* Arret::getLigne(Arret* arret){
     Ligne* result;
     vector<Arret*> arrets;
@@ -109,4 +119,4 @@ Ligne* Arret::getLigne(Arret* arret){
     result = lignes[0];
 
     return(result);
-}
+}*/

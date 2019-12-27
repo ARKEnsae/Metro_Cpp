@@ -22,6 +22,7 @@ class Metro
         Ligne* getLigne(string route_id);
         vector<Ligne*> getLignes(); //KIM
         Itineraire* itineraire;
+        vector<string> menu();
     protected:
 
     private:
