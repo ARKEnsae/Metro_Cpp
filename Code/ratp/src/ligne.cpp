@@ -4,7 +4,7 @@
 #include <string>
 using namespace std;
 
-Ligne::Ligne(int route_id, int numero_ligne, string nom_trajet, string couleur)
+Ligne::Ligne(int route_id, string numero_ligne, string nom_trajet, string couleur)
 {
     this->route_id = route_id;
     this->numero_ligne = numero_ligne;
@@ -15,8 +15,9 @@ Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string cou
 {
     stringstream temp_id(route_id);
     temp_id >> this->route_id;
-    stringstream temp_num(numero_ligne);
-    temp_num >> this->numero_ligne;
+    //stringstream temp_num(numero_ligne);
+    //temp_num >> this->numero_ligne;
+    this->numero_ligne = numero_ligne;
     this->nom_trajet = nom_trajet;
     this->couleur = couleur;
     size_t aller = nom_trajet.find("Aller");
@@ -42,7 +43,7 @@ Ligne::~Ligne()
 int Ligne::getId(){
     return(route_id);
 }
-int Ligne::getNumero(){
+string Ligne::getNumero(){
     return(numero_ligne);
 }
 string Ligne::getNom(){

@@ -75,11 +75,12 @@ int main()
 
         vector<Ligne*> lignes_entree;
         cout<<endl<<"Choisissez votre ligne " << partie_menu[m] <<" parmi les lignes suivantes : " << endl;
-        cout<< "1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12 et 13" <<endl<<endl;
-        int menu_ligne;
+        cout<< "1, 2, 3, '3B', 4, 5, 6, 7, '7B', 8, 9, 10, 11, 12, 13 et 14" <<endl<<endl;
+        string menu_ligne;
         cout<<"Ligne " << partie_menu[m] <<" : ";
         cin>>menu_ligne;
         cout<<endl;
+
 
         // Recuperation des arrêts de la ligne choisie
         for(int i=0; i < lignes.size(); ++i){

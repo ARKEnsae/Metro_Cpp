@@ -11,12 +11,12 @@ class Arret;
 class Ligne
 {
     public:
-        Ligne(int route_id, int numero_ligne, string nom_trajet, string couleur);
+        Ligne(int route_id, string numero_ligne, string nom_trajet, string couleur);
         Ligne(string route_id, string numero_ligne, string nom_trajet, string couleur);
         virtual ~Ligne();
         void ajouteArret(Arret* arret);
         int getId();
-        int getNumero();
+        string getNumero();
         string getNom();
         string getCouleur();
         string getDirection();
@@ -24,7 +24,8 @@ class Ligne
     private:
         vector<Arret*> liste_arrets;
         int route_id;
-        int numero_ligne;
+        //int numero_ligne;
+        string numero_ligne;
         string nom_trajet;
         string couleur;
         string direction;
