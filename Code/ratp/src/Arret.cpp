@@ -34,6 +34,7 @@ void Arret::affiche()
     " ; adresse "  << adresse << " ; coord : [" <<
     stop_lon << ","  << stop_lat <<"]" << endl;
 }
+
 int Arret::getId(){
     return(stop_id);
 }
@@ -81,6 +82,5 @@ Ligne* Arret::getLigne(Arret* arret){
     result = lignes[0];
     return(result);
 }
-
 
 

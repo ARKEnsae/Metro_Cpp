@@ -20,6 +20,7 @@ class Arret
         bool memeLigne (Arret* arret);
         bool memeArret (Arret* arret);
         Ligne* getLigne(Arret* arret);
+        //bool operator< (Arret &other); //KIM
     protected:
     private:
         int stop_id;
@@ -28,6 +29,8 @@ class Arret
         float stop_lon;
         float stop_lat;
         vector<Ligne*> lignes;
+
+
 };
 
 #endif // ARRET_H

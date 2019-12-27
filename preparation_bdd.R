@@ -109,3 +109,14 @@ write.table(voisins_type, file = "Data projet/voisins_type.txt", sep = "\t",
 # 
 # transfers2 <- merge(transfers, stops, by.x = "from_stop_id", by.y = "stop_id",all.x = FALSE, all.y = FALSE)
 # transfers3 <- merge(transfers, stops, by.x = "to_stop_id", by.y = "stop_id",all.x = FALSE, all.y = FALSE)
+
+
+#### modification des fichiers stops en stops_a sans les accent
+rm(list=ls())
+
+#dir = list.dirs("Data/",recursive = FALSE)[1]
+for (dir in list.dirs("Data/",recursive = FALSE)){
+value = read.csv(paste0(dir,"/", "stops.txt"), header = TRUE, sep = ",", stringsAsFactors = FALSE)
+value$stop_name <- iconv(value$stop_name,from="UTF-8",to="ASCII//TRANSLIT")
+write.table(value, file = paste0(sub("Data", "Data projet", dir), "/","stops_a.txt"), sep = ",", row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8",na="")
+}        

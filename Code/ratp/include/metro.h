@@ -20,6 +20,7 @@ class Metro
         Arret* getArret(string stop_id);
         Ligne* getLigne(int route_id);
         Ligne* getLigne(string route_id);
+        vector<Ligne*> getLignes(); //KIM
         Itineraire* itineraire;
     protected:
 

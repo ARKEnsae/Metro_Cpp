@@ -55,3 +55,4 @@ string Ligne::getDirection(){
 vector<Arret*> Ligne::getArrets(){
     return(liste_arrets);
 }
+

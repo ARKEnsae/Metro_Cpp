@@ -91,6 +91,42 @@ int Itineraire::Distance(Node* node1, Node* node2)
     return -1; // should never happen
 }
 
+void conversion_secondes(int n)
+{
+     int //n,		/* n : durée donnée en secondes */
+	    r,		/* r : le reste du modulo */
+	    h,		/* a : le nombre d'heures */
+	    m;      /* a : le nombre de minutes */
+
+	//printf("Donnez une durée en secondes : ");
+	//scanf("%d", &n);	/* la durée en seconde est entrée */
+
+	if (n>0){
+	r=n%3600;		/* on calcul le reste */
+	h=(n-r)/3600;
+	if (h != 0){
+        printf("%dh", h);
+	}
+    n=r;		/* on ne retient que les secondes restantes */
+	r=n%60;		/* on calcul le reste */
+	m=(n-r)/60;
+	if (h == 0 & m != 0){
+		printf("%d min", m);
+	}
+	if (h != 0 & m != 0){
+		printf("%d", m);
+	}
+
+	}
+	else
+	printf("erreur");
+	 //temps_min = round(temps_min/60 * 100)/100;
+
+
+}
+
+
+
 void Itineraire::PrintShortestRouteTo(Node* destination)
 {
     /*Node* previous = destination;
@@ -121,27 +157,37 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         previous = next;
     }
     std::reverse(it_simplifie.begin(),it_simplifie.end());
+    int temps_min = destination->distanceFromStart;
 
-    float temps_min = destination->distanceFromStart;
-    temps_min = round(temps_min/60 * 100)/100;
-    cout << "Temps de trajet minimum : "
-         << temps_min << " minutes" << endl;
+    cout << endl << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << "---------------- Votre itineraire ----------------" << endl;
+    cout << "--------------------------------------------------" << endl;
+    cout << endl << endl;
 
     ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
     cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
-    cout << ligne->getNumero() << " direction "
-                    << ligne->getDirection() << " jusqu a l arret ";
+    cout << ligne->getNumero() << //" direction "
+              //      << ligne->getDirection() <<
+    " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
         cout << it_simplifie[i]->getNom();
         cout << ", puis prendre la ligne ";
         ligne = it_simplifie[i]->getLigne(it_simplifie[i+1]);
-        cout << ligne->getNumero() << " direction "
-                    << ligne->getDirection() << " jusqu a l arret ";
+        cout << ligne->getNumero() << //" direction "
+                   // << ligne->getDirection() <<
+                     " jusqu'a l'arret ";
     }
 
-    cout << "A " <<  it_simplifie[it_simplifie.size()-1]->getNom() << endl << endl;
+
+    cout <<  it_simplifie[it_simplifie.size()-1]->getNom() << endl << endl;
+
+
+    cout << endl  << "Temps de trajet : ";
+    conversion_secondes(temps_min);
     cout << endl;
+
 }
 
 // these two not needed
@@ -194,6 +240,8 @@ int Itineraire::getIndiceFromNode(std::string identifiant, vector<Node*> les_noe
  }
  return(indice_sortie);
 }
+
+
 
 std::vector<std::string> split(std::string str,std::string sep)
 {
@@ -280,10 +328,10 @@ void Itineraire::chargerEdges(string chemin){
     {
         string ligne;
         getline(fichier,ligne);
-       if (nligne==0)  // Si c'est la premi�re ligne je r�cup�re les identifiants d'arret
+       if (nligne==0)  // Si c'est la première ligne je récupère les identifiants d'arret
        {
         }
-        else   // Je recupere les coordonn�es
+        else   // Je recupere les coordonnées
         {
             //edges[nligne-1] = new Edge[nodes.size()]; //test const
             std::vector<string> distances;
@@ -307,7 +355,7 @@ void Itineraire::chargerEdges(string chemin){
     //while ( !fichier.eof() );
     while ( nligne< 759 ); //BUG
 
-    fichier.close(); // rel�chement
+    fichier.close(); // relâchement
 }
 
 void Itineraire::chargerDonnees(string wd, Metro* metro){ //vector<Node*>
