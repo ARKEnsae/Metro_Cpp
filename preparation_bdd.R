@@ -49,13 +49,13 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 #Pour bien avoir la ligne 13 retour depuis Saint-Denis
                 # Et la ligne 7 retour depuis Villejuif
                 keep_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
-                stop_times3 <- stop_times3[-keep_i,]
+                stop_times3 <- stop_times3[keep_i,]
             }
-            # if (any(duplicated(stop_times3$stop_sequence))){
-            #     remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
-            #     stop_times3 <- stop_times3[remove_i,]
-            # }
-    
+            if (any(duplicated(stop_times3$stop_sequence))){
+                remove_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
+                stop_times3 <- stop_times3[-remove_i,]
+            }
+
             if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") || 
                (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b") ||
                (i == 3565 & dir == "Data//RATP_GTFS_METRO_4")
@@ -87,7 +87,8 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
             try(file.copy(paste0(dir,"/", "stops.txt"),
                           paste0(sub("Data", "Data projet", dir),"/", "stops.txt"),
                           overwrite = FALSE))
-            print(paste(stop_times3$stop_name[c(1, nrow(stop_times3))], collapse = " a "))
+            print(paste(paste(stop_times3$stop_name[c(1, nrow(stop_times3))], collapse = " à "),
+                        " ligne : ", stop_times3$route_long_name[1]))
         }
     }
     liste_arrets <- split(stops$stop_id,stops$stop_name)
@@ -150,7 +151,10 @@ rm(list=ls())
 
 #dir = list.dirs("Data/",recursive = FALSE)[1]
 for (dir in list.dirs("Data/",recursive = FALSE)){
-value = read.csv(paste0(dir,"/", "stops.txt"), header = TRUE, sep = ",", stringsAsFactors = FALSE)
-value$stop_name <- iconv(value$stop_name,from="UTF-8",to="ASCII//TRANSLIT")
-write.table(value, file = paste0(sub("Data", "Data projet", dir), "/","stops_a.txt"), sep = ",", row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8",na="")
+    value = read.csv(paste0(dir,"/", "stops.txt"), header = TRUE, sep = ",", stringsAsFactors = FALSE)
+    # value$stop_name <- iconv(value$stop_name,from="UTF-8",to="ASCII//TRANSLIT")
+    # value$stop_desc <- iconv(value$stop_desc,from="UTF-8",to="ASCII//TRANSLIT")
+    value$stop_name <- stringi::stri_trans_general(value$stop_name, "Latin-ASCII")
+    value$stop_desc <- stringi::stri_trans_general(value$stop_desc, "Latin-ASCII")
+    write.table(value, file = paste0(sub("Data", "Data projet", dir), "/","stops_a.txt"), sep = ",", row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8",na="")
 }        
