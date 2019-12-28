@@ -7,11 +7,12 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
-using namespace std;
 #include <algorithm> //??
 #include "Node.h"
 #include "Edge.h"
 #include <math.h>
+
+#define INT_MAX 10000000
 
 Itineraire::itineraire()
 {
@@ -163,10 +164,13 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         previous = next;
     }
     nb_arrets.push_back(0);//dernier indice non important
-    std::reverse(it_simplifie.begin(),it_simplifie.end());
-    std::reverse(nb_arrets.begin(),nb_arrets.end());
+    reverse(it_simplifie.begin(),it_simplifie.end());
+    reverse(nb_arrets.begin(),nb_arrets.end());
+
     int temps_min = destination->getDistance(false);
-    //cout <<temps_min;
+
+    char buffer[100];
+    string string_temp;
 
     cout << endl << endl;
     cout << "--------------------------------------------------" << endl;
@@ -174,9 +178,16 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     cout << "--------------------------------------------------" << endl;
     cout << endl << endl;
 
-
-    cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
     destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
+    /*
+    char buffer[100];
+    string string_temp;
+    sprintf(buffer, "A %s prendre la ligne %s direction %s jusqu'a l'arret ",
+            it_simplifie[0]->getNom(), destination_s[0], destination_s[1]);
+    string_temp = buffer;
+    cout << buffer;
+    */
+    cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
     cout << destination_s[0] << " direction "<<
           destination_s[1] <<
     " jusqu a l'arret ";

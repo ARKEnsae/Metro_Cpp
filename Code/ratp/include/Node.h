@@ -5,7 +5,6 @@
 #include "Ligne.h"
 #include "Metro.h"
 
-using namespace std;
 class Metro;
 
 class Node

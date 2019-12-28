@@ -1,10 +1,7 @@
 #ifndef IHM_H
 #define IHM_H
 #include <iostream>
-#include <vector>
 #include "metro.h"
-
-using namespace std;
 
 class IHM
 {

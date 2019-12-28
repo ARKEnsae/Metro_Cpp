@@ -32,4 +32,3 @@ class Ligne
 };
 
 #endif // LIGNE_H
-//"trip_id"	"stop_id"	"arrival_time"	"departure_time"	"stop_sequence"	"stop_name"	"stop_desc"	"stop_lat"	"stop_lon"	"route_id"	"service_id"	"route_short_name"	"route_long_name"	"route_color"

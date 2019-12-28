@@ -2,7 +2,6 @@
 #include <iostream>
 #include "Arret.h"
 #include "Ligne.h"
-using namespace std;
 
 Node::Node(string id, Metro* metro)
         : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)

@@ -3,7 +3,6 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
 
 Arret::Arret(int id, string nom, string adresse, float x, float y)

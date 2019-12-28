@@ -7,7 +7,6 @@
 #include "Node.h"
 #include "Edge.h"
 #include "Metro.h"
-using namespace std;
 
 class Node;
 class Edge;

@@ -14,8 +14,6 @@
 #include <windows.h> //couleurs palette
 
 
-using namespace std;
-
 IHM::IHM()
 {
         //system("chcp 1252");

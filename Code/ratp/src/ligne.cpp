@@ -2,7 +2,6 @@
 #include <iostream>
 #include <sstream>
 #include <string>
-using namespace std;
 
 Ligne::Ligne(int route_id, string numero_ligne, string nom_trajet, string couleur)
 {

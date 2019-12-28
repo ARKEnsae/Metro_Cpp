@@ -217,8 +217,6 @@ Ligne* Metro::getLigne(string route_id)
     return(this->getLigne(route_id_int));
 }
 
-
-// KIM NEW
 vector<Ligne*> Metro::getLignes()
 {
     return(liste_lignes);
