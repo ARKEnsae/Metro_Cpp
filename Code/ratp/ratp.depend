@@ -10,12 +10,11 @@
 	<iostream>
 	"Ligne.h"
 
-1577560501 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
+1577566021 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
 	<iostream>
-	<string>
 	<vector>
 	"metro.h"
-	<windows.h>
+	"IHM.h"
 
 1577559102 source:w:\bureau\projetcpp\projetc\code\ratp\src\itineraire.cpp
 	"itineraire.h"
@@ -32,7 +31,7 @@
 	"Edge.h"
 	<math.h>
 
-1577560012 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
+1577563517 w:\bureau\projetcpp\projetc\code\ratp\include\itineraire.h
 	"itineraire.h"
 	<vector>
 	"Arret.h"
@@ -52,7 +51,7 @@
 	"Arret.h"
 	<iostream>
 
-1577560319 source:w:\bureau\projetcpp\projetc\code\ratp\src\metro.cpp
+1577564886 source:w:\bureau\projetcpp\projetc\code\ratp\src\metro.cpp
 	"Metro.h"
 	<iomanip>
 	<fstream>
@@ -62,7 +61,7 @@
 	<vector>
 	<limits>
 
-1577560457 w:\bureau\projetcpp\projetc\code\ratp\include\metro.h
+1577565542 w:\bureau\projetcpp\projetc\code\ratp\include\metro.h
 	"Arret.h"
 	"Ligne.h"
 	"itineraire.h"
@@ -180,4 +179,9 @@
 	<iostream>
 	"Arret.h"
 	"Ligne.h"
+
+1577566170 w:\bureau\projetcpp\projetc\code\ratp\include\ihm.h
+	<iostream>
+	<vector>
+	"metro.h"
 

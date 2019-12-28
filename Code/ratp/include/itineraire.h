@@ -22,7 +22,6 @@ class Itineraire
     protected:
 
     private:
-        vector<Arret*> liste_arrets;
         vector<Node*> nodes;
         vector<Edge*> edges;
         void chargerNodes(string chemin, Metro* metro);
