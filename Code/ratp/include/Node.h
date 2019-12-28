@@ -15,17 +15,19 @@ class Node
         virtual ~Node();
         int getId();
         Node* previous;
-        int distanceFromStart;
         Arret* getArret();
         string getNom();
         bool memeLigne (Node* node);
         bool memeArret (Node* node);
         Ligne* getLigne (Node* node);
+        void setDistance(int dist, bool min_itineraire);
+        int getDistance(bool min_itineraire);
     protected:
 
     private:
         Arret* arret;
-
+        int distanceFromStart;
+        int distanceFromStartMinChangement;
 };
 
 #endif // NODE_H

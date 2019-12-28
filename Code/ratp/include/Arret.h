@@ -29,8 +29,6 @@ class Arret
         float stop_lon;
         float stop_lat;
         vector<Ligne*> lignes;
-
-
 };
 
 #endif // ARRET_H

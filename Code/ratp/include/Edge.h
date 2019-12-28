@@ -13,12 +13,12 @@ class Edge
         Edge();
         bool Connects(Node* node1, Node* node2);
         virtual ~Edge();
-        int getDistance();
+        int getDistance(bool min_itineraire);
     protected:
 
     private:
         int distance;
-        int distance_changements;
+        int distance_changement;
 };
 
 #endif // EDGE_H

@@ -19,7 +19,7 @@ Itineraire::itineraire()
 }
 
 
-Node* Itineraire::ExtractSmallest(vector<Node*>& nodes)
+Node* Itineraire::ExtractSmallest(vector<Node*>& nodes, bool min_itineraire)
 {
     int size = nodes.size();
     if (size == 0)
@@ -29,8 +29,8 @@ Node* Itineraire::ExtractSmallest(vector<Node*>& nodes)
     for (int i=1; i<size; ++i)
     {
         Node* current = nodes.at(i);
-        if (current->distanceFromStart <
-                smallest->distanceFromStart)
+        if (current->getDistance(min_itineraire) <
+                smallest->getDistance(min_itineraire))
         {
             smallest = current;
             smallestPosition = i;
@@ -77,7 +77,7 @@ vector<Node*>* Itineraire::AdjacentRemainingNodes(Node* node)
     return adjacentNodes;
 }
 
-int Itineraire::Distance(Node* node1, Node* node2)
+int Itineraire::Distance(Node* node1, Node* node2, bool min_itineraire)
 {
     const int size = edges.size();
     for(int i=0; i<size; ++i)
@@ -85,7 +85,7 @@ int Itineraire::Distance(Node* node1, Node* node2)
         Edge* edge = edges.at(i);
         if (edge->Connects(node1, node2))
         {
-            return edge->getDistance();
+            return edge->getDistance(min_itineraire);
         }
     }
     return -1; // should never happen
@@ -121,8 +121,6 @@ void conversion_secondes(int n)
 	else
 	printf("erreur");
 	 //temps_min = round(temps_min/60 * 100)/100;
-
-
 }
 
 
@@ -131,7 +129,7 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
 {
     Node* previous = destination;
     cout << "Temps de trajet : "
-         << destination->distanceFromStart << endl;
+         << destination->getDistance(false) << endl;
     while (previous)
     {
         cout << previous->getNom() << " (" << previous->getId() << ") ";
@@ -139,25 +137,36 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     }
     cout << endl;
 
-    //Node* previous = destination;
+    previous = destination;
     Node* next;
     Ligne* ligne;
     vector<Node*> it_simplifie ;
+    vector<int> nb_arrets;
     it_simplifie.push_back(previous);
+    int nb = 0;
     while (previous)
     {
         next = previous->previous;
         if(next){
-            if(!previous->memeArret(next) & !previous->memeLigne(next) ){
-                it_simplifie.push_back(previous);
+            if(!previous->memeArret(next)){
+                ++nb;
+                if(!previous->memeLigne(next)){
+                    nb_arrets.push_back(nb);
+                    it_simplifie.push_back(previous);
+                    nb = 0;
+                }
             }
         }else{
             it_simplifie.push_back(previous);
+            nb_arrets.push_back(nb);
         }
         previous = next;
     }
+    nb_arrets.push_back(0);//dernier indice non important
     std::reverse(it_simplifie.begin(),it_simplifie.end());
-    int temps_min = destination->distanceFromStart;
+    std::reverse(nb_arrets.begin(),nb_arrets.end());
+    int temps_min = destination->getDistance(false);
+    //cout <<temps_min;
 
     cout << endl << endl;
     cout << "--------------------------------------------------" << endl;
@@ -165,14 +174,16 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     cout << "--------------------------------------------------" << endl;
     cout << endl << endl;
 
-    ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
+
     cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
-    cout << ligne->getNumero() << " direction "
-                   << ligne->getDirection() <<
+    ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
+    cout << ligne->getNumero() << " direction "<<
+          ligne->getDirection() <<
     " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
         cout << it_simplifie[i]->getNom();
+        cout << " (" << nb_arrets[i] << " arrets)";
         cout << ", puis prendre la ligne ";
         ligne = it_simplifie[i]->getLigne(it_simplifie[i+1]);
         cout << ligne->getNumero() << " direction "
@@ -181,7 +192,9 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     }
 
 
-    cout <<  it_simplifie[it_simplifie.size()-1]->getNom() << endl << endl;
+    cout <<  it_simplifie[it_simplifie.size()-1]->getNom() <<
+        " (" << nb_arrets[it_simplifie.size()-1] << " arrets)" <<
+        endl << endl;
 
 
     cout << endl  << "Temps de trajet minimum : ";
@@ -224,30 +237,28 @@ void Itineraire::RemoveEdge(vector<Edge*>& edges, Edge* edge)
     }
 }
 
-int Itineraire::getIndiceFromNode(std::string identifiant, vector<Node*> les_noeuds)
+int Itineraire::getIndiceFromNode(string identifiant, vector<Node*> les_noeuds)
 {
     int id_int;
     stringstream temp_id(identifiant);
     temp_id >> id_int;
- int indice_sortie;
- const int size = les_noeuds.size();
- for(int i=0; i<size; ++i){
+    int indice_sortie;
+    const int size = les_noeuds.size();
+    for(int i=0; i<size; ++i){
  //       cout << "identifiant noeud : " << les_noeuds[i]->id << endl;
  //       cout << "identifiant : " << identifiant << endl;
         if(les_noeuds[i]->getId()== id_int){
             indice_sortie = i;
         }
- }
- return(indice_sortie);
+    }
+    return(indice_sortie);
 }
 
-
-
-std::vector<std::string> split(std::string str,std::string sep)
+vector<string> split(string str, string sep)
 {
     char* cstr=const_cast<char*>(str.c_str());
     char* current;
-    std::vector<std::string> arr;
+    vector<string> arr;
     current=strtok(cstr,sep.c_str());
     while(current!=NULL)
     {
@@ -257,36 +268,42 @@ std::vector<std::string> split(std::string str,std::string sep)
     return arr;
 }
 
-void Itineraire::Dijkstras()
+void Itineraire::Dijkstras(bool min_itineraire)
 {
     while (nodes.size() > 0)
     {
-        Node* smallest = ExtractSmallest(nodes);
+        Node* smallest = ExtractSmallest(nodes, min_itineraire);
         vector<Node*>* adjacentNodes =
             AdjacentRemainingNodes(smallest);
         const int size = adjacentNodes->size();
         for (int i=0; i<size; ++i)
         {
             Node* adjacent = adjacentNodes->at(i);
-            int distance = Distance(smallest, adjacent) +
-                           smallest->distanceFromStart;
-            if (distance < adjacent->distanceFromStart)
+            int distance = Distance(smallest, adjacent, min_itineraire) +
+                           smallest->getDistance(min_itineraire);
+            if (distance < adjacent->getDistance(min_itineraire))
             {
-                adjacent->distanceFromStart = distance;
+                adjacent->setDistance(Distance(smallest, adjacent, false) +
+                           smallest->getDistance(false),
+                                       false); //distance temps
+                adjacent->setDistance(Distance(smallest, adjacent, true) +
+                           smallest->getDistance(true),
+                                       true); // distance changement
                 adjacent->previous = smallest;
             }
         }
         delete adjacentNodes;
     }
 }
-void Itineraire::DijkstrasFinal(std::string entree,std::string sortie){ //vector<Node*> nodes, Edge** edges,
+void Itineraire::DijkstrasFinal(string entree, string sortie, bool min_itineraire){ //vector<Node*> nodes, Edge** edges,
     int entree_int = getIndiceFromNode(entree,nodes);
     int sortie_int = getIndiceFromNode(sortie,nodes);
 
-    nodes[entree_int]->distanceFromStart = 0; // set start node
+    nodes[entree_int]->setDistance(0, false); // set start node
+    nodes[entree_int]->setDistance(0, true);
     Node* node_fin = nodes[sortie_int];
     Node* node_entree = nodes[entree_int];
-    Dijkstras();
+    Dijkstras(min_itineraire);
     PrintShortestRouteTo(node_fin);
 }
 void Itineraire::chargerNodes(string chemin, Metro* metro){ //vector<Node*>
@@ -352,7 +369,7 @@ void Itineraire::chargerEdges(string chemin){
         nligne++;
     }
     //while ( !fichier.eof() );
-    while ( nligne< 759 ); //BUG
+    while ( nligne<= 759 ); //BUG
 
     fichier.close(); // relâchement
 }
