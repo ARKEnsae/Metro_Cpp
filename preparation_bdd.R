@@ -1,11 +1,15 @@
-stops_id <- unlist(lapply(list.dirs("Data/",recursive = FALSE),function(dir){
+stops_id <- do.call(rbind, lapply(list.dirs("Data/",recursive = FALSE),function(dir){
     stops <- read.csv(paste0(dir,"/", "stops.txt"),
                       header = TRUE,
                       sep = ",",
                       stringsAsFactors = FALSE)
-    stops$stop_id
+    data.frame(id = stops$stop_id, dir = dir, 
+               nom = stops$stop_name,
+               stringsAsFactors = F)
 }))
-stops_id <- stops_id
+stops_id[stops_id$id == 2170,]
+stops_id <- stops_id$id
+stops_id <- stops_id[stops_id != 2371]
 voisins <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
@@ -45,7 +49,10 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
             stop_times3 <- merge(stop_times2, trips3, by = "trip_id",sort = F)
             stop_times3 <- stop_times3[order(stop_times3$order),]
             if( i == 6179 & dir == "Data//RATP_GTFS_METRO_13" ||
-                i == 3139 & dir == "Data//RATP_GTFS_METRO_7" ){
+                i == 3139 & dir == "Data//RATP_GTFS_METRO_7" ||
+                (i == 4123 & dir == "Data//RATP_GTFS_METRO_1") || 
+                (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b") ||
+                (i == 3565 & dir == "Data//RATP_GTFS_METRO_4")){
                 #Pour bien avoir la ligne 13 retour depuis Saint-Denis
                 # Et la ligne 7 retour depuis Villejuif
                 keep_i <- which(stop_times3$stop_sequence ==1)[2]:nrow(stop_times3)
@@ -56,13 +63,13 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 stop_times3 <- stop_times3[-remove_i,]
             }
 
-            if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") || 
-               (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b") ||
-               (i == 3565 & dir == "Data//RATP_GTFS_METRO_4")
-               ){
-                stop_times3$stop_sequence <- seq(nrow(stop_times3), 1, -1)
-                stop_times3<- stop_times3[stop_times3$stop_sequence,]
-            }
+            # if((i == 4123 & dir == "Data//RATP_GTFS_METRO_1") || 
+            #    (i == 1184 & dir == "Data//RATP_GTFS_METRO_7b") ||
+            #    (i == 3565 & dir == "Data//RATP_GTFS_METRO_4")
+            #    ){
+            #     stop_times3$stop_sequence <- seq(nrow(stop_times3), 1, -1)
+            #     stop_times3<- stop_times3[stop_times3$stop_sequence,]
+            # }
             
             for(j in seq_len(nrow(stop_times3) - 1)){
                 from = as.character(stop_times3[j, "stop_id"])
@@ -91,7 +98,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                         " ligne : ", stop_times3$route_long_name[1]))
         }
     }
-    liste_arrets <- split(stops$stop_id,stops$stop_name)
+    liste_arrets <- split(stops$stop_id[stops$stop_id!=2371],stops$stop_name)
     for (i in seq_along(liste_arrets)){
         if(length(liste_arrets[[i]]) == 2){
             from <- as.character(liste_arrets[[i]][1])
@@ -114,7 +121,7 @@ voisins["2366", "2363"]
 2366
 1827
 voisins["1827","1824"]
-voisins["1824","1827"]
+voisins["2371","1827"]
 
 nrow(voisins)[voisins< (-1)]
 write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
