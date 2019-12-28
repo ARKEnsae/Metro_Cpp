@@ -128,14 +128,14 @@ void conversion_secondes(int n)
 void Itineraire::PrintShortestRouteTo(Node* destination)
 {
     Node* previous = destination;
-    cout << "Temps de trajet : "
+    /*cout << "Temps de trajet : "
          << destination->getDistance(false) << endl;
     while (previous)
     {
         cout << previous->getNom() << " (" << previous->getId() << ") ";
         previous = previous->previous;
     }
-    cout << endl;
+    cout << endl;*/
 
     previous = destination;
     Node* next;
@@ -369,7 +369,7 @@ void Itineraire::chargerEdges(string chemin){
         nligne++;
     }
     //while ( !fichier.eof() );
-    while ( nligne<= 759 ); //BUG
+    while ( nligne<= 758 ); //BUG
 
     fichier.close(); // relâchement
 }

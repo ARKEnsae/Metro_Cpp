@@ -64,10 +64,11 @@ bool Arret::memeLigne (Arret* arret){
             if(resultat)
                 break;
         }
-    }*/
+    }
+
     if(this->lignes.size() == 0 | arret->getLigne().size() == 0){
         return(this->nom == arret->getNom());
-    }
+    }*/
     return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
 }
 
@@ -93,6 +94,7 @@ Ligne* Arret::getLigne(Arret* arret){
             return(lignes[i]);
         }
     }
+    return(lignes[0]);
     vector<Ligne*> autres_lignes = arret->getLigne();
     for(int i=0; i < autres_lignes.size(); ++i){
         arrets = autres_lignes[i]->getArrets();
