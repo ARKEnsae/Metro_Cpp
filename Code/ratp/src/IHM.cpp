@@ -67,7 +67,6 @@ bool numeric_string_compare(const std::string& s1, const std::string& s2)
 
 vector<string> IHM::choixItineraire(Metro metro)
 {
-
     cout<<endl<<" ----------------------- MENU -----------------------"<<endl<<endl;
 
     vector<string> partie_menu;
