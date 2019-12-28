@@ -7,14 +7,15 @@ stops_id <- do.call(rbind, lapply(list.dirs("Data/",recursive = FALSE),function(
                nom = stops$stop_name,
                stringsAsFactors = F)
 }))
-stops_id[stops_id$id == 2170,]
-stops_id <- stops_id$id
-stops_id <- stops_id[stops_id != 2371]
+stops_id[stops_id$id == 8433,]
+stops_id <- (stops_id$id)
+id_a_enlever = c(8433) 
+stops_id <- stops_id[!stops_id %in% id_a_enlever]
 voisins <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
-dir = "Data//RATP_GTFS_METRO_7"
+dir = "Data//RATP_GTFS_METRO_10"
 for (dir in list.dirs("Data/",recursive = FALSE)){
     try(dir.create(sub("Data", "Data projet", dir)))
     list_fichier = list.files(dir)
@@ -41,7 +42,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     trips2 <- merge(trips, routes, by = "route_id")
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
     i_export = 0
-    i=i_unique_route_id[3]
+    i=i_unique_route_id[2]
     for (i in i_unique_route_id){
         if (!(i %in% c(1807, 1808) & dir == "Data//RATP_GTFS_METRO_10")){
             trips3 <- trips2[i, ]
@@ -98,7 +99,8 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                         " ligne : ", stop_times3$route_long_name[1]))
         }
     }
-    liste_arrets <- split(stops$stop_id[stops$stop_id!=2371],stops$stop_name)
+    stops = stops[!stops$stop_id%in%id_a_enlever,]
+    liste_arrets <- split(stops$stop_id,stops$stop_name)
     for (i in seq_along(liste_arrets)){
         if(length(liste_arrets[[i]]) == 2){
             from <- as.character(liste_arrets[[i]][1])
