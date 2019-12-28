@@ -172,6 +172,10 @@ void Metro::chargeDonnees(string wd)
     this->ajouteToutesLignes(wd);
     itineraire->chargerDonnees(wd, this);
 }
+void Metro::majNodes(string wd){
+    itineraire = new Itineraire();
+    itineraire->chargerDonnees(wd, this);
+}
 
 Arret* Metro::getArret(int stop_id)
 {
@@ -353,3 +357,38 @@ vector<string> Metro::menu()
     cout<< endl << endl;
     return(identifiants_depart_arrivee);
 }
+
+bool Metro::menuItineraire(){
+        string menu_ligne;
+        cout<<"Voulez-vous l'itineraire : " << endl <<
+        " 0 : Le plus rapide ?" << endl <<
+        " 1 : Avec le moins de changements ?" <<endl;
+        vector<string> choix_possibles;
+        choix_possibles.push_back("0");
+        choix_possibles.push_back("1");
+        cin>>menu_ligne;
+        while (find(choix_possibles.begin(), choix_possibles.end(), menu_ligne) == choix_possibles.end() ){
+            cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
+            cin>>menu_ligne;
+        }
+        cout << endl  << endl;
+        return(menu_ligne == "1");
+}
+
+bool Metro::menuQuitter(){
+        string menu_ligne;
+        cout<< endl << endl << "Voulez-vous : " << endl <<
+        " 0 : Quitter l'application ?" << endl <<
+        " 1 : Chercher un nouvel itineraire ?" <<endl;
+        vector<string> choix_possibles;
+        choix_possibles.push_back("0");
+        choix_possibles.push_back("1");
+        cin>>menu_ligne;
+        while (find(choix_possibles.begin(), choix_possibles.end(), menu_ligne) == choix_possibles.end() ){
+            cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
+            cin>>menu_ligne;
+        }
+        cout << endl  << endl;
+        return(menu_ligne == "1");
+}
+

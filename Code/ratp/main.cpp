@@ -28,10 +28,17 @@ int main()
     Metro metro;
     metro.chargeDonnees(project_directory);
     vector<string> identifiants_depart_arrivee = metro.menu();
-    cout << "Depart : " << metro.getArret(identifiants_depart_arrivee[0])->getNom() << identifiants_depart_arrivee[0]<<endl;
-    cout <<  "Arrivee : " << metro.getArret(identifiants_depart_arrivee[1])->getNom()<< identifiants_depart_arrivee[1] << endl;
+    bool min_itineraire = metro.menuItineraire();
+    //cout << "Depart : " << metro.getArret(identifiants_depart_arrivee[0])->getNom() << identifiants_depart_arrivee[0]<<endl;
+    //cout <<  "Arrivee : " << metro.getArret(identifiants_depart_arrivee[1])->getNom()<< identifiants_depart_arrivee[1] << endl;
 
-    metro.itineraire->DijkstrasFinal(identifiants_depart_arrivee[0],identifiants_depart_arrivee[1], true);
+    metro.itineraire->DijkstrasFinal(identifiants_depart_arrivee[0],identifiants_depart_arrivee[1], min_itineraire);
+    while(metro.menuQuitter()){
+        metro.majNodes(project_directory);
+        identifiants_depart_arrivee = metro.menu();
+        min_itineraire = metro.menuItineraire();
+        metro.itineraire->DijkstrasFinal(identifiants_depart_arrivee[0],identifiants_depart_arrivee[1], min_itineraire);
+    }
     //metro.itineraire->DijkstrasFinal("2539","2075");
 
     // Alain

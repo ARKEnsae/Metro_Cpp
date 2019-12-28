@@ -139,7 +139,7 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
 
     previous = destination;
     Node* next;
-    Ligne* ligne;
+    vector<string> destination_s;
     vector<Node*> it_simplifie ;
     vector<int> nb_arrets;
     it_simplifie.push_back(previous);
@@ -176,21 +176,20 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
 
 
     cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
-    ligne = it_simplifie[0]->getLigne(it_simplifie[1]);
-    cout << ligne->getNumero() << " direction "<<
-          ligne->getDirection() <<
+    destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
+    cout << destination_s[0] << " direction "<<
+          destination_s[1] <<
     " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
         cout << it_simplifie[i]->getNom();
         cout << " (" << nb_arrets[i] << " arrets)";
         cout << ", puis prendre la ligne ";
-        ligne = it_simplifie[i]->getLigne(it_simplifie[i+1]);
-        cout << ligne->getNumero() << " direction "
-                    << ligne->getDirection() <<
+        destination_s = it_simplifie[i]->calculDestination(it_simplifie[i+1]);
+        cout << destination_s[0] << " direction "
+                    << destination_s[1] <<
                      " jusqu'a l'arret ";
     }
-
 
     cout <<  it_simplifie[it_simplifie.size()-1]->getNom() <<
         " (" << nb_arrets[it_simplifie.size()-1] << " arrets)" <<

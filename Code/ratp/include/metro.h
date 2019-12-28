@@ -16,6 +16,7 @@ class Metro
         Metro();
         virtual ~Metro();
         void chargeDonnees(string wd);
+        void majNodes(string wd);
         Arret* getArret(int stop_id);
         Arret* getArret(string stop_id);
         Ligne* getLigne(int route_id);
@@ -23,6 +24,8 @@ class Metro
         vector<Ligne*> getLignes(); //KIM
         Itineraire* itineraire;
         vector<string> menu();
+        bool menuItineraire();
+        bool menuQuitter();
     protected:
 
     private:

@@ -19,7 +19,6 @@ class Itineraire
         itineraire();
         void DijkstrasFinal(string entree, string sortie, bool min_itineraire);
         void chargerDonnees(string wd, Metro* metro);
-
     protected:
 
     private:

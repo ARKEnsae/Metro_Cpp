@@ -33,8 +33,8 @@ bool Node::memeArret (Node* node){
 bool Node::memeLigne (Node* node){
     return(arret->memeLigne(node->getArret()));
 }
-Ligne* Node::getLigne (Node* node){
-    return(arret->getLigne(node->getArret()));
+vector<string> Node::calculDestination (Node* node){
+    return(arret->calculDestination(node->getArret()));
 }
 int Node::getDistance(bool min_itineraire){
     if(min_itineraire){

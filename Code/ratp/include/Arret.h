@@ -19,7 +19,7 @@ class Arret
         void associeLigne(Ligne* ligne);
         bool memeLigne (Arret* arret);
         bool memeArret (Arret* arret);
-        Ligne* getLigne(Arret* arret);
+        vector<string> calculDestination(Arret* arret);
         //bool operator< (Arret &other); //KIM
     protected:
     private:
