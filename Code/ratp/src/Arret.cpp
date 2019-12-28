@@ -104,12 +104,11 @@ Ligne* Arret::getLigne(Arret* arret){
             return(lignes[i]);
         }
     }
-    if(lignes.size()>0){
+    if(lignes.size()>0){ // Pour prendre en code que les arrêts sont mal codes et des fois pas de ligne associee
        return(lignes[0]);
     }else{
         return(autres_lignes[0]);
     }
-
 }
 /*
 Ligne* Arret::getLigne(Arret* arret){

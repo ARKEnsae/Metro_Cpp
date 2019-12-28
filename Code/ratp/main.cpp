@@ -31,7 +31,7 @@ int main()
     cout << "Depart : " << metro.getArret(identifiants_depart_arrivee[0])->getNom() << identifiants_depart_arrivee[0]<<endl;
     cout <<  "Arrivee : " << metro.getArret(identifiants_depart_arrivee[1])->getNom()<< identifiants_depart_arrivee[1] << endl;
 
-    metro.itineraire->DijkstrasFinal(identifiants_depart_arrivee[0],identifiants_depart_arrivee[1]);
+    metro.itineraire->DijkstrasFinal(identifiants_depart_arrivee[0],identifiants_depart_arrivee[1], false);
     //metro.itineraire->DijkstrasFinal("2539","2075");
 
     // Alain

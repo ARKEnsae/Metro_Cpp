@@ -5,7 +5,7 @@
 using namespace std;
 
 Node::Node(string id, Metro* metro)
-        : previous(NULL), distanceFromStart(INT_MAX)
+        : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
     this->arret = metro->getArret(id);
 }
@@ -35,4 +35,18 @@ bool Node::memeLigne (Node* node){
 }
 Ligne* Node::getLigne (Node* node){
     return(arret->getLigne(node->getArret()));
+}
+int Node::getDistance(bool min_itineraire){
+    if(min_itineraire){
+        return(distanceFromStartMinChangement);
+    }else{
+        return(distanceFromStart);
+    }
+}
+void Node::setDistance(int dist, bool min_itineraire){
+    if(min_itineraire){
+        distanceFromStartMinChangement = dist;
+    }else{
+        distanceFromStart = dist;
+    }
 }

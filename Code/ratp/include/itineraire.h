@@ -17,7 +17,7 @@ class Itineraire
 {
     public:
         itineraire();
-        void DijkstrasFinal(string entree, string sortie);
+        void DijkstrasFinal(string entree, string sortie, bool min_itineraire);
         void chargerDonnees(string wd, Metro* metro);
 
     protected:
@@ -28,12 +28,12 @@ class Itineraire
         vector<Edge*> edges;
         void chargerNodes(string chemin, Metro* metro);
         void chargerEdges(string chemin);
-        Node* ExtractSmallest(vector<Node*>& nodes);
+        Node* ExtractSmallest(vector<Node*>& nodes, bool min_itineraire);
         bool Contains(vector<Node*>& nodes, Node* node);
         vector<Node*>* AdjacentRemainingNodes(Node* node);
-        int Distance(Node* node1, Node* node2);
+        int Distance(Node* node1, Node* node2, bool min_itineraire);
         void PrintShortestRouteTo(Node* destination);
-        void Dijkstras();
+        void Dijkstras(bool min_itineraire);
         vector<Edge*>* AdjacentEdges(vector<Edge*>& edges, Node* node);
         void RemoveEdge(vector<Edge*>& edges, Edge* edge);
         int getIndiceFromNode(string identifiant, vector<Node*> les_noeuds);
