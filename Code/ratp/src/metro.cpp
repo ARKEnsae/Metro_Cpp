@@ -20,7 +20,6 @@ Metro::~Metro()
 void Metro::ajouteArret(Arret* arret)
 {
     liste_arrets.push_back(arret);
-    liste_noms_arrets.push_back(arret->getNom());
 }
 
 //Pour ajouter tous les arrets d'un fichier stop.txt

@@ -7,9 +7,7 @@ Node::Node(string id, Metro* metro)
         : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
     this->arret = metro->getArret(id);
-    if (this->arret->getLigne().size()>1)
-        cout <<id << " a " << this->arret->getLigne().size() << " lignes " << endl;
-}
+ }
 
 Node::~Node()
 {

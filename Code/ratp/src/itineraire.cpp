@@ -1,4 +1,4 @@
-#include "itineraire.h"
+#include "Itineraire.h"
 #include "Metro.h"
 #include <vector>
 #include <iostream>

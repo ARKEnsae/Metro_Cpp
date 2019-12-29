@@ -11,8 +11,8 @@ int main()
 {
     IHM menu;
 
-    //string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC";
-    string project_directory = "W:/Bureau/ProjetCpp/ProjetC";
+    string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC";
+    //string project_directory = "W:/Bureau/ProjetCpp/ProjetC";
     Metro metro;
     metro.chargeDonnees(project_directory);
     vector<string> identifiants_depart_arrivee = menu.choixItineraire(metro);

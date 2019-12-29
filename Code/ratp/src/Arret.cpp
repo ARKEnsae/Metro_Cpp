@@ -97,7 +97,7 @@ vector<string> Arret::calculDestination(Arret* arret){
             return(resultat);
         }
     }
-    //Non trouvé : c'est forcément l'inverse des lignes de this :
+    //Non trouvÃ© : c'est forcÃ©ment l'inverse des lignes de this :
     resultat.push_back(lignes[0]->getNumero());
     resultat.push_back(lignes[0]->getNom());
     size_t aller = resultat[1].find("Aller");

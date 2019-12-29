@@ -1,7 +1,7 @@
 #ifndef IHM_H
 #define IHM_H
 #include <iostream>
-#include "metro.h"
+#include "Metro.h"
 
 class IHM
 {

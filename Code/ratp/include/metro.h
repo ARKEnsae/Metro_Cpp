@@ -2,7 +2,7 @@
 #define METRO_H
 #include "Arret.h"
 #include "Ligne.h"
-#include "itineraire.h"
+#include "Itineraire.h"
 #include <vector>
 
 #include <iostream>
@@ -29,7 +29,6 @@ class Metro
         void ajouteToutesLignes(string wd);
         void ajouteTousStopTxt(string wd);
         vector<Arret*> liste_arrets;
-        vector<string> liste_noms_arrets;
         vector<Ligne*> liste_lignes;
         void ajouteStopTxt(string path_fichier);
         void ajouteArret(Arret* arret);

@@ -8,8 +8,8 @@
 #include <limits>
 
 
-#include "metro.h"
-#include "ligne.h"
+#include "Metro.h"
+#include "Ligne.h"
 #include "Arret.h"
 #include <windows.h> //couleurs palette
 
@@ -102,7 +102,7 @@ vector<string> IHM::choixItineraire(Metro metro)
 
         cout<<endl;
 
-        // Recuperation des arrêts de la ligne choisie
+        // Recuperation des arrÃªts de la ligne choisie
         for(int i=0; i < liste_lignes.size(); ++i)
         {
             if(liste_lignes[i]->getNumero()==menu_ligne)
@@ -131,7 +131,7 @@ vector<string> IHM::choixItineraire(Metro metro)
         sort(arrets_entree_libelles.begin(),arrets_entree_libelles.end());
         sort(arrets_entree.begin(),arrets_entree.end(),trier_arrets_alphabet);
 
-        // Choix de l'arrêt
+        // Choix de l'arrÃªt
         cout<<endl<<endl<<"Choisissez votre arret " << partie_menu[m] <<" : " << endl << endl;
         for (int i = 0; i < arrets_entree_libelles.size(); ++i)
         {
