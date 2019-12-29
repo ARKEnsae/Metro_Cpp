@@ -35,7 +35,8 @@ IHM::~IHM()
 bool trier_arrets_alphabet(Arret* arret1, Arret* arret2) {
     return (arret1->getNom() < arret2->getNom());
 }
-bool is_not_digit(char c)
+
+/*bool is_not_digit(char c)
 {
     return !std::isdigit(c);
 }
@@ -61,7 +62,7 @@ bool numeric_string_compare(const std::string& s1, const std::string& s2)
     }
 
     return std::lexicographical_compare(it1, s1.end(), it2, s2.end());
-}
+}*/
 
 vector<string> IHM::choixItineraire(Metro metro)
 {
