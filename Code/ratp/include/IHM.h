@@ -8,17 +8,18 @@
 class IHM
 {
     public:
-        HANDLE  hConsole = GetStdHandle(STD_OUTPUT_HANDLE); //NEW
-        IHM();
+        IHM(bool activerCouleur);
         virtual ~IHM();
         vector<string> choixItineraire(Metro metro);
         bool choixTypeItineraire();
         bool quitter();
         void AfficherItineraire(Itineraire itineraire); //NEW
-
+        void colorerEcran(int code_couleur);
     protected:
 
     private:
+        HANDLE hConsole;
+        bool activerCouleur;
 };
 
 #endif // IHM_H

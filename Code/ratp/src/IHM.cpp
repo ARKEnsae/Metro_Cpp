@@ -16,8 +16,11 @@
 #include <windows.h> //couleurs palette
 
 
-IHM::IHM()
+IHM::IHM(bool activerCouleur)
 {
+    this->activerCouleur = activerCouleur;
+    if (activerCouleur)
+        this->hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 }
 
 IHM::~IHM()
@@ -29,19 +32,20 @@ bool trier_arrets_alphabet(Arret* arret1, Arret* arret2) {
     return (arret1->getNom() < arret2->getNom());
 }
 
-void colorer_ecran(HANDLE hConsole, int code_couleur){
-    SetConsoleTextAttribute(hConsole, code_couleur);
+void IHM::colorerEcran(int code_couleur){
+    if (activerCouleur)
+        SetConsoleTextAttribute(hConsole, code_couleur);
 }
 
 
 vector<string> IHM::choixItineraire(Metro metro)
 {
-    colorer_ecran(hConsole, 14); //jaune
+    colorerEcran(14); //jaune
     cout << "--------------------------------------------------" << endl;
     cout << "---------------------- MENU ----------------------" << endl;
     cout << "--------------------------------------------------" << endl;
     cout << endl << endl;
-    colorer_ecran(hConsole, 15); //blanc
+    colorerEcran(15); //blanc
 
     vector<string> partie_menu;
     partie_menu.push_back("de depart");
@@ -63,19 +67,19 @@ vector<string> IHM::choixItineraire(Metro metro)
         vector<Ligne*> lignes_entree;
         cout<<endl<<"Choisissez votre ligne " << partie_menu[m] <<" parmi les lignes suivantes : " << endl;
 
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout << id_ligne[0];
         for(int i = 1; i < (id_ligne.size()-1); ++i){
             cout << ", " << id_ligne[i];
         }
         cout << " et " << id_ligne[id_ligne.size()-1] << endl;
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
 
         string menu_ligne;
         cout<<"Ligne " << partie_menu[m] <<" : ";
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cin>>menu_ligne;
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         while ( find(id_ligne.begin(), id_ligne.end(), menu_ligne) == id_ligne.end() ){
             cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
             cin>>menu_ligne;
@@ -116,16 +120,16 @@ vector<string> IHM::choixItineraire(Metro metro)
         cout<<endl<<endl<<"Choisissez votre arret " << partie_menu[m] <<" : " << endl << endl;
         for (int i = 0; i < arrets_entree_libelles.size(); ++i)
         {
-            colorer_ecran(hConsole, 14); //jaune
+            colorerEcran(14); //jaune
             cout<< i << " : ";
-            colorer_ecran(hConsole, 15); //blanc
+            colorerEcran(15); //blanc
             cout << arrets_entree[i]->getNom()<<endl;
         }
         cout<<endl<<endl<<"Arret " << partie_menu[m]<< " : ";
         int menu_arret_depart;
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cin>>menu_arret_depart;
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         while(cin.fail()){ //pour eviter bug si on entre une chqine de caracteres
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
@@ -138,9 +142,9 @@ vector<string> IHM::choixItineraire(Metro metro)
             cin>>menu_arret_depart;
         }
 
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout<<"("<< arrets_entree[menu_arret_depart]->getNom() <<")";
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout<<endl;
         stringstream ss;
         ss << arrets_entree[menu_arret_depart]->getId();
@@ -155,13 +159,13 @@ vector<string> IHM::choixItineraire(Metro metro)
 bool IHM::choixTypeItineraire(){
         string menu_ligne;
         cout<<"Voulez-vous l'itineraire : " << endl;
-       colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout <<" 0 : ";
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout <<"Le plus rapide ?" << endl;
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout <<" 1 : ";
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout <<"Avec le moins de changements ?" << endl;
         vector<string> choix_possibles;
         choix_possibles.push_back("0");
@@ -178,13 +182,13 @@ bool IHM::choixTypeItineraire(){
 bool IHM::quitter(){
         string menu_ligne;
         cout<< endl << endl << "Voulez-vous : " << endl;
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout <<" 0 : ";
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout <<"Quitter l'application ?" << endl;
-        colorer_ecran(hConsole, 14); //jaune
+        colorerEcran(14); //jaune
         cout <<" 1 : ";
-        colorer_ecran(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout <<"Chercher un nouvel itineraire ?" << endl;
         vector<string> choix_possibles;
         choix_possibles.push_back("0");
@@ -250,42 +254,42 @@ void IHM::AfficherItineraire(Itineraire itineraire)
     // Affichage
     destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
 
-    SetConsoleTextAttribute(hConsole, 14); //jaune
+    colorerEcran(14); //jaune
     cout << endl << endl;
     cout << "--------------------------------------------------" << endl;
     cout << "---------------- Votre itineraire ----------------" << endl;
     cout << "--------------------------------------------------" << endl;
     cout << endl << endl;
-    SetConsoleTextAttribute(hConsole, 15); //blanc
+    colorerEcran(15); //blanc
 
     cout << "A ";
-     SetConsoleTextAttribute(hConsole, 11); //orange
+     colorerEcran(11); //orange
     cout <<  it_simplifie[0]->getNom();
-    SetConsoleTextAttribute(hConsole, 15); //blanc
+    colorerEcran(15); //blanc
     cout << " prendre la ligne ";
-     SetConsoleTextAttribute(hConsole, 24); //vert
+     colorerEcran(24); //vert
     cout << destination_s[0];
-     SetConsoleTextAttribute(hConsole, 15); //blanc
+     colorerEcran(15); //blanc
     cout << " direction ";
-     SetConsoleTextAttribute(hConsole, 13); //violet
+     colorerEcran(13); //violet
     cout << destination_s[1];
-     SetConsoleTextAttribute(hConsole, 15); //blanc
+     colorerEcran(15); //blanc
     cout << " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
-        SetConsoleTextAttribute(hConsole, 11); //orange
+        colorerEcran(11); //orange
         cout << it_simplifie[i]->getNom();
-        SetConsoleTextAttribute(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout << " (" << nb_arrets[i] << " arrets)" ;
         cout << ", puis prendre la ligne ";
         destination_s = it_simplifie[i]->calculDestination(it_simplifie[i+1]);
-        SetConsoleTextAttribute(hConsole, 24); //vert
+        colorerEcran(24); //vert
         cout << destination_s[0];
-        SetConsoleTextAttribute(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout << " direction ";
-          SetConsoleTextAttribute(hConsole, 13); //violet
+        colorerEcran(13); //violet
         cout << destination_s[1];
-        SetConsoleTextAttribute(hConsole, 15); //blanc
+        colorerEcran(15); //blanc
         cout << " jusqu'a l'arret ";
     }
 
@@ -295,9 +299,9 @@ void IHM::AfficherItineraire(Itineraire itineraire)
 
 
     cout << endl << "Temps de trajet minimum : ";
-    SetConsoleTextAttribute(hConsole, 14); //jaune
+    colorerEcran(14); //jaune
     conversion_secondes(temps_min);
-    SetConsoleTextAttribute(hConsole, 15); //blanc
+    colorerEcran(15); //blanc
     cout << endl;
 
 

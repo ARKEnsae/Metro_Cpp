@@ -9,10 +9,11 @@ using namespace std;
 
 int main()
 {
-    IHM menu;
     //string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC";
-
     string project_directory = "W:/Bureau/ProjetCpp/ProjetC";
+    bool activerCouleur = false;
+
+    IHM menu(activerCouleur);
     Metro metro;
     metro.chargeDonnees(project_directory);
     Graphe graphe(project_directory);
