@@ -7,13 +7,16 @@ stops_id <- do.call(rbind, lapply(list.dirs("Data/",recursive = FALSE),function(
                nom = stops$stop_name,
                stringsAsFactors = F)
 }))
-stops_id[stops_id$id == 8433,]
+stops_id[stops_id$id == 2397,]
+stops_id[stops_id$id == 1166840,]
+
+#stops_id[which(stops_id$id == 2295)+1,]
 stops_id <- (stops_id$id)
 id_a_enlever = c(8433) 
 stops_id <- stops_id[!stops_id %in% id_a_enlever]
 voisins <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
-voisins_type <- matrix("", nrow = length(stops_id), ncol = length(stops_id),
+voisins_type <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
 dir = "Data//RATP_GTFS_METRO_10"
 for (dir in list.dirs("Data/",recursive = FALSE)){
@@ -32,7 +35,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
         from <- as.character(transfers[i, "from_stop_id"])
         to <- as.character(transfers[i, "to_stop_id"])
         voisins[from, to] <- voisins[to, from]  <- transfers[i, "min_transfer_time"]
-        voisins_type[from, to] <- voisins_type[to, from] <- "transfer"
+        voisins_type[from, to] <- voisins_type[to, from] <- 1
     }
     
     stop_times$order <- seq_len(nrow(stop_times))
@@ -81,7 +84,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
                 transfer_time = as.numeric(difftime(to_time,from_time,units="secs"))
                 
                 voisins[from, to] <- abs(transfer_time)
-                voisins_type[from, to] <- trips3$route_long_name
+                voisins_type[from, to] <- 0
             }
             stop_times3 <- stop_times3[,c("trip_id", "stop_id", "arrival_time", "departure_time", "stop_sequence", 
                                           "stop_name", "stop_desc", "stop_lat", "stop_lon", 
@@ -106,7 +109,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
             from <- as.character(liste_arrets[[i]][1])
             to <- as.character(liste_arrets[[i]][2])
             voisins[from, to] <- voisins[to, from]  <- 0
-            voisins_type[from, to] <- voisins_type[to, from] <- "meme_ligne"
+            voisins_type[from, to] <- voisins_type[to, from] <- 0
         }
     }
 }
@@ -114,7 +117,7 @@ voisins["2075",voisins["2075",]>=0]
 voisins["1659",voisins["1659",]>=0]
 voisins["1827",voisins["1827",]>=0]
 voisins["2366",voisins["2366",]>=0]
-voisins["1824",voisins["1824",]>=0]
+voisins["1899",voisins["1899",]>=0]
 voisins["1827", "2366"]
 voisins["2366", "2363"]
 voisins["2366", "2363"]
