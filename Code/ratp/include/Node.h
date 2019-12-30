@@ -5,7 +5,6 @@
 #include "Ligne.h"
 #include "Metro.h"
 
-using namespace std;
 class Metro;
 
 class Node
@@ -19,7 +18,7 @@ class Node
         string getNom();
         bool memeLigne (Node* node);
         bool memeArret (Node* node);
-        Ligne* getLigne (Node* node);
+        vector<string> calculDestination(Node* node);
         void setDistance(int dist, bool min_itineraire);
         int getDistance(bool min_itineraire);
     protected:

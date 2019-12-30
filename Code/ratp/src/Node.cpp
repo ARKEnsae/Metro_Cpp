@@ -2,13 +2,12 @@
 #include <iostream>
 #include "Arret.h"
 #include "Ligne.h"
-using namespace std;
 
 Node::Node(string id, Metro* metro)
         : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
     this->arret = metro->getArret(id);
-}
+ }
 
 Node::~Node()
 {
@@ -33,8 +32,8 @@ bool Node::memeArret (Node* node){
 bool Node::memeLigne (Node* node){
     return(arret->memeLigne(node->getArret()));
 }
-Ligne* Node::getLigne (Node* node){
-    return(arret->getLigne(node->getArret()));
+vector<string> Node::calculDestination (Node* node){
+    return(arret->calculDestination(node->getArret()));
 }
 int Node::getDistance(bool min_itineraire){
     if(min_itineraire){

@@ -3,7 +3,6 @@
 #include <sstream>
 #include <vector>
 #include <algorithm>
-using namespace std;
 
 
 Arret::Arret(int id, string nom, string adresse, float x, float y)
@@ -64,10 +63,11 @@ bool Arret::memeLigne (Arret* arret){
             if(resultat)
                 break;
         }
-    }*/
+    }
+
     if(this->lignes.size() == 0 | arret->getLigne().size() == 0){
         return(this->nom == arret->getNom());
-    }
+    }*/
     return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
 }
 
@@ -80,35 +80,34 @@ int getIndArret(vector<Arret*> liste_arrets, Arret* arret){
     }
     return(i);
 }
-Ligne* Arret::getLigne(Arret* arret){
+vector<string> Arret::calculDestination(Arret* arret){
     vector<Arret*> arrets;
+    vector<string> resultat;
 
     for(int i=0; i < lignes.size(); ++i){
         arrets = lignes[i]->getArrets();
-        int j=getIndArret(arrets, this);
+        int j = getIndArret(arrets, this);
         int k = getIndArret(arrets, arret);
-        //cout << lignes[i]->getNom() << endl;
+        //cout << endl <<  lignes[i]->getNom()<< endl;
+        //cout << << lignes[i]->getNom() << endl;
         //cout << j << " et " << k << "et " << arrets.size() << (k<arrets.size() && j < k) << endl;
         if(k<arrets.size() && j < k){
-            return(lignes[i]);
+            resultat.push_back(lignes[i]->getNumero());
+            resultat.push_back(lignes[i]->getDirection());
+            return(resultat);
         }
     }
-    vector<Ligne*> autres_lignes = arret->getLigne();
-    for(int i=0; i < autres_lignes.size(); ++i){
-        arrets = autres_lignes[i]->getArrets();
-        int j=getIndArret(arrets, this);
-        int k = getIndArret(arrets, arret);
-        //cout << lignes[i]->getNom() << endl;
-        //cout << j << " et " << k << "et " << arrets.size() << (k<arrets.size() && j < k) << endl;
-        if(k<arrets.size() && j < k){
-            return(lignes[i]);
-        }
+    //Non trouvé : c'est forcément l'inverse des lignes de this :
+    resultat.push_back(lignes[0]->getNumero());
+    resultat.push_back(lignes[0]->getNom());
+    size_t aller = resultat[1].find("Aller");
+    if (aller!=std::string::npos){//On veut donc le retour
+        resultat[1] =  resultat[1].substr(1, resultat[1].find(" <->")-1);
+    } else {//On veut donc l'aller
+        size_t retour = resultat[1].find("Retour");
+        resultat[1] = resultat[1].substr(resultat[1].find(" <->")+5, retour-4);
     }
-    if(lignes.size()>0){ // Pour prendre en code que les arr�ts sont mal codes et des fois pas de ligne associee
-       return(lignes[0]);
-    }else{
-        return(autres_lignes[0]);
-    }
+    return(resultat);
 }
 /*
 Ligne* Arret::getLigne(Arret* arret){

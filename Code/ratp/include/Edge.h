@@ -1,7 +1,6 @@
 #ifndef EDGE_H
 #define EDGE_H
 #include "Node.h"
-using namespace std;
 
 class Node;
 class Edge
