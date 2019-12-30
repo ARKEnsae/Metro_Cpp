@@ -11,7 +11,6 @@ class Arret
     public:
         Arret(int id, string nom, string adresse, float x, float y);
         Arret(string id, string nom, string adresse, string x, string y);
-        virtual void affiche();
         int getId();
         vector<Ligne*> getLigne();
         string getNom();
@@ -19,8 +18,7 @@ class Arret
         void associeLigne(Ligne* ligne);
         bool memeLigne (Arret* arret);
         bool memeArret (Arret* arret);
-        vector<string> calculDestination(Arret* arret);
-        //bool operator< (Arret &other); //KIM
+        vector<string> calculerDirection(Arret* arret);
     protected:
     private:
         int stop_id;

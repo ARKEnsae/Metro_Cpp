@@ -252,7 +252,7 @@ void IHM::AfficherItineraire(Itineraire itineraire)
 
 
     // Affichage
-    destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
+    destination_s = it_simplifie[0]->calculerDirection(it_simplifie[1]);
 
     colorerEcran(14); //jaune
     cout << endl << endl;
@@ -282,7 +282,7 @@ void IHM::AfficherItineraire(Itineraire itineraire)
         colorerEcran(15); //blanc
         cout << " (" << nb_arrets[i] << " arrets)" ;
         cout << ", puis prendre la ligne ";
-        destination_s = it_simplifie[i]->calculDestination(it_simplifie[i+1]);
+        destination_s = it_simplifie[i]->calculerDirection(it_simplifie[i+1]);
         colorerEcran(24); //vert
         cout << destination_s[0];
         colorerEcran(15); //blanc

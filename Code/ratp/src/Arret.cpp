@@ -27,13 +27,6 @@ void Arret::associeLigne(Ligne* ligne){
     this->lignes.push_back(ligne);
 }
 
-void Arret::affiche()
-{
-    cout <<"stop id " << stop_id << " ; nom " << nom <<
-    " ; adresse "  << adresse << " ; coord : [" <<
-    stop_lon << ","  << stop_lat <<"]" << endl;
-}
-
 int Arret::getId(){
     return(stop_id);
 }
@@ -64,7 +57,7 @@ int getIndArret(vector<Arret*> liste_arrets, Arret* arret){
     }
     return(i);
 }
-vector<string> Arret::calculDestination(Arret* arret){
+vector<string> Arret::calculerDirection(Arret* arret){
     vector<Arret*> arrets;
     vector<string> resultat;
 
@@ -93,23 +86,4 @@ vector<string> Arret::calculDestination(Arret* arret){
     }
     return(resultat);
 }
-/*
-Ligne* Arret::getLigne(Arret* arret){
-    Ligne* result;
-    vector<Arret*> arrets;
-    vector<Arret*>::iterator it_actuel;
-    vector<Arret*>::iterator it_destination;
 
-    for(int i=0; i < lignes.size(); ++i){
-        arrets = lignes[i]->getArrets();
-        it_actuel = std::find(arrets.begin(), arrets.end(), this);
-        it_destination = std::find(arrets.begin(), arrets.end(), arret);
-        if(it_destination!=arrets.end() & it_actuel < it_destination){
-            result = lignes[i];
-            break;
-        }
-    }
-    result = lignes[0];
-
-    return(result);
-}*/
