@@ -9,7 +9,6 @@
 Metro::Metro()
 {
     //ctor
-    itineraire = new Itineraire();
 }
 
 Metro::~Metro()
@@ -168,11 +167,6 @@ void Metro::chargeDonnees(string wd)
 {
     this->ajouteTousStopTxt(wd);
     this->ajouteToutesLignes(wd);
-    itineraire->chargerDonnees(wd, this);
-}
-void Metro::majNodes(string wd){
-    itineraire = new Itineraire();
-    itineraire->chargerDonnees(wd, this);
 }
 
 Arret* Metro::getArret(int stop_id)

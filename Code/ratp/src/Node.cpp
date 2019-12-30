@@ -1,13 +1,19 @@
 #include "Node.h"
 #include <iostream>
-#include "Arret.h"
-#include "Ligne.h"
+#include <sstream>
 
-Node::Node(string id, Metro* metro)
+#define INT_MAX 10000000
+
+Node::Node(string id)
         : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
-    this->arret = metro->getArret(id);
- }
+    stringstream temp_id(id);
+    temp_id >> id_arret;
+}
+Node::Node(int id)
+        : id_arret(id), previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
+{
+}
 
 Node::~Node()
 {
@@ -15,26 +21,9 @@ Node::~Node()
 }
 
 int Node::getId(){
-    return(arret->getId());
+    return(id_arret);
 }
 
-Arret* Node::getArret(){
-    return(arret);
-}
-
-string Node::getNom(){
-    return(arret->getNom());
-}
-
-bool Node::memeArret (Node* node){
-    return(arret->memeArret(node->getArret()));
-}
-bool Node::memeLigne (Node* node){
-    return(arret->memeLigne(node->getArret()));
-}
-vector<string> Node::calculDestination (Node* node){
-    return(arret->calculDestination(node->getArret()));
-}
 int Node::getDistance(bool min_itineraire){
     if(min_itineraire){
         return(distanceFromStartMinChangement);
@@ -48,4 +37,9 @@ void Node::setDistance(int dist, bool min_itineraire){
     }else{
         distanceFromStart = dist;
     }
+}
+void Node::reinitialiseNode(){
+    distanceFromStartMinChangement = INT_MAX;
+    distanceFromStart = INT_MAX;
+    previous = NULL;
 }

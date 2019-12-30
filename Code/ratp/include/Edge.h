@@ -8,7 +8,7 @@ class Edge
     public:
         Node* node1;
         Node* node2;
-        Edge(Node* node1, Node* node2, int distance);
+        Edge(Node* node1, Node* node2, int distance, int distance_changement);
         Edge();
         bool Connects(Node* node1, Node* node2);
         virtual ~Edge();

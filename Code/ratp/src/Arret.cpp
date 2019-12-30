@@ -48,26 +48,10 @@ vector<Ligne*> Arret::getLigne(){
     return(lignes);
 }
 bool Arret::memeArret (Arret* arret){
-    //return(this->nom == arret->getNom());
-    if(this->lignes.size() == 0 | arret->getLigne().size() == 0){
-        return(this->nom == arret->getNom());
-    }
-    return((this->nom == arret->getNom()) &(this->lignes == arret->getLigne()));
+    return((this->nom == arret->getNom()) &(lignes[0]->getNumero()==arret->getLigne()[0]->getNumero()));
 }
 bool Arret::memeLigne (Arret* arret){
     vector<Ligne*> autres_lignes = arret->getLigne();
-    /*bool resultat = false;
-    for(int i=0; i < lignes.size(); ++i){
-        for (int j = 0; j< autres_lignes.size(); j++){
-            resultat = lignes[i]->getNumero() == autres_lignes[j]->getNumero();
-            if(resultat)
-                break;
-        }
-    }
-
-    if(this->lignes.size() == 0 | arret->getLigne().size() == 0){
-        return(this->nom == arret->getNom());
-    }*/
     return(lignes[0]->getNumero()==autres_lignes[0]->getNumero());
 }
 

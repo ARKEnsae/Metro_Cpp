@@ -1,15 +1,10 @@
 #include "Edge.h"
 
-Edge::Edge(Node* node1, Node* node2, int distance)
-        : node1(node1), node2(node2), distance(distance)
-    {
-        if(node1->memeLigne(node2)){
-            distance_changement = 0;
-        }else{
-            distance_changement = 1;
-        }
-        //distance_changement = !node1->memeLigne(node2);
-    }
+Edge::Edge(Node* node1, Node* node2, int distance, int distance_changement)
+        : node1(node1), node2(node2), distance(distance), distance_changement(distance_changement)
+{
+
+}
 
 Edge::Edge()//NEW CONSTRUCTEUR KIM
         : distance(0), distance_changement(0)

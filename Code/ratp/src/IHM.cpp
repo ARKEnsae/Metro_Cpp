@@ -7,11 +7,12 @@
 #include <sstream>
 #include <limits>
 #include <stdio.h> //printf
+#include <math.h>
 
 
 #include "Metro.h"
 #include "Ligne.h"
-#include "Arret.h"
+#include "itineraire.h"
 #include <windows.h> //couleurs palette
 
 
@@ -197,13 +198,13 @@ bool IHM::quitter(){
         return(menu_ligne == "1");
 }
 
-void conversion_secondes(int n)
+string conversion_secondes(int n)
 {
-     int //n,		/* n : durée donnée en secondes */
+     float //n,		/* n : durée donnée en secondes */
 	    r,		/* r : le reste du modulo */
 	    h,		/* h : le nombre d'heures */
 	    m;      /* m : le nombre de minutes */
-
+    string result = "";
 	//printf("Donnez une durée en secondes : ");
 	//scanf("%d", &n);	/* la durée en seconde est entrée */
 
@@ -211,16 +212,15 @@ void conversion_secondes(int n)
 	r=n%3600;		/* on calcul le reste */
 	h=(n-r)/3600;
 	if (h != 0){
-        printf("%dh", h);
+        printf("%.0fh", h);
 	}
     n=r;		/* on ne retient que les secondes restantes */
-	r=n%60;		/* on calcul le reste */
-	m=(n-r)/60;
+	m=round(n/60);		/* on calcul le reste */
 	if (h == 0 & m != 0){
-		printf("%d min", m);
+		printf("%.0f min", m);
 	}
 	if (h != 0 & m != 0){
-		printf("%d", m);
+		printf("%.0f", m);
 	}
 
 	}
@@ -231,18 +231,21 @@ void conversion_secondes(int n)
 
 void IHM::AfficherItineraire(Itineraire itineraire)
 {
-    vector<Node*> it_simplifie = itineraire.it_simplifie;
+    vector<Arret*> it_simplifie = itineraire.creerItineraireSimplifie();
     /*HANDLE  hConsole;
     hConsole = GetStdHandle(STD_OUTPUT_HANDLE);*/
 
     vector<string> destination_s;
-    vector<int> nb_arrets = itineraire.nombre_arrets; //PROBLEME NB ARRETS
+    vector<int> nb_arrets = itineraire.creerNbArretsSimplifie();
     //int temps_min = CalculerTempsMin(it_simplifie);
     //Node* destination = ;
-    int temps_min = it_simplifie[it_simplifie.size()-1]->getDistance(false);
+
+    //int temps_min = it_simplifie[it_simplifie.size()-1]->getDistance(false);
+    int temps_min = itineraire.getTempsTotal();
 
     char buffer[100];
     string string_temp;
+
 
     // Affichage
     destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
@@ -273,7 +276,7 @@ void IHM::AfficherItineraire(Itineraire itineraire)
         SetConsoleTextAttribute(hConsole, 11); //orange
         cout << it_simplifie[i]->getNom();
         SetConsoleTextAttribute(hConsole, 15); //blanc
-        cout << " (" << nb_arrets[i] << " arrets)";
+        cout << " (" << nb_arrets[i] << " arrets)" ;
         cout << ", puis prendre la ligne ";
         destination_s = it_simplifie[i]->calculDestination(it_simplifie[i+1]);
         SetConsoleTextAttribute(hConsole, 24); //vert
