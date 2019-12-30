@@ -83,7 +83,7 @@
 	"Arret.h"
 	<iostream>
 
-1577577183 source:w:\documents\cplusplus\projet\projetc\code\ratp\src\itineraire.cpp
+1577717775 source:w:\documents\cplusplus\projet\projetc\code\ratp\src\itineraire.cpp
 	"Itineraire.h"
 	"Metro.h"
 	<vector>
@@ -97,8 +97,9 @@
 	"Node.h"
 	"Edge.h"
 	<math.h>
+	<windows.h>
 
-1577576447 w:\documents\cplusplus\projet\projetc\code\ratp\include\itineraire.h
+1577717795 w:\documents\cplusplus\projet\projetc\code\ratp\include\itineraire.h
 	"itineraire.h"
 	<vector>
 	"Arret.h"
@@ -147,11 +148,12 @@
 1577576447 w:\documents\cplusplus\projet\projetc\code\ratp\include\edge.h
 	"Node.h"
 
-1577576708 source:w:\documents\cplusplus\projet\projetc\code\ratp\main.cpp
+1577719874 source:w:\documents\cplusplus\projet\projetc\code\ratp\main.cpp
 	<iostream>
 	<vector>
 	"metro.h"
 	"IHM.h"
+	"Itineraire.h"
 
 1577550186 source:w:\bureau\projetcpp\projetc\code\ratp\src\edge.cpp
 	"Edge.h"
@@ -189,11 +191,13 @@
 	"Arret.h"
 	<windows.h>
 
-1577577101 w:\documents\cplusplus\projet\projetc\code\ratp\include\ihm.h
+1577718336 w:\documents\cplusplus\projet\projetc\code\ratp\include\ihm.h
 	<iostream>
 	"Metro.h"
+	"Itineraire.h"
+	<windows.h>
 
-1577577135 source:w:\documents\cplusplus\projet\projetc\code\ratp\src\ihm.cpp
+1577718334 source:w:\documents\cplusplus\projet\projetc\code\ratp\src\ihm.cpp
 	"IHM.h"
 	<iostream>
 	<string>
@@ -202,6 +206,7 @@
 	<algorithm>
 	<sstream>
 	<limits>
+	<stdio.h>
 	"Metro.h"
 	"Ligne.h"
 	"Arret.h"

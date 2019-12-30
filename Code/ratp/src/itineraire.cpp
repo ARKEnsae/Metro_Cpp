@@ -2,7 +2,7 @@
 #include "Metro.h"
 #include <vector>
 #include <iostream>
-#include <stdio.h>
+#include <stdio.h> //printf
 #include <string.h>
 #include <iomanip>
 #include <fstream>
@@ -11,6 +11,8 @@
 #include "Node.h"
 #include "Edge.h"
 #include <math.h>
+#include <windows.h> //couleurs palette
+
 
 #define INT_MAX 10000000
 
@@ -66,10 +68,6 @@ vector<Node*>* Itineraire::AdjacentRemainingNodes(Node* node)
         {
             adjacent = edge->node2;
         }
-        //else if (edge->node2 == node) //pas dans les deux sens
-        //{
-         //   adjacent = edge->node1;
-        //}
         if (adjacent && Contains(nodes, adjacent))
         {
             adjacentNodes->push_back(adjacent);
@@ -92,57 +90,55 @@ int Itineraire::Distance(Node* node1, Node* node2, bool min_itineraire)
     return -1; // should never happen
 }
 
-void conversion_secondes(int n)
+
+Itineraire Itineraire::CalculerItineraire(Node* destination)
 {
-     int //n,		/* n : durée donnée en secondes */
-	    r,		/* r : le reste du modulo */
-	    h,		/* a : le nombre d'heures */
-	    m;      /* a : le nombre de minutes */
+    Itineraire itineraire;
+    Node* previous = destination;
+    Node* next;
+    vector<Node*> it_simplifie ; // à retourner
+    vector<int> nb_arrets; //à retourner
+    it_simplifie.push_back(previous);
+    int nb = 0;
+     while (previous)
+    {
+        next = previous->previous;
+        if(next){
+            if(!previous->memeArret(next)){
+                ++nb;
+                if(!previous->memeLigne(next)){
+                    nb_arrets.push_back(nb);
+                    it_simplifie.push_back(previous);
+                    nb = 0;
+                }
+            }
+        }else{
+            it_simplifie.push_back(previous);
+            nb_arrets.push_back(nb);
+        }
+        previous = next;
+    }
+    nb_arrets.push_back(0);//dernier indice non important
+    reverse(it_simplifie.begin(),it_simplifie.end());
+    reverse(nb_arrets.begin(),nb_arrets.end());
 
-	//printf("Donnez une durée en secondes : ");
-	//scanf("%d", &n);	/* la durée en seconde est entrée */
-
-	if (n>0){
-	r=n%3600;		/* on calcul le reste */
-	h=(n-r)/3600;
-	if (h != 0){
-        printf("%dh", h);
-	}
-    n=r;		/* on ne retient que les secondes restantes */
-	r=n%60;		/* on calcul le reste */
-	m=(n-r)/60;
-	if (h == 0 & m != 0){
-		printf("%d min", m);
-	}
-	if (h != 0 & m != 0){
-		printf("%d", m);
-	}
-
-	}
-	else
-	printf("erreur");
-	 //temps_min = round(temps_min/60 * 100)/100;
+    itineraire.it_simplifie=it_simplifie;
+    itineraire.nombre_arrets=nb_arrets;
+    return(itineraire);
 }
 
 
-
-void Itineraire::PrintShortestRouteTo(Node* destination)
+/*void Itineraire::PrintShortestRouteTo(Node* destination)
 {
-    Node* previous = destination;
-    /*cout << "Temps de trajet : "
-         << destination->getDistance(false) << endl;
-    while (previous)
-    {
-        cout << previous->getNom() << " (" << previous->getId() << ") ";
-        previous = previous->previous;
-    }
-    cout << endl;*/
+    HANDLE  hConsole;
+    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 
-    previous = destination;
+
+    Node* previous = destination;
     Node* next;
     vector<string> destination_s;
-    vector<Node*> it_simplifie ;
-    vector<int> nb_arrets;
+    vector<Node*> it_simplifie ; // à retourner
+    vector<int> nb_arrets; //à retourner
     it_simplifie.push_back(previous);
     int nb = 0;
     while (previous)
@@ -172,34 +168,46 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
     char buffer[100];
     string string_temp;
 
+    // Affichage
+    destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
+
+    SetConsoleTextAttribute(hConsole, 14); //jaune
     cout << endl << endl;
     cout << "--------------------------------------------------" << endl;
     cout << "---------------- Votre itineraire ----------------" << endl;
     cout << "--------------------------------------------------" << endl;
     cout << endl << endl;
+    SetConsoleTextAttribute(hConsole, 15); //blanc
 
-    destination_s = it_simplifie[0]->calculDestination(it_simplifie[1]);
-    /*
-    char buffer[100];
-    string string_temp;
-    sprintf(buffer, "A %s prendre la ligne %s direction %s jusqu'a l'arret ",
-            it_simplifie[0]->getNom(), destination_s[0], destination_s[1]);
-    string_temp = buffer;
-    cout << buffer;
-    */
-    cout << "A " <<  it_simplifie[0]->getNom() << " prendre la ligne ";
-    cout << destination_s[0] << " direction "<<
-          destination_s[1] <<
-    " jusqu a l'arret ";
+    cout << "A ";
+     SetConsoleTextAttribute(hConsole, 11); //orange
+    cout <<  it_simplifie[0]->getNom();
+    SetConsoleTextAttribute(hConsole, 15); //blanc
+    cout << " prendre la ligne ";
+     SetConsoleTextAttribute(hConsole, 24); //vert
+    cout << destination_s[0];
+     SetConsoleTextAttribute(hConsole, 15); //blanc
+    cout << " direction ";
+     SetConsoleTextAttribute(hConsole, 13); //violet
+    cout << destination_s[1];
+     SetConsoleTextAttribute(hConsole, 15); //blanc
+    cout << " jusqu a l'arret ";
 
     for(int i=1; i < (it_simplifie.size()-1); ++i){
+        SetConsoleTextAttribute(hConsole, 11); //orange
         cout << it_simplifie[i]->getNom();
+        SetConsoleTextAttribute(hConsole, 15); //blanc
         cout << " (" << nb_arrets[i] << " arrets)";
         cout << ", puis prendre la ligne ";
         destination_s = it_simplifie[i]->calculDestination(it_simplifie[i+1]);
-        cout << destination_s[0] << " direction "
-                    << destination_s[1] <<
-                     " jusqu'a l'arret ";
+        SetConsoleTextAttribute(hConsole, 24); //vert
+        cout << destination_s[0];
+        SetConsoleTextAttribute(hConsole, 15); //blanc
+        cout << " direction ";
+          SetConsoleTextAttribute(hConsole, 13); //violet
+        cout << destination_s[1];
+        SetConsoleTextAttribute(hConsole, 15); //blanc
+        cout << " jusqu'a l'arret ";
     }
 
     cout <<  it_simplifie[it_simplifie.size()-1]->getNom() <<
@@ -207,14 +215,16 @@ void Itineraire::PrintShortestRouteTo(Node* destination)
         endl << endl;
 
 
-    cout << endl  << "Temps de trajet minimum : ";
+    cout << endl << "Temps de trajet minimum : ";
+    SetConsoleTextAttribute(hConsole, 14); //jaune
     conversion_secondes(temps_min);
+    SetConsoleTextAttribute(hConsole, 15); //blanc
     cout << endl;
 
-}
+}*/
 
 // these two not needed
-vector<Edge*>* Itineraire::AdjacentEdges(vector<Edge*>& edges, Node* node)
+/*vector<Edge*>* Itineraire::AdjacentEdges(vector<Edge*>& edges, Node* node)
 {
     vector<Edge*>* adjacentEdges = new vector<Edge*>();
     const int size = edges.size();
@@ -245,7 +255,7 @@ void Itineraire::RemoveEdge(vector<Edge*>& edges, Edge* edge)
             return;
         }
     }
-}
+}*/
 
 int Itineraire::getIndiceFromNode(string identifiant, vector<Node*> les_noeuds)
 {
@@ -305,7 +315,7 @@ void Itineraire::Dijkstras(bool min_itineraire)
         delete adjacentNodes;
     }
 }
-void Itineraire::DijkstrasFinal(string entree, string sortie, bool min_itineraire){ //vector<Node*> nodes, Edge** edges,
+Itineraire Itineraire::DijkstrasFinal(string entree, string sortie, bool min_itineraire){ //vector<Node*> nodes, Edge** edges,
     int entree_int = getIndiceFromNode(entree,nodes);
     int sortie_int = getIndiceFromNode(sortie,nodes);
 
@@ -314,7 +324,10 @@ void Itineraire::DijkstrasFinal(string entree, string sortie, bool min_itinerair
     Node* node_fin = nodes[sortie_int];
     Node* node_entree = nodes[entree_int];
     Dijkstras(min_itineraire);
-    PrintShortestRouteTo(node_fin);
+   // PrintShortestRouteTo(node_fin); //OLD
+    Itineraire itineraire = CalculerItineraire(node_fin); //NEW
+  //  AfficherItineraire(itineraire); //NEW
+    return(itineraire);
 }
 void Itineraire::chargerNodes(string chemin, Metro* metro){ //vector<Node*>
     string chaine;
