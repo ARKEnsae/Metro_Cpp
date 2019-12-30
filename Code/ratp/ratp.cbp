@@ -36,19 +36,21 @@
 		</Compiler>
 		<Unit filename="include/Arret.h" />
 		<Unit filename="include/Edge.h" />
+		<Unit filename="include/Graphe.h" />
 		<Unit filename="include/IHM.h" />
 		<Unit filename="include/Itineraire.h" />
-		<Unit filename="include/Ligne.h" />
-		<Unit filename="include/Metro.h" />
 		<Unit filename="include/Node.h" />
+		<Unit filename="include/ligne.h" />
+		<Unit filename="include/metro.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Arret.cpp" />
 		<Unit filename="src/Edge.cpp" />
+		<Unit filename="src/Graphe.cpp" />
 		<Unit filename="src/IHM.cpp" />
 		<Unit filename="src/Itineraire.cpp" />
-		<Unit filename="src/Ligne.cpp" />
-		<Unit filename="src/Metro.cpp" />
 		<Unit filename="src/Node.cpp" />
+		<Unit filename="src/ligne.cpp" />
+		<Unit filename="src/metro.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />
