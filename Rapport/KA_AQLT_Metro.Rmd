@@ -1,0 +1,34 @@
+---
+title: "Itinéraire entre deux stations du métro parisien"
+author: "Kim Antunez et Alain Quartier-la-Tente"
+date: "07/01/2020 - 15h30 à 15h45"
+output: 
+    pdf_document:
+        number_sections: true
+        toc: true
+urlcolor: blue
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Introduction
+
+Ce rapport décrit le projet C++ de Kim Antunez et d'Alain Quartier-la-Tente dont l'objectif est de permettre à l'utilisateur d'obtenir un chemin entre deux stations de métro selon deux critères : le plus court chemin ou le chemin avec le moins de correspondances. 
+L'ensemble des données et des codes utilisés sont disponibles sous https://github.com/AQLT/ProjetC, la section \ref{sec:pris_en_main} décrivant comment prendre en main et utiliser l'application.
+ Les données utilisées sont les données du métro parisien fournies par la RATP (section \ref{sec:def_donnees}), l'implémentation des classes est décrite dans la section \ref{sec:desc_classes}, l'algorithme utilisé pour calculer les chemins est l'algorithme de Dijkstra (section \ref{sec:algo}). 
+Enfin, les pistes d'amélioration sont décrites dans la partie \ref{sec:amelioration}
+
+
+# Prise en main du programme {#sec:pris_en_main}
+
+# Description des données {#sec:def_donnees}
+
+# Description des classes {#sec:desc_classes}
+
+# Description de l'algorithme {#sec:algo}
+
+# Pistes d'amélioration {#sec:amelioration}
+
+
