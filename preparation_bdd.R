@@ -128,6 +128,7 @@ voisins["2366", "2363"]
 voisins["1827","1824"]
 voisins["2371","1827"]
 
+voisins[voisins>0]
 nrow(voisins)[voisins< (-1)]
 write.table(voisins, file = "Data projet/voisins.txt", sep = "\t",
           row.names = TRUE, col.names = TRUE,fileEncoding = "UTF-8")
@@ -169,4 +170,8 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     value$stop_name <- stringi::stri_trans_general(value$stop_name, "Latin-ASCII")
     value$stop_desc <- stringi::stri_trans_general(value$stop_desc, "Latin-ASCII")
     write.table(value, file = paste0(sub("Data", "Data projet", dir), "/","stops_a.txt"), sep = ",", row.names = FALSE, col.names = TRUE,fileEncoding = "UTF-8",na="")
-}        
+}       
+
+## Code ajout plan lignes
+cat(paste0("![](img/plan_lignes/",list.files("/Users/alainquartierlatente/Desktop/Ensae/ProjetC/Rapport/img/plan_lignes/"),
+           ")",collapse = "\n\n"))
