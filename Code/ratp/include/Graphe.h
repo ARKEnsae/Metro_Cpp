@@ -14,7 +14,6 @@ class Graphe
     public:
         Graphe(string wd); // constructeur
         Node* dijkstras(string entree, string sortie, bool minChangement); //algo du plus court chemin
-        void reinitialiserNodes(); // réinitialise TOUS les Nodes (distance et previous) avant de relancer l'algorithme
     protected:
 
     private:
@@ -26,6 +25,7 @@ class Graphe
         int getIndiceFromNode(string identifiant, vector<Node*> les_noeuds); //renvoie l'emplacement d'un Node dans un vecteur de Nodes, à partir d'un idNode sélectionné
 
       // Les fonctions qui suivent concernent les differentes etapes de l'algorithme
+        void initialiserNodes(); // initialise TOUS les Nodes (distance et previous) (utile lorsqu'on relance l'algorithme)
         Node* extractSmallest(vector<Node*>& nodes, bool minChangement); // renvoie le noeud le plus proche en distance d'un certain noeud parmi un vecteur de noeud
         vector<Node*>* adjacentRemainingNodes(Node* node); // renvoie les noeuds adjacents d'un noeud qui n'ont pas été parcourus
         int calculerDistance(Node* node1, Node* node2, bool minChangement); // calculer la distance entre deux neouds

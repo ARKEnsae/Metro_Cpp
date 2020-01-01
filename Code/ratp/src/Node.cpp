@@ -38,7 +38,7 @@ void Node::setDistanceFromStart(int dist, bool min_itineraire){
         distanceFromStartCourtChemin = dist;
     }
 }
-void Node::reinitialiserNode(){
+void Node::initialiserNode(){
     distanceFromStartMinChangement = INT_MAX;
     distanceFromStartCourtChemin = INT_MAX;
     previous = NULL;

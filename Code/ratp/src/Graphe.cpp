@@ -117,6 +117,7 @@ vector<string> split(string str, string sep)
 }
 
 Node* Graphe::dijkstras(string entree, string sortie, bool min_itineraire){
+    this->initialiserNodes();
     //On crée une copie de nodes pour garder le vecteur en mémoire
     vector<Node*> nodes_algo;
     for (int i=0; i<nodes.size(); i++)
@@ -227,9 +228,9 @@ void Graphe::importerEdges(string chemin, string chemin_changement){
     fichier.close(); // relachement mémoire
 }
 
-void Graphe::reinitialiserNodes(){
+void Graphe::initialiserNodes(){
     for(int i=0; i<nodes.size(); ++i)
     {
-        nodes[i]->reinitialiserNode();
+        nodes[i]->initialiserNode();
     }
 }

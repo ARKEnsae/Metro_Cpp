@@ -13,7 +13,7 @@ class Node
         Node* previous; // le noeud de type previous sert dans l'algorithme de calcul de plus court chemin
         void setDistanceFromStart(int dist, bool minChangement); // change la distance de l'objet Node, càd la distance parcouru au sens de l'algorithme
         int getDistanceFromStart(bool minChangement); // récupère la distance de l'objet Node, càd la distance parcouru au sens de l'algorithme (depuis le point de départ)
-        void reinitialiserNode(); // réinitialise le Node (distance et previous) avant de relancer l'algorithme (depuis le point de départ)
+        void initialiserNode(); // réinitialise le Node (distance et previous) avant de relancer l'algorithme (depuis le point de départ)
     protected:
 
     private:

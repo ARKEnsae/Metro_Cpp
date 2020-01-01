@@ -10,9 +10,12 @@ using namespace std;
 int main()
 {
     // ATTENTION PENSER A CHANGER !
+    // Mettre le lien vers le dossier qui contient le dossier Data projet
     string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC"; // Kim
     //string project_directory = "W:/Bureau/ProjetCpp/ProjetC"; //Alain
-    bool activerCouleur = true; // A modifier à false si ordinateur non windows
+    bool activerCouleur = true; // A modifier à false si ordinateur non windows ou si l'on ne souhaite pas de couleur
+
+
 
     IHM menu(activerCouleur); // on crée un objet menu
     Metro metro; // on crée un objet metro
@@ -28,9 +31,7 @@ int main()
                                  metro); // On calcule l'itineraire le plus court en fonction de ce choix grâce à l'algo
     menu.afficherItineraire(itineraire_sortie); // On affiche l'itineraire
 
-
     while(menu.quitter()){ // tant qu'on ne quitte pas l'application
-        graphe.reinitialiserNodes(); // on reinitinalise les noeuds
         // et c'est reparti ! cf. ci-dessous pour la suite
         identifiants_depart_arrivee = menu.choixDepartArrivee(metro);
         minChangement = menu.choixTypeItineraire();
