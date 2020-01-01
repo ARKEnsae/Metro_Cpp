@@ -195,6 +195,7 @@ Une classe `IHM` a été créé pour gérer l'interface homme-machine. Il a 4 gr
 
 - temps d'attente/horaire/API temps réel
 
+- specialisaiton de l'algorithme
 
 
 
