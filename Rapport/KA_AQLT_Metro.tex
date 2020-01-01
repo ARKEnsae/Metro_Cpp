@@ -139,6 +139,16 @@ des lignes a été rajouté dans la section \ref{sec:lignes_metro}.
 \hypertarget{sec:pris_en_main}{%
 \section{Prise en main du programme}\label{sec:pris_en_main}}
 
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Changer le WD
+\item
+  Choisir si l'on veut mettre la couleur
+\item
+  Lancer le programme est se laisser guider.
+\end{enumerate}
+
 \hypertarget{sec:def_donnees}{%
 \section{Description des données}\label{sec:def_donnees}}
 
@@ -271,15 +281,15 @@ Plusieurs incohérences sur les trajets ont également étaient trouvées :
   fixée il pouvait y avoir au même horaire un départ d'un terminus pour
   une direction et du terminus opposé pour l'autre direction. Cela
   devrait normalement être impossible puisque la ``route'' permet
-  d'identifier la directement. Ce problème affecté les lignes 1, 4, 7,
-  7B et 13 : un travail manuel a donc été fait pour identifier
-  correctement les lignes aller et retour.
+  d'identifier la direction. Ce problème affecté les lignes 1, 4, 7, 7B
+  et 13 : un travail manuel a donc été fait pour identifier correctement
+  les lignes aller et retour.
 \item
   Certaines ``routes'' de la base de données n'existent pas en vrai.
   C'est le cas d'une des routes de la ligne 10 ``BOULOGNE - PONT DE
   SAINT CLOUD \textless{}-\textgreater{} GARE D'AUSTERLITZ) - Aller''
   qui partirait de l'arrêt Porte d'Auteuil pour ensuite aller à l'arrêt
-  Michel-Ange Molitor et continuer direction Gare D'austerlitz (alors
+  Michel-Ange Molitor et continuer direction Gare D'Austerlitz (alors
   que depuis Porte d'Auteuil la seule direction possible est Boulogne).
   Cette ``route'' n'a pas pas été considéré dans notre algorithme.
 \end{itemize}
@@ -320,17 +330,152 @@ les données dans le logiciel statistique \faRProject :
   \end{itemize}
 \end{itemize}
 
-L'ensemble de ces nouveaux fichiés sont stockés sous
+L'ensemble des fichiers utilisés dans l'implémentation C++ est
+disponible sous
 \url{https://github.com/AQLT/Metro_Cpp/tree/master/Data\%20projet}.
 
 \hypertarget{sec:desc_classes}{%
 \section{Description des classes}\label{sec:desc_classes}}
+
+Pour l'implémentation de ce projet C++, nous avons créé 8 classes qui
+peuvent être rassembler dans quatre groupes :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Les classes liées à la représentation des données. Il s'agit des
+  classes \texttt{Arret}, \texttt{Ligne} et \texttt{Metro}.
+\item
+  Les classes liées à l'algorithme du plus court chemin. Il s'agit des
+  classes \texttt{Node}, \texttt{Edge} et \texttt{Graphe}.
+\item
+  Une classe qui permet de faire le lien entre les données et
+  l'algorithme. Il s'agit de la classe \texttt{Itineraire}.
+\item
+  Une classe liée à l'interface avec l'utilisateur. Il s'agit de la
+  classe \texttt{IHM}.
+\end{enumerate}
+
+La figure XXXXX décrit les relations entre toutes ces classes. Plus
+d'informations sur les méthodes de chaque classes sont disponibles dans
+le code du projet.
+
+\hypertarget{classes-liuxe9es-au-stockage-des-donnuxe9es}{%
+\subsection{Classes liées au stockage des
+données}\label{classes-liuxe9es-au-stockage-des-donnuxe9es}}
+
+À partir des données décrites dans la section \ref{sec:def_donnees},
+nous avons créé quatre classes :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  La classe \texttt{Arret} est la classe qui représente un arrêt de
+  métro tel que définit dans la base de données de la RATP : il dépend
+  donc du numéro de la ligne ainsi que de la direction. Il y a donc par
+  exemple deux objets \texttt{Arret} associés à l'arrêt ``Gaîté'' (un
+  qui correspond à l'arrêt Gaîté sur la ligne 13 direction
+  Châtillon-Montrouge et un qui correspond à l'arrêt Gaîté sur la ligne
+  13 direction Saint-Denis/Les Courtilles) et quatre objets
+  \texttt{Arret} associés à l'arrêt Denfert-Rochereau (deux sur la ligne
+  4 et deux sur la ligne 5). Chaque arrêt peut être associé à un ou
+  plusieurs objets \texttt{Ligne}.
+\item
+  La classe \texttt{Ligne} représente un ensemble ordonné d'objets
+  \texttt{Arret} et définissent l'ensemble des arrêts d'une ligne et est
+  associé à une direction. Ainsi, pour la ligne 4 il y a deux objets
+  \texttt{Ligne} qui correspondent au chemin de la ligne 4 direction
+  Mairie de Montrouge et au chemin de la ligne 4 direction Porte de
+  Clignancourt. De la même façon pour la ligne 13 il y a quatre objets
+  \texttt{Ligne}.
+\item
+  La classe \texttt{Metro} est la classe qui synthétise le réseau : elle
+  contient l'ensemble des objets \texttt{Arret} et l'ensemble des objets
+  \texttt{Ligne}.
+\end{enumerate}
+
+\hypertarget{classes-liuxe9es-uxe0-lalgorithme-du-plus-court-chemin}{%
+\subsection{Classes liées à l'algorithme du plus court
+chemin}\label{classes-liuxe9es-uxe0-lalgorithme-du-plus-court-chemin}}
+
+Trois classes ont été créées pour effectuer l'algorithme de Dijkstra :
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  La classe \texttt{Node} est la classe qui représente un nœud. Chaque
+  nœud est associé à un identifiant (qui correspond à un identifiant
+  d'un \texttt{Arret}) et possède plusieurs paramètres qui seront
+  actualisés pendant l'algorithme de Dijkstra (voir section
+  \ref{sec:algo}).
+\item
+  La classe \texttt{Edge} est la classe qui représente un arc orienté.
+  C'est-à-dire qu'un \texttt{Edge} représente un lien entre un
+  \texttt{Node} 1 vers un \texttt{Node} avec la distance entre ces deux
+  objets. Cette distance correspond au temps de correspondances/temps de
+  trajet si l'on veut calculer l'itinéraire le plus court ou à la valeur
+  de l'indicatrice d'être sur la même ligne si l'on calculer
+  l'itinéraire avec le moins de changements.
+\item
+  La classe \texttt{Graphe} est la classe qui synthétise le réseau du
+  côté algorithmique : il contient l'ensemble des \texttt{Node} et des
+  \texttt{Edge} et permet de calculer le plus court chemin.
+\end{enumerate}
+
+\hypertarget{classe-faisant-le-lien-entre-lalgorithme-et-les-donnuxe9es.}{%
+\subsection{Classe faisant le lien entre l'algorithme et les
+données.}\label{classe-faisant-le-lien-entre-lalgorithme-et-les-donnuxe9es.}}
+
+La classe \texttt{Itineraire} permet de faire le lien entre les données
+et le résultat de l'algorithme du plus court chemin. Son constructeur
+utilise le \texttt{Node} d'arrivé et le \texttt{Metro} pour :
+
+\begin{itemize}
+\item
+  retracer l'ensemble des \texttt{Node} parcourus dans le plus court
+  chemin et en déduire l'ensemble des \texttt{Arret} parcourus pour
+  effectuer l'itinéraire ;
+\item
+  calculer le temps nécessaire pour effectuer le trajet.
+\end{itemize}
+
+Elle fournit également quelques fonctions pour faciliter l'affichage du
+résultat par l'\texttt{IHM}.
+
+\hypertarget{classe-liuxe9e-uxe0-linterface-homme-machine}{%
+\subsection{Classe liée à l'interface
+homme-machine}\label{classe-liuxe9e-uxe0-linterface-homme-machine}}
+
+Une classe \texttt{IHM} a été créé pour gérer l'interface homme-machine.
+Il a 4 grandes fonctionnalités :
+
+\begin{itemize}
+\item
+  \texttt{choixDepartArrivee()} qui, à partir d'un \texttt{Metro},
+  permet à l'utilisateur de choisir son point de départ et d'arrivée ;
+\item
+  \texttt{afficherItineraire()} qui, à partir d'un \texttt{Itineraire},
+  récupère les principales informations à afficher à l'utilisateur sur
+  son itinéraire ;
+\item
+  \texttt{choixTypeItineraire()} et \texttt{quitter()} qui permettent de
+  choisir son type d'itinéraire (plus court chemin ou le moins de
+  correspondances possibles) et de savoir si l'on quitte ou non
+  l'application.
+\end{itemize}
 
 \hypertarget{sec:algo}{%
 \section{Description de l'algorithme}\label{sec:algo}}
 
 \hypertarget{sec:amelioration}{%
 \section{Pistes d'amélioration}\label{sec:amelioration}}
+
+\begin{itemize}
+\item
+  export des matrices
+\item
+  temps d'attente/horaire/API temps réel
+\end{itemize}
 
 \hypertarget{sec:lignes_metro}{%
 \section{Lignes de métro}\label{sec:lignes_metro}}
