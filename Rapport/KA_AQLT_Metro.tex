@@ -149,6 +149,8 @@ des lignes a été rajouté dans la section \ref{sec:lignes_metro}.
   Lancer le programme est se laisser guider.
 \end{enumerate}
 
+\includegraphics{img/main.png}
+
 \hypertarget{sec:def_donnees}{%
 \section{Description des données}\label{sec:def_donnees}}
 
@@ -403,13 +405,13 @@ Trois classes ont été créées pour effectuer l'algorithme de Dijkstra :
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  La classe \texttt{Node} est la classe qui représente un nœud. Chaque
-  nœud est associé à un identifiant (qui correspond à un identifiant
+  La classe \texttt{Node} est la classe qui représente un sommet. Chaque
+  sommet est associé à un identifiant (qui correspond à un identifiant
   d'un \texttt{Arret}) et possède plusieurs paramètres qui seront
   actualisés pendant l'algorithme de Dijkstra (voir section
   \ref{sec:algo}).
 \item
-  La classe \texttt{Edge} est la classe qui représente un arc orienté.
+  La classe \texttt{Edge} est la classe qui représente une arête.
   C'est-à-dire qu'un \texttt{Edge} représente un lien entre un
   \texttt{Node} 1 vers un \texttt{Node} avec la distance entre ces deux
   objets. Cette distance correspond au temps de correspondances/temps de
@@ -475,6 +477,8 @@ Il a 4 grandes fonctionnalités :
   export des matrices
 \item
   temps d'attente/horaire/API temps réel
+\item
+  specialisaiton de l'algorithme
 \end{itemize}
 
 \hypertarget{sec:lignes_metro}{%

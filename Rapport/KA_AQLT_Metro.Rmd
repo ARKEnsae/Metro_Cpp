@@ -41,6 +41,8 @@ Pour mieux se retrouver dans le réseau parisien, le plan de l'ensemble des lign
 
 3. Lancer le programme est se laisser guider.
 
+![](img/main.png)
+
 
 # Description des données {#sec:def_donnees}
 
@@ -160,9 +162,9 @@ De la même façon pour la ligne 13 il y a quatre objets `Ligne`.
 
 Trois classes ont été créées pour effectuer l'algorithme de Dijkstra :
 
-1. La classe `Node` est la classe qui représente un nœud. Chaque nœud est associé à un identifiant (qui correspond à un identifiant d'un `Arret`) et possède plusieurs paramètres qui seront actualisés pendant l'algorithme de Dijkstra (voir section \ref{sec:algo}).
+1. La classe `Node` est la classe qui représente un sommet. Chaque sommet est associé à un identifiant (qui correspond à un identifiant d'un `Arret`) et possède plusieurs paramètres qui seront actualisés pendant l'algorithme de Dijkstra (voir section \ref{sec:algo}).
 
-2. La classe `Edge` est la classe qui représente un arc orienté. C'est-à-dire qu'un `Edge` représente un lien entre un `Node` 1 vers un `Node` avec la distance entre ces deux objets. Cette distance correspond au temps de correspondances/temps de trajet si l'on veut calculer l'itinéraire le plus court ou à la valeur de l'indicatrice d'être sur la même ligne si l'on calculer l'itinéraire avec le moins de changements.
+2. La classe `Edge` est la classe qui représente une arête. C'est-à-dire qu'un `Edge` représente un lien entre un `Node` 1 vers un `Node` avec la distance entre ces deux objets. Cette distance correspond au temps de correspondances/temps de trajet si l'on veut calculer l'itinéraire le plus court ou à la valeur de l'indicatrice d'être sur la même ligne si l'on calculer l'itinéraire avec le moins de changements.
 
 3. La classe `Graphe` est la classe qui synthétise le réseau du côté algorithmique : il contient l'ensemble des `Node` et des `Edge` et permet de calculer le plus court chemin.
 
