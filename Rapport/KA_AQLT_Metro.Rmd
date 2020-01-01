@@ -5,13 +5,18 @@ date: "07/01/2020 - 15h30 à 15h45"
 output: 
     pdf_document:
         number_sections: true
-        toc: true
+        toc: true 
+        fig_caption: true
+        keep_tex: true
 urlcolor: blue
 header-includes:
 - \usepackage{pdflscape}
 - \newcommand{\blandscape}{\begin{landscape}}
 - \newcommand{\elandscape}{\end{landscape}}
 - \usepackage{fontawesome5}
+- \usepackage{caption}
+lang: "french"
+classoption: 'french'
 ---
 
 ```{r setup, include=FALSE}
@@ -21,14 +26,16 @@ knitr::opts_chunk$set(echo = TRUE)
 # Introduction
 
 Ce rapport décrit le projet C++ de Kim Antunez et d'Alain Quartier-la-Tente dont l'objectif est de permettre à l'utilisateur d'obtenir un chemin entre deux stations de métro selon deux critères : le plus court chemin ou le chemin avec le moins de correspondances. 
-L'ensemble des données et des codes utilisés sont disponibles sous https://github.com/AQLT/ProjetC, la section \ref{sec:pris_en_main} décrivant comment prendre en main et utiliser l'application.
+L'ensemble des données et des codes utilisés sont disponibles sous https://github.com/AQLT/Metro_Cpp, la section \ref{sec:pris_en_main} décrivant comment prendre en main et utiliser l'application.
  Les données utilisées sont les données du métro parisien fournies par la RATP (section \ref{sec:def_donnees}), l'implémentation des classes est décrite dans la section \ref{sec:desc_classes}, l'algorithme utilisé pour calculer les chemins est l'algorithme de Dijkstra (section \ref{sec:algo}). 
 Enfin, les pistes d'amélioration sont décrites dans la partie \ref{sec:amelioration}.
 
-Pour mieux se retrouver dans le réseau parisien, le plan de l'ensemble des lignes a été rajouté dans la section \ref{sec:lignes_metro}
+Pour mieux se retrouver dans le réseau parisien, le plan de l'ensemble des lignes a été rajouté dans la section \ref{sec:lignes_metro}.
 
 
 # Prise en main du programme {#sec:pris_en_main}
+
+
 
 # Description des données {#sec:def_donnees}
 
@@ -42,7 +49,7 @@ Pour les données de la RATP sont disponibles sous deux formes d'archives :
 - Une archive avec des fichiers GTFS réparties par lignes ;  
 - Une archive avec des fichiers GTFS pour l'ensemble du réseau (métro, bus, tram et RER).
 
-C'est cette première archive que nous avons utilisé pour nous restreindre plus facilement aux données des lignes de métro uniquement. Nous avons stockés les données utilisées ici : https://github.com/AQLT/ProjetC/tree/master/Data.
+C'est cette première archive que nous avons utilisé pour nous restreindre plus facilement aux données des lignes de métro uniquement. Nous avons stockés les données utilisées ici : https://github.com/AQLT/Metro_Cpp/tree/master/Data.
 
 Pour chaque ligne, les données sont stockées dans différents fichiers :  
 
@@ -111,7 +118,7 @@ Pour simplifier le chargement des données en C++, nous avons pré-traité les d
 
     + `voisins.txt` : la coordonnée (i,j) correspond au temps nécessaire pour aller directement l'arrêt i à l'arrêt j (avec une valeur égale à -1 s'il n'y a pas de correspondance directe possible).
 
-L'ensemble de ces nouveaux fichiés sont stockés sous https://github.com/AQLT/ProjetC/tree/master/Data%20projet.
+L'ensemble de ces nouveaux fichiés sont stockés sous https://github.com/AQLT/Metro_Cpp/tree/master/Data%20projet.
 
 
 # Description des classes {#sec:desc_classes}
