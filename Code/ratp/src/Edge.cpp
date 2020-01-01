@@ -1,13 +1,13 @@
 #include "Edge.h"
 
-Edge::Edge(Node* node1, Node* node2, int distance, int distance_changement)
-        : node1(node1), node2(node2), distance(distance), distance_changement(distance_changement)
+Edge::Edge(Node* node1, Node* node2, int distanceCourtChemin, int distanceMinChangement)
+        : node1(node1), node2(node2), distanceCourtChemin(distanceCourtChemin), distanceMinChangement(distanceMinChangement)
 {
 
 }
 
-Edge::Edge()//NEW CONSTRUCTEUR KIM
-        : distance(0), distance_changement(0)
+Edge::Edge()
+        : distanceCourtChemin(0), distanceMinChangement(0)
     {
         Node* n1;
         node1 = n1;
@@ -22,20 +22,17 @@ Edge::~Edge()
 
 int Edge::getDistance(bool min_itineraire){
     if(min_itineraire){
-        return(distance_changement);
+        return(distanceMinChangement);
     }else{
-        return(distance);
+        return(distanceCourtChemin);
     }
 }
 
- bool Edge::Connects(Node* node1, Node* node2)
+ bool Edge::connects(Node* node1, Node* node2)
     {
         return (
                    (node1 == this->node1 &&
                     node2 == this->node2)
-                    //|| //dans le mauvais sens ?
-                   //(node1 == this->node2 &&
-                    //node2 == this->node1)
                 )
                     ;
     }

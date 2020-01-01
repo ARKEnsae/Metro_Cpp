@@ -8,18 +8,19 @@
 class IHM
 {
     public:
-        IHM(bool activerCouleur);
+        IHM(bool activerCouleur); //constructeur
         virtual ~IHM();
-        vector<string> choixItineraire(Metro metro);
-        bool choixTypeItineraire();
-        bool quitter();
-        void AfficherItineraire(Itineraire itineraire); //NEW
-        void colorerEcran(int code_couleur);
+        vector<string> choixDepartArrivee(Metro metro); // menu : choisir la station de départ et d'arrivee
+        bool choixTypeItineraire(); // menu : affiche le choix d'itineraire (entre plus court chemin et minimum de changement)
+        void afficherItineraire(Itineraire itineraire); //menu : affiche l'itinéraire en sortie d'algo
+        bool quitter(); // menu : quitte l'application
     protected:
 
     private:
-        HANDLE hConsole;
-        bool activerCouleur;
+        HANDLE hConsole; //objet de type HANDLE permettant de colorer la console sur windows
+        bool activerCouleur; //booleen qui vaut TRUE si on veut colorer la console (windows) et FALSE sinon
+        void colorerEcran(int code_couleur); // fonction qui colore l'écran
+
 };
 
 #endif // IHM_H

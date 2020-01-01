@@ -2,16 +2,16 @@
 #include <iostream>
 #include <sstream>
 
-#define INT_MAX 10000000
+#define INT_MAX 10000000 //La valeur que l'on donne à l'infini. Car en informatique, l'infini n'existe pas !
 
 Node::Node(string id)
-        : previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
+        : previous(NULL), distanceFromStartCourtChemin(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
     stringstream temp_id(id);
-    temp_id >> id_arret;
+    temp_id >> idNode;
 }
 Node::Node(int id)
-        : id_arret(id), previous(NULL), distanceFromStart(INT_MAX), distanceFromStartMinChangement(INT_MAX)
+        : idNode(id), previous(NULL), distanceFromStartCourtChemin(INT_MAX), distanceFromStartMinChangement(INT_MAX)
 {
 }
 
@@ -20,26 +20,26 @@ Node::~Node()
     //dtor
 }
 
-int Node::getId(){
-    return(id_arret);
+int Node::getIdNode(){
+    return(idNode);
 }
 
-int Node::getDistance(bool min_itineraire){
+int Node::getDistanceFromStart(bool min_itineraire){
     if(min_itineraire){
         return(distanceFromStartMinChangement);
     }else{
-        return(distanceFromStart);
+        return(distanceFromStartCourtChemin);
     }
 }
-void Node::setDistance(int dist, bool min_itineraire){
+void Node::setDistanceFromStart(int dist, bool min_itineraire){
     if(min_itineraire){
         distanceFromStartMinChangement = dist;
     }else{
-        distanceFromStart = dist;
+        distanceFromStartCourtChemin = dist;
     }
 }
-void Node::reinitialiseNode(){
+void Node::reinitialiserNode(){
     distanceFromStartMinChangement = INT_MAX;
-    distanceFromStart = INT_MAX;
+    distanceFromStartCourtChemin = INT_MAX;
     previous = NULL;
 }

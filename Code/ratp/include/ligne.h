@@ -11,24 +11,23 @@ class Arret;
 class Ligne
 {
     public:
-        Ligne(int route_id, string numero_ligne, string nom_trajet, string couleur);
-        Ligne(string route_id, string numero_ligne, string nom_trajet, string couleur);
+        Ligne(int idLigne, string numero_ligne, string nom_trajet, string couleur); // constructeur
+        Ligne(string idLigne, string numero_ligne, string nom_trajet, string couleur); // constructeur
         virtual ~Ligne();
-        void ajouteArret(Arret* arret);
-        int getId();
-        string getNumero();
-        string getNom();
-        string getCouleur();
-        string getDirection();
-        vector<Arret*> getArrets();
+        void setArretsLigne(Arret* arret); // agrémente arretsLigne
+        int getIdLigne(); // recupere idLigne
+        string getNumero(); // recupere numero
+        string getNom(); // recupere nom_trajet
+        string getCouleur(); // recupere couleur
+        string getDirection(); // recupere direction
+        vector<Arret*> getArretsLigne(); //recupere arretsLigne
     private:
-        vector<Arret*> liste_arrets;
-        int route_id;
-        //int numero_ligne;
-        string numero_ligne;
-        string nom_trajet;
-        string couleur;
-        string direction;
+        vector<Arret*> arretsLigne; // liste des arrets de la ligne
+        int idLigne; // identifiant de la ligne
+        string numero_ligne; // numéro de ligne (ex : ligne 13)
+        string nom_trajet; // nom du trajet ((CHATEAU DE VINCENNES <-> LA DEFENSE) - Retour)
+        string couleur; // couleur de la ligne (NON UTILISE et mal renseigné par la RATP)
+        string direction; // direction de la ligne, raccourci de nom_trajet adapté à l'algo (Ex LA DEFENSE)
 };
 
 #endif // LIGNE_H

@@ -38,7 +38,7 @@ void IHM::colorerEcran(int code_couleur){
 }
 
 
-vector<string> IHM::choixItineraire(Metro metro)
+vector<string> IHM::choixDepartArrivee(Metro metro)
 {
     colorerEcran(14); //jaune
     cout << "--------------------------------------------------" << endl;
@@ -53,7 +53,7 @@ vector<string> IHM::choixItineraire(Metro metro)
     vector<string> identifiants_depart_arrivee;
 
     vector<string> id_ligne;
-    vector<Ligne*> liste_lignes = metro.getLignes();
+    vector<Ligne*> liste_lignes = metro.getLignesMetro();
     for(int i = 0; i < liste_lignes.size(); ++i){
         id_ligne.push_back(liste_lignes[i]->getNumero());
     }
@@ -100,16 +100,16 @@ vector<string> IHM::choixItineraire(Metro metro)
         vector<Arret*> arrets_entree;
         for(int i=0; i < lignes_entree.size(); ++i)
         {
-            for(int j=0; j < lignes_entree[i]->getArrets().size(); ++j)
+            for(int j=0; j < lignes_entree[i]->getArretsLigne().size(); ++j)
             {
-                if (std::find(arrets_entree_libelles.begin(), arrets_entree_libelles.end(), lignes_entree[i]->getArrets()[j]->getNom()) != arrets_entree_libelles.end())
+                if (std::find(arrets_entree_libelles.begin(), arrets_entree_libelles.end(), lignes_entree[i]->getArretsLigne()[j]->getNom()) != arrets_entree_libelles.end())
                 {
 
                 }
                 else
                 {
-                    arrets_entree_libelles.push_back(lignes_entree[i]->getArrets()[j]->getNom());
-                    arrets_entree.push_back(lignes_entree[i]->getArrets()[j]);
+                    arrets_entree_libelles.push_back(lignes_entree[i]->getArretsLigne()[j]->getNom());
+                    arrets_entree.push_back(lignes_entree[i]->getArretsLigne()[j]);
                 }
             }
         }
@@ -130,7 +130,7 @@ vector<string> IHM::choixItineraire(Metro metro)
         colorerEcran(14); //jaune
         cin>>menu_arret_depart;
         colorerEcran(15); //blanc
-        while(cin.fail()){ //pour eviter bug si on entre une chqine de caracteres
+        while(cin.fail()){ //pour eviter bug si on entre une chaine de caracteres
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(),'\n');
             cout << "Choix incorrect, veuillez essayer de nouveau :" << endl;
@@ -147,7 +147,7 @@ vector<string> IHM::choixItineraire(Metro metro)
         colorerEcran(15); //blanc
         cout<<endl;
         stringstream ss;
-        ss << arrets_entree[menu_arret_depart]->getId();
+        ss << arrets_entree[menu_arret_depart]->getIdArret();
         string str = ss.str();
         identifiants_depart_arrivee.push_back(str);
     }
@@ -209,9 +209,6 @@ string conversion_secondes(int n)
 	    h,		/* h : le nombre d'heures */
 	    m;      /* m : le nombre de minutes */
     string result = "";
-	//printf("Donnez une durée en secondes : ");
-	//scanf("%d", &n);	/* la durée en seconde est entrée */
-
 	if (n>0){
 	r=n%3600;		/* on calcul le reste */
 	h=(n-r)/3600;
@@ -230,21 +227,14 @@ string conversion_secondes(int n)
 	}
 	else
 	printf("erreur");
-	 //temps_min = round(temps_min/60 * 100)/100;
 }
 
-void IHM::AfficherItineraire(Itineraire itineraire)
+void IHM::afficherItineraire(Itineraire itineraire)
 {
     vector<Arret*> it_simplifie = itineraire.creerItineraireSimplifie();
-    /*HANDLE  hConsole;
-    hConsole = GetStdHandle(STD_OUTPUT_HANDLE);*/
 
     vector<string> destination_s;
     vector<int> nb_arrets = itineraire.creerNbArretsSimplifie();
-    //int temps_min = CalculerTempsMin(it_simplifie);
-    //Node* destination = ;
-
-    //int temps_min = it_simplifie[it_simplifie.size()-1]->getDistance(false);
     int temps_min = itineraire.getTempsTotal();
 
     char buffer[100];
@@ -293,8 +283,10 @@ void IHM::AfficherItineraire(Itineraire itineraire)
         cout << " jusqu'a l'arret ";
     }
 
-    cout <<  it_simplifie[it_simplifie.size()-1]->getNom() <<
-        " (" << nb_arrets[it_simplifie.size()-1] << " arrets)" <<
+    colorerEcran(11); //orange
+    cout <<  it_simplifie[it_simplifie.size()-1]->getNom();
+    colorerEcran(15); //blanc
+    cout <<" (" << nb_arrets[it_simplifie.size()-1] << " arrets)" <<
         endl << endl;
 
 

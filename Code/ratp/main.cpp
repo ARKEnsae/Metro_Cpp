@@ -9,34 +9,37 @@ using namespace std;
 
 int main()
 {
-    //string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC";
-    string project_directory = "W:/Bureau/ProjetCpp/ProjetC";
-    bool activerCouleur = false;
+    // ATTENTION PENSER A CHANGER !
+    string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC"; // Kim
+    //string project_directory = "W:/Bureau/ProjetCpp/ProjetC"; //Alain
+    bool activerCouleur = true; // A modifier à false si ordinateur non windows
 
-    IHM menu(activerCouleur);
-    Metro metro;
-    metro.chargeDonnees(project_directory);
-    Graphe graphe(project_directory);
-    vector<string> identifiants_depart_arrivee = menu.choixItineraire(metro);
-    bool min_itineraire = menu.choixTypeItineraire();
-
+    IHM menu(activerCouleur); // on crée un objet menu
+    Metro metro; // on crée un objet metro
+    metro.importerDonnees(project_directory); // on importe les données
+    Graphe graphe(project_directory); // on crée un objet graphe
+    vector<string> identifiants_depart_arrivee = menu.choixDepartArrivee(metro);
+    // On affiche le menu de choix de la station de depart et d'arrivee et on récupère les 2 identifiants de stations
+    bool minChangement = menu.choixTypeItineraire(); // on affiche le menu de type d'itineraire (chemin le plus rapide
+                                                    // ou minimum de changements) et on récupère la réponse
     Itineraire itineraire_sortie(graphe.dijkstras(identifiants_depart_arrivee[0],
                                                   identifiants_depart_arrivee[1],
-                                                  min_itineraire),
-                                 metro);
-    menu.AfficherItineraire(itineraire_sortie);
+                                                  minChangement),
+                                 metro); // On calcule l'itineraire le plus court en fonction de ce choix grâce à l'algo
+    menu.afficherItineraire(itineraire_sortie); // On affiche l'itineraire
 
 
-    while(menu.quitter()){
-        graphe.reinitialiseNodes();
-        identifiants_depart_arrivee = menu.choixItineraire(metro);
-        min_itineraire = menu.choixTypeItineraire();
+    while(menu.quitter()){ // tant qu'on ne quitte pas l'application
+        graphe.reinitialiserNodes(); // on reinitinalise les noeuds
+        // et c'est reparti ! cf. ci-dessous pour la suite
+        identifiants_depart_arrivee = menu.choixDepartArrivee(metro);
+        minChangement = menu.choixTypeItineraire();
         Itineraire itineraire_sortie(graphe.dijkstras(identifiants_depart_arrivee[0],
                                                       identifiants_depart_arrivee[1],
-                                                      min_itineraire),
+                                                      minChangement),
                                      metro);
 
-        menu.AfficherItineraire(itineraire_sortie);
+        menu.afficherItineraire(itineraire_sortie);
     }
 
     return 0;

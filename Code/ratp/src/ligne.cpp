@@ -3,25 +3,23 @@
 #include <sstream>
 #include <string>
 
-Ligne::Ligne(int route_id, string numero_ligne, string nom_trajet, string couleur)
+Ligne::Ligne(int idLigne, string numero_ligne, string nom_trajet, string couleur)
 {
-    this->route_id = route_id;
+    this->idLigne = idLigne;
     this->numero_ligne = numero_ligne;
     this->nom_trajet = nom_trajet;
     this->couleur = couleur;
 }
-Ligne::Ligne(string route_id, string numero_ligne, string nom_trajet, string couleur)
+Ligne::Ligne(string idLigne, string numero_ligne, string nom_trajet, string couleur)
 {
-    stringstream temp_id(route_id);
-    temp_id >> this->route_id;
-    //stringstream temp_num(numero_ligne);
-    //temp_num >> this->numero_ligne;
+    stringstream temp_id(idLigne);
+    temp_id >> this->idLigne;
     this->numero_ligne = numero_ligne;
     this->nom_trajet = nom_trajet;
     this->couleur = couleur;
     size_t aller = nom_trajet.find("Aller");
     this->direction = nom_trajet;
-    if (aller!=std::string::npos){ // NEW ALAIN
+    if (aller!=std::string::npos){
         string direction = nom_trajet.substr(nom_trajet.find(" <->")+5, aller-4);
         direction = direction.substr(0, direction.find("Aller")-4);
         this->direction = direction;
@@ -35,11 +33,11 @@ Ligne::~Ligne()
 {
     //dtor
 }
- void Ligne::ajouteArret(Arret* arret){
-    liste_arrets.push_back(arret);
+ void Ligne::setArretsLigne(Arret* arret){
+    arretsLigne.push_back(arret);
 }
-int Ligne::getId(){
-    return(route_id);
+int Ligne::getIdLigne(){
+    return(idLigne);
 }
 string Ligne::getNumero(){
     return(numero_ligne);
@@ -53,7 +51,7 @@ string Ligne::getCouleur(){
 string Ligne::getDirection(){
     return(direction);
 }
-vector<Arret*> Ligne::getArrets(){
-    return(liste_arrets);
+vector<Arret*> Ligne::getArretsLigne(){
+    return(arretsLigne);
 }
 
