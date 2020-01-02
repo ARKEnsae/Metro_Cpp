@@ -643,7 +643,9 @@ Toutefois, l'algorithme fonctionne de la même façon dans ce cadre.
 \item
   Pour tous les sommets adjacents à ce sommet de départ, actualiser le
   distanceFromStart du sommet avec la valeur égale à la distance entre
-  le sommet de départ et ce sommet.
+  le sommet de départ et ce sommet. On note également par où on passe :
+  pour chaque sommet actualisé, on note la valeur du sommet précédent
+  (\textcolor{blue}{Node.previous} est ici égal au sommet de départ).
 \end{enumerate}
 
 \begin{center}
@@ -775,7 +777,7 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 \setcounter{enumi}{5}
 \tightlist
 \item
-  A chaque itération, identifier tout d'abord les voisins restant à
+  Àchaque itération, identifier tout d'abord les voisins restant à
   parcourir (\textcolor{orange}{adjacentRemainingNodes()}) et choisir le
   sommet non visité pour lequel la distanceFromStart est la plus petite
   (\textcolor{orange}{extractSmallest()}).
