@@ -10,10 +10,10 @@
 	<iostream>
 	"Ligne.h"
 
-1577922446 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
+1577961749 source:w:\bureau\projetcpp\projetc\code\ratp\main.cpp
 	<iostream>
 	<vector>
-	"metro.h"
+	"Metro.h"
 	"IHM.h"
 	"Graphe.h"
 
@@ -141,13 +141,13 @@
 	<iostream>
 	<sstream>
 
-1577922074 w:\bureau\projetcpp\projetc\code\ratp\include\ihm.h
+1577961773 w:\bureau\projetcpp\projetc\code\ratp\include\ihm.h
 	<iostream>
 	"Metro.h"
 	"Itineraire.h"
 	<windows.h>
 
-1577922074 source:w:\bureau\projetcpp\projetc\code\ratp\src\ihm.cpp
+1577961435 source:w:\bureau\projetcpp\projetc\code\ratp\src\ihm.cpp
 	"IHM.h"
 	<iostream>
 	<string>
@@ -161,7 +161,6 @@
 	"Metro.h"
 	"Ligne.h"
 	"itineraire.h"
-	<windows.h>
 
 1577919856 w:\documents\cplusplus\projet\projetc\code\ratp\include\ihm.h
 	<iostream>
@@ -192,7 +191,7 @@
 	"Edge.h"
 	"Metro.h"
 
-1577922466 source:w:\bureau\projetcpp\projetc\code\ratp\src\graphe.cpp
+1577959480 source:w:\bureau\projetcpp\projetc\code\ratp\src\graphe.cpp
 	"Graphe.h"
 	<vector>
 	<iostream>
@@ -205,7 +204,6 @@
 	"Node.h"
 	"Edge.h"
 	<math.h>
-	<windows.h>
 
 1577921432 w:\documents\cplusplus\projet\projetc\code\ratp\include\graphe.h
 	<vector>

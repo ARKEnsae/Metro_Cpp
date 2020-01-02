@@ -17,7 +17,9 @@ class IHM
     protected:
 
     private:
+#ifdef _WINDOWS_H
         HANDLE hConsole; //objet de type HANDLE permettant de colorer la console sur windows
+#endif
         bool activerCouleur; //booleen qui vaut TRUE si on veut colorer la console (windows) et FALSE sinon
         void colorerEcran(int code_couleur); // fonction qui colore l'écran
 

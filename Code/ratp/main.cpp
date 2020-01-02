@@ -13,9 +13,9 @@ int main()
     // Mettre le lien vers le dossier qui contient le dossier Data projet
     string project_directory = "W:/Documents/Cplusplus/Projet/ProjetC"; // Kim
     //string project_directory = "W:/Bureau/ProjetCpp/ProjetC"; //Alain
-    bool activerCouleur = true; // A modifier à false si ordinateur non windows ou si l'on ne souhaite pas de couleur
-
-
+    bool activerCouleur = true; //Pour activer la coloration syntaxique
+    // ATTENTION : si on n'utilise pas Windows, supprimer la ligne 6 du fichier
+    //   IHM.h contenant "#include <windows.h>"
 
     IHM menu(activerCouleur); // on crée un objet menu
     Metro metro; // on crée un objet metro

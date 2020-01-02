@@ -13,14 +13,16 @@
 #include "Metro.h"
 #include "Ligne.h"
 #include "itineraire.h"
-#include <windows.h> //couleurs palette
 
 
 IHM::IHM(bool activerCouleur)
 {
     this->activerCouleur = activerCouleur;
+    #ifdef _WINDOWS_H
     if (activerCouleur)
         this->hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    #endif
+
 }
 
 IHM::~IHM()
@@ -33,8 +35,10 @@ bool trier_arrets_alphabet(Arret* arret1, Arret* arret2) {
 }
 
 void IHM::colorerEcran(int code_couleur){
+    #ifdef _WINDOWS_H
     if (activerCouleur)
         SetConsoleTextAttribute(hConsole, code_couleur);
+    #endif
 }
 
 
