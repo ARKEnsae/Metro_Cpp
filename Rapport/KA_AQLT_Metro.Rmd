@@ -39,11 +39,11 @@ Pour mieux se retrouver dans le réseau parisien, et surtout tester la validité
 
 ## Prise en main 
 
-Afin de s'assurer que le programme tourne bien sur votre ordinateur. Veillez à effectuer les vérifications suivantes
+Afin de s'assurer que le programme tourne bien sur votre ordinateur. Veillez à effectuer les vérifications suivantes :
 
-1. Changer le répertoire de travail (`project_directory`)
+1. Changer le répertoire de travail (`project_directory`) : il doit s'agir du lien vers le dossier contenant le dossier `Data Projet`. Ainsi, si l'archive a été dézippée sous `D:/`, `project_directory` doit être égale à `D:/`
 
-2. Choisir si l'on veut mettre la couleur  (booléen `activerCouleur`). Cette fonctionnalité n'est opérationnelle que sur les ordinateurs Windows. 
+2. Choisir si l'on veut mettre la couleur  (booléen `activerCouleur`). Cette fonctionnalité n'est opérationnelle que sur les ordinateurs Windows car il nécessite le package `windows.h`. 
 
 3. Lancer le programme est se laisser guider 
 
