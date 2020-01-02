@@ -202,7 +202,7 @@ bool IHM::quitter(){
         return(menu_ligne == "1");
 }
 
-string conversion_secondes(int n)
+void conversion_secondes(int n)
 {
      float //n,		/* n : durée donnée en secondes */
 	    r,		/* r : le reste du modulo */

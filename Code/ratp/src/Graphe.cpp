@@ -10,7 +10,6 @@
 #include "Node.h"
 #include "Edge.h"
 #include <math.h>
-#include <windows.h> //couleurs palette
 
 Graphe::Graphe(string wd)
 {

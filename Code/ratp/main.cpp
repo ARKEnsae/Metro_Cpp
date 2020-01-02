@@ -1,6 +1,6 @@
 #include <iostream>
 #include <vector>
-#include "metro.h"
+#include "Metro.h"
 #include "IHM.h"
 #include "Graphe.h"
 
