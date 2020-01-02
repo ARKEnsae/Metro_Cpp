@@ -165,8 +165,7 @@ Pour l'implémentation de ce projet C++, nous avons créé huit classes qui pouv
 
 4. Une classe générant l'Interface Homme-Machine. Il s'agit de la classe `IHM`.
 
-<!--  Kim : demander a Alain de numéroter automatiquement figures --> 
-La figure 1 décrit les relations entre toutes ces classes.
+La figure \ref{fig:diag_classes} décrit les relations entre toutes ces classes.
 Elle reprend un certain nombre de conventions d'un diagramme de classe en UML. Comme par exemple :
 
 - Les objets de type public sont préfixés d'un "+" et de type privé d'un "-"
@@ -176,10 +175,7 @@ Sans pour autant respecter toutes ses normes. Comme par exemple :
 
 - Les constructeurs ne figurent pas sur ce schéma, à l'exception d'un des constructeurs d'Itineraire. 
 
-```{r, include=TRUE, fig.align="center", fig.cap=c("Liens entre les classes du projet"), echo=FALSE}
-knitr::include_graphics("./img/Diagramme_classes/diagramme_classes.pdf")
-```
-
+![Liens entre les classes du projet\label{fig:diag_classes}](img/Diagramme_classes/diagramme_classes.pdf)
 
 Des informations supplémentaires sur les méthodes mobilisées dans chaque classe sont disponibles dans le code du projet.
 
