@@ -81,6 +81,7 @@
 \usepackage{fontawesome5}
 \usepackage{caption}
 \usepackage{tikz}
+\usepackage[tikz]{bclogo}
 \usepackage{changepage}
 % https://github.com/rstudio/rmarkdown/issues/337
 \let\rmarkdownfootnote\footnote%
@@ -146,18 +147,26 @@ dans la section \ref{sec:lignes_metro}.
 \subsection{Prise en main}\label{prise-en-main}}
 
 Afin de s'assurer que le programme tourne bien sur votre ordinateur.
-Veillez à effectuer les vérifications suivantes
+Veillez à effectuer les vérifications suivantes :
 
 \begin{enumerate}
 \def\labelenumi{\arabic{enumi}.}
 \item
-  Changer le répertoire de travail (\texttt{project\_directory})
+  Changer le répertoire de travail (\texttt{project\_directory}) : il
+  doit s'agir du lien vers le dossier contenant le dossier
+  \texttt{Data\ Projet}. Ainsi, si l'archive a été dézippée sous
+  \texttt{D:/}, \texttt{project\_directory} doit être égale à
+  \texttt{D:/Metro\_Cpp}.
 \item
   Choisir si l'on veut mettre la couleur (booléen
-  \texttt{activerCouleur}). Cette fonctionnalité n'est opérationnelle
-  que sur les ordinateurs Windows.
+  \texttt{activerCouleur}).\\
+  \bcattention  \textbf{Attention} : la coloration de la console utilise
+  le package \texttt{windows.h} et n'est donc compatible que sous les
+  ordinateurs sous Windows. Dans le cas contraire, ouvrir le fichier
+  \texttt{IHM.h} et supprimer la ligne 6 contenant
+  \texttt{\#include\ \textless{}windows.h\textgreater{}}.
 \item
-  Lancer le programme est se laisser guider
+  Lancer le programme est se laisser guider.
 \end{enumerate}
 
 \includegraphics{img/main.png}
