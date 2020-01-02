@@ -1,0 +1,288 @@
+---
+title: "Itinéraire entre deux stations du métro parisien"
+subtitle: "Projet C++, Ensae"
+author: "Kim Antunez et Alain Quartier-la-Tente"
+division: "07/01/2020 - 15h30 à 15h45"
+departement: "Ensae --- 2019-2020"
+logo: "img/LOGO-ENSAE.png"
+automaticcontents: false
+output:
+    beamer_presentation:
+        template: template.tex
+        keep_tex: yes
+        theme: TorinoTh
+        slide_level: 3
+header-includes:
+- \usepackage{wrapfig}
+- \usepackage{booktabs}
+- \usepackage{longtable}
+- \usepackage{array}
+- \usepackage{multirow}
+- \usepackage[table]{xcolor}
+- \usepackage{wrapfig}
+- \usepackage{float}
+- \usepackage{colortbl}
+- \usepackage{pdflscape}
+- \usepackage{tabu}
+- \usepackage{threeparttable}
+- \usepackage{threeparttablex}
+- \usepackage[normalem]{ulem}
+- \usepackage{makecell}
+- \usepackage{animate}
+- \usepackage{fontawesome5}
+themeoptions: "coding=utf8,language=french"
+classoption: 'usepdftitle=false,french'
+fontsize: 10pt
+---
+
+
+### Sommaire
+
+\tableofcontents
+
+# Description des classes
+
+### Description des classes
+
+
+# Description de l'algorithme
+
+
+### Description de l'algorithme (1/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A) at (0,0) {};
+    \node (B) at (1,-3) {};
+    \node (C) at (3,-2) {};
+    \node (D) at (4,0) {};
+    \node (E) at (7,-3) {};
+    \node (F) at (9,-1) {} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+
+### Description de l'algorithme (2/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B) at (1,-3) {$\infty$};
+    \node (C) at (3,-2) {$\infty$};
+    \node (D) at (4,0) {$\infty$};
+    \node (E) at (7,-3) {$\infty$};
+    \node (F) at (9,-1) {$\infty$} ;
+\end{scope}
+
+\begin{scope}[every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+### Description de l'algorithme (3/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B) at (1,-3) {4};
+    \node (C) at (3,-2) {4};
+    \node (D) at (4,0) {$\infty$};
+    \node (E) at (7,-3) {$\infty$};
+    \node (F) at (9,-1) {$\infty$} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge[dashed] node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge[dashed] node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+
+### Description de l'algorithme (4/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
+    \node (C)[label distance=0.1cm, label={below:\small $4+2>4$}] at (3,-2) {4};
+    \node (D) at (4,0) {$\infty$};
+    \node (E) at (7,-3) {$\infty$};
+    \node (F) at (9,-1) {$\infty$} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge[dashed] node {$4$} (B);
+    \path  (B) edge[dashed] node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+
+### Description de l'algorithme (5/8)
+
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
+    \node (C)[white, thick,draw,fill=black] at (3,-2) {4};
+    \node (D)[label={[label distance=0.1cm]\small $4+3$}] at (4,0) {7};
+    \node (E)[label={[label distance=0.1cm]below:\small $4+5$}] at (7,-3) {5};
+    \node (F)[label={[label distance=0.1cm]right:\small $4+6$}] at (9,-1) {10} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge[dashed] node {$2$} (C);
+    \path  (A) edge[dashed] node {$4$} (C);
+    \path  (C) edge[dashed] node {$3$} (D);
+    \path  (C) edge[dashed] node {$1$} (E);
+    \path  (C) edge[dashed] node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+### Description de l'algorithme (6/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
+    \node (C)[white, thick,draw,fill=black] at (3,-2) {4};
+    \node (D) at (4,0) {7};
+    \node (E)[white, thick,draw,fill=black] at (7,-3) {5};
+    \node (F)[label={[label distance=0.1cm]right:\small $5+3<10$}] at (9,-1) {8} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge[dashed] node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge node {$2$} (F);
+    \path  (E) edge[dashed] node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+
+### Description de l'algorithme (7/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
+    \node (C)[white, thick,draw,fill=black] at (3,-2) {4};
+    \node (D)[white, thick,draw,fill=black] at (4,0) {7};
+    \node (E)[white, thick,draw,fill=black] at (7,-3) {5};
+    \node (F) at (9,-1) {8} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge[dashed] node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge node {$6$} (F);
+    \path  (D) edge[dashed] node {$2$} (F);
+    \path  (E) edge node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+### Description de l'algorithme (8/8)
+
+
+\begin{tikzpicture}
+\begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
+    \node (A)[white, thick,draw,fill=black] at (0,0) {0};
+    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
+    \node (C)[white, thick,draw,fill=black] at (3,-2) {4};
+    \node (D)[white, thick,draw,fill=black] at (4,0) {7};
+    \node (E)[white, thick,draw,fill=black] at (7,-3) {5};
+    \node (F)[white, thick,draw,fill=black] at (9,-1) {8} ;
+\end{scope}
+
+\begin{scope}[
+              every node/.style={fill=white,circle},
+              every edge/.style={draw=black,ultra thick}]
+    \path  (A) edge node {$4$} (B);
+    \path  (B) edge node {$2$} (C);
+    \path  (A) edge node {$4$} (C);
+    \path  (C) edge node {$3$} (D);
+    \path  (C) edge node {$1$} (E);
+    \path  (C) edge[dashed] node {$6$} (F);
+    \path  (D) edge[dashed] node {$2$} (F);
+    \path  (E) edge[dashed] node {$3$} (F);
+\end{scope}
+\end{tikzpicture}
+
+
+# Pistes d'amélioration
+
+### Pistes d'amélioration
+
+1. Améliorer le chargement des données
+
+2. Prendre en compte l'horaire (ajout des temps de passage dans `Edge`)
+
+3. Ajouter d'autres types d'itinéraires
+
+

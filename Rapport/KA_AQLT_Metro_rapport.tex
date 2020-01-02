@@ -162,7 +162,7 @@ Veillez à effectuer les vérifications suivantes sur le fichier
   Choisir si l'on veut mettre la couleur (booléen
   \texttt{activerCouleur}).\\
   \bcattention  \textbf{Attention} : la coloration de la console utilise
-  le package \texttt{windows.h} et n'est donc compatible que sous les
+  la librairie \texttt{windows.h} et n'est donc compatible que sous les
   ordinateurs sous Windows. Dans le cas contraire, ouvrir le fichier
   \texttt{IHM.h} et supprimer la ligne 6 contenant
   \texttt{\#include\ \textless{}windows.h\textgreater{}}.
@@ -333,7 +333,7 @@ les données via le logiciel statistique \faRProject :
 \begin{itemize}
 \tightlist
 \item
-  Pour chaque ``route'' nous avons créé un fichier avec :
+  Pour chaque ligne de métro nous avons créé un dossier avec :
 
   \begin{itemize}
   \item
@@ -343,10 +343,14 @@ les données via le logiciel statistique \faRProject :
       génère en effet des problèmes d'encodage, ce qui ne permet pas par
       exemple d'afficher correctement les caractères accentués.}.
   \item
-    L'ensemble des arrêts de manière ordonnée ainsi que le nom de la
-    route (permet de créer toutes les lignes, d'identifier les arrêts
-    traversés ainsi que l'ordre de passage). 
+    Un fichier par ``route'' contenant l'ensemble des arrêts de manière
+    ordonnée ainsi que le nom de la route (ce qui permet d'identifier
+    les arrêts traversés par une ligne ainsi que l'ordre de passage).
   \end{itemize}
+\end{itemize}
+
+\begin{itemize}
+\tightlist
 \item
   Deux matrices carrées ayant autant de colonnes et de lignes que
   d'identifiants d'arrêts :
@@ -391,8 +395,8 @@ classe en UML. Comme par exemple :
 \begin{itemize}
 \tightlist
 \item
-  Les objets de type public sont préfixés d'un ``+'' et de type privé
-  d'un ``-''
+  Les objets de type public sont préfixés d'un ``+'' et ceux de type
+  privé d'un ``-''
 \end{itemize}
 
 Sans pour autant respecter toutes ses normes. Comme par exemple :
@@ -404,10 +408,14 @@ Sans pour autant respecter toutes ses normes. Comme par exemple :
   des constructeurs d'Itineraire.
 \end{itemize}
 
-\begin{figure}
-\centering
-\includegraphics{img/Diagramme_classes/diagramme_classes.pdf}
-\caption{Liens entre les classes du projet\label{fig:diag_classes}}
+\begin{figure}[h]
+\includegraphics{img/Diagramme_classes/diagramme_classes.pdf} 
+\captionsetup{margin=0cm,format=hang,justification=justified}
+\caption{Liens entre les classes du projet}\label{fig:diag_classes}
+
+ \footnotesize
+Note de lecture : Les objets de type public sont préfixés d'un "+" et ceux de type privé d'un "-". 
+Les constructeurs ne figurent pas sur ce schéma, à l'exception d'un des constructeurs d'Itineraire. 
 \end{figure}
 
 Des informations supplémentaires sur les méthodes mobilisées dans chaque
@@ -682,7 +690,7 @@ Toutefois, l'algorithme fonctionne de la même façon dans ce cadre.
   sommet précédent » et le « sommet voisin » (dist =
   \textcolor{orange}{calculerDistance()}). Si l'ancienne
   distanceFromStart associée au « sommet voisin » est supérieure à «
-  dist » alors on la modifie à « dist ». On passe ensuite au nœud
+  dist » alors on la modifie à « dist ». On passe ensuite au sommet
   suivant.
 \end{enumerate}
 
@@ -758,7 +766,7 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 
 \begin{adjustwidth}{50pt}{50pt}
 \begin{center}
-\emph{Ici, on calcule par exemple les distanceFromStart de tous les voisins du nœud central non parcourus.}
+\emph{Ici, on calcule par exemple les distanceFromStart de tous les voisins du sommet central non parcourus.}
 \end{center}
 \end{adjustwidth}
 
@@ -850,9 +858,12 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 \tightlist
 \item
   Enregistrer les chemins parcourus à chaque étape et répéter jusqu'à ce
-  que toutes les arêtes soient visitées. Il est alors possible en
-  choisissant un sommet d'arrivée de retracer le chemin le plus court à
-  parcourir et les distances parcourus entre chaque sommet.
+  que toutes les arêtes soient visitées \footnote{On pourrait
+    spécialiser l'algorithme en arrêtant de parcourir le graphe une fois
+    le sommet d'arrivée atteint. En revanche, le temps de calcul étant
+    relativement faible le gain serait limité.}. Il est alors possible
+  en choisissant un sommet d'arrivée de retracer le chemin le plus court
+  à parcourir et les distances parcourus entre chaque sommet.
 \end{enumerate}
 
 \begin{center}
@@ -883,7 +894,7 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 
 \begin{adjustwidth}{50pt}{50pt}
 \begin{center}
-\emph{L’algorithme se termine : tous les noeuds sont parcourus.}
+\emph{L’algorithme se termine : tous les sommets sont parcourus.}
 \end{center}
 \end{adjustwidth}
 
@@ -898,19 +909,66 @@ négligeable.
 \hypertarget{sec:amelioration}{%
 \section{Pistes d'amélioration}\label{sec:amelioration}}
 
+Plusieurs points peuvent être améliorés :
+
 \begin{itemize}
 \item
-  export des matrices
+  Le format matriciel utilisé pour stocker les temps de correspondances
+  et de trajet n'est pas optimal puisque cela oblige à lire les
+  informations sur tous les sommets non reliés entre eux et à parcourir
+  deux fois la matrice pour charger les deux types de distance. Le temps
+  de chargement des données pourrait être amélioré de façon conséquente
+  en créant un fichier dont chaque ligne contient deux identifiants
+  d'arrêts et les distances pour le chemin le plus court et le chemin
+  avec le moins de changement.
 \item
-  temps d'attente/horaire/API temps réel
+  Nous n'avons pas pris en compte l'horaire dans notre projet. C'est par
+  exemple ce qui explique que nous n'avons pas intégré les lignes de
+  RER. Une façon de gérer l'heure (et la date) serait de rajouter dans
+  la classe \texttt{Edge} un vecteur contenant l'ensemble des horaires
+  de passage. Pendant la mise à jour des distances des \texttt{Node} de
+  l'algorithme, il faut alors :
+
+  \begin{enumerate}
+  \def\labelenumi{\arabic{enumi}.}
+  \item
+    mettre à jour la valeur de \textcolor{blue}{Node.distanceFromStart}
+    comme étant égale à la somme entre le temps de correspondance et la
+    différence entre l'horaire du prochain passage et l'horaire actuelle
+    ;
+  \item
+    incrémenter l'horaire actuelle de cette somme.
+  \end{enumerate}
 \item
-  specialisaiton de l'algorithme
+  Lorsque deux itinéraires ont un temps de trajet ``proche'' (par
+  exemple dont le temps de trajet est inférieur à 2 minutes), on
+  pourrait afficher les deux possibilités.
+\end{itemize}
+
+D'autres informations pourraient être utilisées pour proposer d'autres
+fonctionnalités. Par exemples les coordonnées GPS (disponibles dans la
+classe \texttt{Arret}) pourraient être utilisées pour :
+
+\begin{itemize}
+\item
+  Calculer l'itinéraire en prenant en compte le temps de marche
+  nécessaire pour aller au plus proche métro.
+\item
+  Prendre en compte le réseau de bus.
+\item
+  Ajouter d'autres types d'itinéraires comme le calcul d'un itinéraire
+  en passant par des toilettes publiques de la RATP :
+  \url{https://dataratp.opendatasoft.com/explore/dataset/sanitaires-reseau-ratp}.
 \end{itemize}
 
 \hypertarget{sec:lignes_metro}{%
 \section{Lignes de métro}\label{sec:lignes_metro}}
 
+\begin{figure}
+\centering
 \includegraphics{img/plan_lignes/Plan-Metro.pdf}
+\caption{Plan général du réseau de transport parisien (hors bus)}
+\end{figure}
 
 \newpage
 \begin{landscape}
