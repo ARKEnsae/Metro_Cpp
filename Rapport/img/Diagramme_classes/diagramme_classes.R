@@ -6,6 +6,8 @@
 
 rm(list=ls())
 
+library(DiagrammeR)
+
 library(datamodelr)
 
 tables <- data.frame("table" = c("Graphe","Ligne","Arret","Metro","IHM","Itineraire","Edge","Node"),
@@ -223,7 +225,7 @@ stringsAsFactors = FALSE
 
 columns <- rbind(Graphe,Metro,IHM,Itineraire,Edge,Node,Ligne,Arret)
 #columns <- rbind(Itineraire)
-rm(Graphe,Metro,IHM,Itineraire,Edge,Node,Ligne,Arret)
+#rm(Graphe,Metro,IHM,Itineraire,Edge,Node,Ligne,Arret)
 
 #references = NULL
 references <- data.frame("table" = c("Ligne","Arret","Node","Ligne","Arret","Node","Edge","Metro","Arret","Node","Metro","Itineraire"),
@@ -240,6 +242,33 @@ dm_f <- list(tables = tables,columns = columns, references = references)
 attr(dm_f,"class") <- c("data_model","list")
 
 graph <- dm_create_graph(dm_f, rankdir = "BT", col_attr = c("column", "type"))
+
 dm_render_graph(graph)
 
-dm_export_graph(graph, file_name = "Rapport/img/Diagramme_classes/diagramme_classes.svg",width = NULL,height = NULL)
+###### créer mini_graphe
+
+IHM <- IHM[1:2,]
+Itineraire <- Itineraire[1:2,]
+Ligne <- Ligne[1:6,]
+Edge <- Edge[1:4,]
+Graphe <- Graphe[1:2,]
+Metro <- Metro[1:2,]
+Arret <- Arret[1:6,]
+Node <- Node[1:4,]
+
+columns <- rbind(Graphe,Metro,IHM,Itineraire,Edge,Node,Ligne,Arret)
+rm(Graphe,Metro,IHM,Itineraire,Edge,Node,Ligne,Arret)
+
+dm_f_mini <- list(tables = tables,columns = columns, references = references)
+
+attr(dm_f_mini,"class") <- c("data_model","list")
+
+graph_mini <- dm_create_graph(dm_f_mini, rankdir = "BT", col_attr = c("column", "type"))
+
+
+dm_render_graph(graph_mini)
+
+
+# Mauvaise taille de police
+# dm_export_graph(graph, file_name = "Rapport/img/Diagramme_classes/diagramme_classes.pdf",width = NULL,height = NULL)
+

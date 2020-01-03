@@ -1,0 +1,21 @@
+\frametitle{Pistes d’amélioration}
+\protect\hypertarget{pistes-damuxe9lioration-1}{}
+
+\begin{enumerate}
+[1.]
+\item
+  Améliorer le chargement des données
+\item
+  Prendre en compte l’horaire des métros (ajout des temps de passage
+  dans \texttt{Edge})
+\item
+  Prendre en compte le réseau de bus, de RER et de tramways, le temps de
+  marche entre deux stations\ldots{}
+\item
+  Proposer plusieurs itinéraires quand ceux-ci ont un temps de trajet
+  proche
+\item
+  Ajouter d’autres types d’itinéraires : accessibles aux personnes en
+  situation de handicap, passant par des toilettes publiques \ldots{}
+\end{enumerate}
+

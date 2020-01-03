@@ -2,23 +2,17 @@
 title: "Itinéraire entre deux stations du métro parisien"
 author: "Kim Antunez et Alain Quartier-la-Tente"
 date: "07/01/2020 - 15h30 à 15h45"
+logo: "img/LOGO-ENSAE_avatar.png"
 output: 
     pdf_document:
         number_sections: true
         toc: true 
         fig_caption: true
         keep_tex: true
+        includes:
+            in_header: header.tex
+            before_body: body.tex
 urlcolor: blue
-header-includes:
-- \usepackage{pdflscape}
-- \newcommand{\blandscape}{\begin{landscape}}
-- \newcommand{\elandscape}{\end{landscape}}
-- \usepackage{fontawesome5}
-- \usepackage{caption}
-- \usepackage{tikz}
-- \usepackage[tikz]{bclogo}
-- \usepackage{changepage}
-
 lang: "french"
 classoption: 'french'
 ---
@@ -27,12 +21,13 @@ classoption: 'french'
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
 # Introduction
 
 Ce rapport décrit le projet C++ de Kim Antunez et d'Alain Quartier-la-Tente (Ensae, 2A) dont l'objectif est de permettre à l'utilisateur d'obtenir un itinéraire entre deux stations de métro selon deux critères : le plus court chemin ou le chemin avec le moins de correspondances. 
 L'ensemble des données et des codes utilisés sont disponibles sous https://github.com/AQLT/Metro_Cpp, la section \ref{sec:le_programme} décrivant comment utiliser l'application.
  Les données utilisées sont les données du métro parisien fournies par la RATP (section \ref{sec:def_donnees}), l'implémentation des classes est décrite dans la section \ref{sec:desc_classes}, l'algorithme utilisé pour calculer les chemins est l'algorithme de Dijkstra (section \ref{sec:algo}). 
-Enfin, les pistes d'amélioration sont décrites dans la partie \ref{sec:amelioration}.
+Enfin, une conclusion et quelques pistes d'amélioration sont décrites dans la partie \ref{sec:amelioration}.
 
 Pour mieux se retrouver dans le réseau parisien, et surtout tester la validité de l'algorithme, le plan de l'ensemble des lignes a été rajouté dans la section \ref{sec:lignes_metro}.
 
@@ -40,19 +35,66 @@ Pour mieux se retrouver dans le réseau parisien, et surtout tester la validité
 
 ## Prise en main 
 
-Afin de s'assurer que le programme tourne bien sur votre ordinateur. Veillez à effectuer les vérifications suivantes sur le fichier `main.cpp` :
+Afin de s'assurer que le programme tourne bien sur votre ordinateur, veillez à effectuer les vérifications suivantes dans le fichier `main.cpp` :
 
-1. Changer le répertoire de travail (`project_directory`) : il doit s'agir du lien vers le dossier contenant le dossier `Data Projet`. Ainsi, si l'archive a été dézippée sous `D:/`, `project_directory` doit être égale à `D:/Metro_Cpp`.
+1. Changer le répertoire de travail (`project_directory`) : il doit s'agir du lien vers le dossier contenant notamment le dossier `Data Projet`. Ainsi, si l'archive a été dézippée sous `D:/`, `project_directory` doit être égale à `D:/Metro_Cpp`.
 
-2. Choisir si l'on veut mettre la couleur  (booléen `activerCouleur`).   
+2. Choisir si l'on veut mettre de la couleur dans l'interface (booléen `activerCouleur`).   
 \bcattention 
-**Attention** : la coloration de la console utilise la librairie `windows.h` et n'est donc compatible que sous les ordinateurs sous Windows. Dans le cas contraire, ouvrir le fichier `IHM.h` et supprimer la ligne 6 contenant `#include <windows.h>`. 
+**Attention** : la coloration de la console utilise la librairie `windows.h` et n'est donc compatible qu'avec les ordinateurs sous Windows. Si vous utilisez un autre système d'exploitation, ouvrez le fichier `IHM.h` et supprimer la ligne 6 contenant `#include <windows.h>`. 
 
 3. Lancer le programme est se laisser guider.
 
 ![](img/main.png)
 
 ## Démonstration
+
+
+Nous cherchons ici à calculer l'itinéraire le plus court entre la station de métro **Gabriel-Péri** (sur la **ligne 13**) et la station **Château de Vincennes** (sur la **ligne 1**). Le résultat (critère du plus court chemin et du moins de correspondances) est illustré en figure \ref{fig:deux_itineraires}.
+
+Pour cela, il suffit de se laisser guider par le menu en indiquant tout d'abord dans la console le numéro (parfois suivi de "B" pour les lignes bis) de la ligne de la station de départ, puis le code du menu qui correspond au nom de la station. 
+Il faut ensuite refaire les mêmes actions pour le choix de la station d'arrivée. 
+
+![](img/menu/menu12.png)
+
+Il est ensuite possible de choisir le **type d'itinéraire** souhaité.
+Nous choisissons ici le **chemin le plus rapide**.
+
+La console nous indique donc le chemin le plus court. 
+
+![](img/menu/menu3.png)
+
+
+\begin{quote}
+\Huge\textbf{``}\normalsize
+\emph{À Gabriel-Péri, prendre la ligne 13 direction Châtillon-Montrouge jusqu’à l’arrêt Saint-Lazare (7 arrêts), puis prendre la ligne 14 direction Olympiades jusqu’à l’arrêt Gare de Lyon (4 arrêts), puis prendre la ligne 1 direction Château de Vincennes jusqu’à l’arrêt Château de Vincennes (15 arrêts).}
+\begin{flushright}
+\Huge\textbf{''}\normalsize
+\end{flushright}
+\end{quote}
+Si l'on change le **type d'itinéraire** en choisissant le **chemin avec le minimum de correspondances**, on obtient l'itinéraire suivant. 
+
+
+![](img/menu/menu4.png)
+
+
+\begin{quote}
+\Huge\textbf{``}\normalsize
+\emph{À Gabriel-Péri, prendre la ligne 13 direction Châtillon-Montrouge jusqu’à l’arrêt Champs-Elysées-Clémenceau (9 arrêts), puis prendre la ligne 1 direction Château de Vincennes jusqu’à l’arrêt Château de Vincennes (15 arrêts).}
+\begin{flushright}
+\Huge\textbf{''}\normalsize
+\end{flushright}
+\end{quote}
+
+<!--left bottom right top -->
+\begin{figure}
+\includegraphics[trim = 260px 330px 90px 160px, clip]{img/plan_lignes/Plan-Metro_algo21.pdf}
+\captionsetup{margin=0cm,format=hang,justification=justified}
+\caption{Itinéraires de Gabriel-Péri à Château de Vincennes}\label{fig:deux_itineraires}
+
+ \footnotesize
+Note de lecture : Le chemin le plus court est représenté en \textcolor[HTML]{DB0ADE}{rose} et celui avec le minimum de changements en \textcolor[HTML]{1C14D9}{bleu}. 
+\end{figure}
 
 
 # Description des données {#sec:def_donnees}
@@ -62,9 +104,9 @@ Afin de s'assurer que le programme tourne bien sur votre ordinateur. Veillez à 
 Toutes les données utilisées dans ce projet sont issues de la RATP, plus précisément de la base `offre-transport-de-la-ratp-format-gtfs` (https://dataratp.opendatasoft.com/explore/dataset/offre-transport-de-la-ratp-format-gtfs/information/). 
 Ces données sont au format *General Transit Feed Specification* (GTFS) qui est un format standardisé pour diffuser des données relatives aux réseaux de transport en commun (horaires, informations géographiques, etc.). 
 
-Pour les données de la RATP sont disponibles sous deux formes d'archives : 
+Deux archives de données de la RATP sont mises à disposition :
 
-- Une archive avec des fichiers GTFS réparties par lignes ;  
+- Une archive avec des fichiers GTFS répartis par lignes ;  
 - Une archive avec des fichiers GTFS pour l'ensemble du réseau (métro, bus, tram et RER).
 
 C'est la première archive que nous avons utilisée.
@@ -76,11 +118,11 @@ Chaque ligne de métro est associée à un dossier qui contient des données sto
 1. `routes.txt` : définit les itinéraires des transports en commun 
 $\rightarrow$ données **utilisées** avec le fichier `trips.txt` pour identifier l'ordre de passage à chaque arrêt pour les lignes aller et retour. 
 
-2. `stops.txt` : définit l'ensemble des arrêts où les usages peuvent monter ou descendre, avec le nom de l'arrêt, l'adresse et les coordonnées GPS 
+2. `stops.txt` : définit l'ensemble des arrêts où les usagers peuvent monter ou descendre, avec le nom de l'arrêt, l'adresse et les coordonnées GPS 
 $\rightarrow$ données **utilisées** dans ce projet pour définir l'ensemble des arrêts.
 
 3. `stop_times.txt` : définit, pour chaque trajet et pour chaque arrêt, les heures d'arrivée et de départ du métro 
-$\rightarrow$ données **utilisées** avec le fichier `trip.txt` pour connaître le temps de trajet entre deux stations de la même ligne. 
+$\rightarrow$ données **utilisées** avec le fichier `trip.txt` pour connaître le temps de trajet entre deux stations d'une même ligne. 
 
 4. `transfers.txt` : définit les règles de liaison aux pôles de correspondance entre des itinéraires 
 $\rightarrow$ données **utilisées** dans ce projet pour connaître les correspondances et les temps de correspondance entre les lignes.
@@ -103,63 +145,50 @@ Plus d'informations sur les données GTFS sont disponibles sur le site de Google
 
 ## Difficultés et solutions adoptées
 
-Chaque arrêt est défini par une identifiant unique.
-Cet identifiant est différent pour chaque ligne et pour chaque route (aller et retour) sans qu'aucune durée de correspondance n'ait été définie dans les données. 
+Chaque arrêt est défini par un identifiant unique.
+Cet identifiant est différent pour chaque ligne et pour chaque route (aller et retour). 
 Certains itinéraires étaient donc impossibles à calculer avec l'utilisation de ces seules données brutes.
 Par exemple, si l'on est à l'arrêt de métro Gaîté sur la ligne 13 direction Châtillon-Montrouge on ne peut pas rejoindre l'arrêt Montparnasse car la ligne est orientée dans la "mauvaise direction".
-$\rightarrow$ **Solution adoptée** : ajouter un temps de transfert égal à 0 permettant de passer d'un arrêt d'une ligne aller à ce même arrêt (même nom) de la ligne retour, et inversement. 
+
+$\rightarrow$ **Solution adoptée** : ajouter un temps de transfert égal à 0 permettant de passer d'un arrêt d'une ligne aller à ce même arrêt (même nom) de la ligne retour, et inversement. 
 Ainsi, le temps de transfert est nul pour passer de l'arrêt de métro Gaîté sur la ligne 13 direction Châtillon-Montrouge à l'arrêt de métro Gaîté sur la ligne 13 direction Saint-Denis/Les Courtilles. 
-<!-- Kim : rediscuter des limites avec Alain --> 
-En revanche cela rend le calcul du temps de trajet moins fiable pour deux raisons :
 
-1. Le temps de transfert entre deux lignes n'est pas le même en fonction de la direction que l'on prend. 
-
-2. Pour réaliser certains itinéraires, il est nécessaire de changer de direction tout en restant sur la même ligne (par exemple sur la ligne 13 passer de Guy Môquet à Brochant il faut aller jusqu'à l'arrêt La Fourche et changer de direction). 
-<!-- Fin : Kim : rediscuter des limites avec Alain --> 
+Toutefois, même avec cette correction des données, des limites concernant les temps de transfert subsistent. Par exemple, pour réaliser certains itinéraires, il est nécessaire de changer de direction tout en restant sur la même ligne (par exemple sur la ligne 13 passer de Guy Môquet à Brochant il faut aller jusqu'à l'arrêt La Fourche et changer de direction). 
 
 Puisque nous avons fait le choix de ne pas tenir compte du temps d'attente moyen d'un métro, **le temps de trajet prévu pour chaque itinéraire est sous-estimé**.
 
 Cette façon de numéroter les arrêts implique que certains arrêts ne sont associés qu'à une ligne (aller ou retour) alors que d'autres sont associés à deux lignes (par exemple sur la ligne 13 qui contient 2 lignes aller ou 2 lignes retour).
 
-Plusieurs incohérences ont également été trouvées dans les données qui concernent les trajets :
+Plusieurs incohérences ont également été corrigées dans les données :
 
-<!-- Kim : pas compris --> 
 -  Le fichier `routes.txt` ne permettait pas toujours de bien identifier les lignes aller et retour. 
-En effet, pour certaines lignes de métro, pour le même identifiant de "trip" et pour une "route" fixée, il pouvait y avoir au même horaire un départ d'un terminus pour une direction et du terminus opposé pour l'autre direction. 
+En effet, pour certaines "routes" (par exemple : ligne 13 de Châtillon-Montrouge à Saint-Denis/Les Courtilles), certains départs étaient identifiés comme partant du terminus opposé. 
 Cela devrait normalement être impossible puisque la "route" permet d'identifier la direction. 
-Ce problème affecte les lignes 1, 4, 7, 7B et 13 : un travail manuel sur les bases de données a donc été réalisé pour identifier correctement les lignes aller et retour.  
-<!-- Fin : Kim : pas compris --> 
+Ce problème affecte les lignes 1, 4, 7, 7B et 13 : un travail manuel sur les bases de données a donc été réalisé pour identifier correctement les lignes aller et retour. 
 
 - Certaines "routes" de la base de données ne correspondent pas à la réalité du réseau du métro parisien. C'est le cas d'une des routes de la ligne 10 "BOULOGNE - PONT DE SAINT CLOUD <-> GARE D'AUSTERLITZ) - Aller" qui partirait de l'arrêt Porte d'Auteuil pour ensuite aller à l'arrêt Michel-Ange Molitor et continuer direction Gare D'Austerlitz (alors que depuis Porte d'Auteuil la seule direction possible est Boulogne). Cette "route" n'a alors pas été considérée dans notre algorithme.
 
 Pour simplifier le chargement des données en C++, nous avons pré-traité les données via le logiciel statistique \faRProject :
 
-
-<!-- Kim : pas compris --> 
-
 - Pour chaque ligne de métro nous avons créé un dossier avec :  
-    + Le fichier `stops.txt` dans lequel nous avons enlevé les accents (permet de créer l'ensemble des arrêts) ;
-^[le logiciel Code::Blocks utilisé sur les postes Windows de l'Ensae génère en effet des problèmes d'encodage, ce qui ne permet pas par exemple d'afficher correctement les caractères accentués.].
-    
-    + Un fichier par "route" contenant l'ensemble des arrêts de manière ordonnée ainsi que le nom de la route (ce qui permet d'identifier les arrêts traversés par une ligne ainsi que l'ordre de passage).
-    
-<!-- Fin : Kim : pas compris --> 
+    + Le fichier `stops.txt` dans lequel nous avons enlevé les accents (permet de créer l'ensemble des arrêts)^[le logiciel Code::Blocks utilisé sur les postes Windows de l'Ensae génère en effet des problèmes d'encodage, ce qui ne permet pas par exemple d'afficher correctement les caractères accentués.] ;
 
+    
+    + Un fichier par "route" contenant l'ensemble des arrêts de manière ordonnée ainsi que le nom de la route (Ex : CHATEAU DE VINCENNES <-> LA DEFENSE - Aller) , ce qui permet d'identifier les arrêts traversés par une ligne ainsi que l'ordre de passage. 
+    
 - Deux matrices carrées ayant autant de colonnes et de lignes que d'identifiants d'arrêts :
 
-<!-- Kim : revoir --> 
-    + `voisins_type.txt` : la coordonnée (i,j) vaut -1 si les deux arrêts ne sont pas directement connectés, 0 si les deux arrêts en fait "les mêmes" (i.e. : ce sont des arrêts qui ont le même nom et le même numéro de ligne, cf. plus haut)  et 1 si les deux arrêts sont connectés mais sur deux lignes différentes (par exemple entre la ligne 4 et la ligne 13 à l'arrêt Montparnasse).
+    * `voisins_type.txt` : la coordonnée (i,j) vaut -1 si les deux arrêts ne sont pas directement connectés, 0 si les deux arrêts sont voisins et sur une même ligne et 1 si les deux arrêts sont connectés mais sur deux lignes différentes (par exemple entre la ligne 4 et la ligne 13 à l'arrêt Montparnasse).
 
-    + `voisins.txt` : la coordonnée (i,j) correspond au temps nécessaire pour aller directement l'arrêt i à l'arrêt j. Avec une valeur égale à -1 s'il n'y a pas de correspondance directe possible et à 0 si 0 si les deux arrêts en fait "les mêmes" (i.e. : ce sont des arrêts qui ont le même nom et le même numéro de ligne, cf. plus haut).
-<!-- Fin Kim : revoir --> 
+    * `voisins.txt` : la coordonnée (i,j) correspond au temps nécessaire pour aller directement l'arrêt i à l'arrêt j. Avec une valeur égale à -1 s'il n'y a pas de correspondance directe possible et à 0 si les deux arrêts en fait "les mêmes" (i.e. : ce sont des arrêts qui ont le même nom et le même numéro de ligne, cf. plus haut).
+    
 
 Les fichiers utilisés dans l'implémentation C++ sont disponibles sous https://github.com/AQLT/Metro_Cpp/tree/master/Data%20projet.
 
 
 # Description des classes {#sec:desc_classes}
 
-
-Pour l'implémentation de ce projet C++, nous avons créé huit classes qui pouvant être rassemblées en quatre groupes :
+Nous avons cherché à rendre l'implémentation de ce projet C++ la plus modulable possible en séparant notamment les classes relatives à l'algorithme du plus court chemin de celles relatives à l'architecture du réseau de métro parisien. Nous avons créé huit classes pouvant être rassemblées en quatre groupes :
 
 1. Les classes liées à la représentation des données du métro parisien. Il s'agit des classes `Arret`, `Ligne` et  `Metro`.
 
@@ -170,17 +199,41 @@ Pour l'implémentation de ce projet C++, nous avons créé huit classes qui pouv
 4. Une classe générant l'Interface Homme-Machine. Il s'agit de la classe `IHM`.
 
 La figure \ref{fig:diag_classes} décrit les relations entre toutes ces classes.
-Elle reprend un certain nombre de conventions d'un diagramme de classe en UML. Comme par exemple :
+Elle reprend un certain nombre de conventions d'un diagramme de classe en UML (objets de type public préfixés d'un "+" et ceux de type privé d'un "-") sans pour autant respecter toutes ses normes. Par exemple, les constructeurs ne figurent pas sur ce schéma^[à l'exception d'un des constructeurs de la classe Itineraire qui met en évidence le lien d'Itineraire avec non seulement le réseau de métro (`Metro`, `Arret`) mais également l'algorithme (`Node`) ]. 
 
-- Les objets de type public sont préfixés d'un "+" et ceux de type privé d'un "-"
+Des informations supplémentaires sur les méthodes mobilisées dans chaque classe sont disponibles dans le code du projet.
 
 
-Sans pour autant respecter toutes ses normes. Comme par exemple : 
+## Classes liées au réseau de métro parisien
 
-- Les constructeurs ne figurent pas sur ce schéma, à l'exception d'un des constructeurs d'Itineraire. 
+À partir des données décrites dans la section \ref{sec:def_donnees}, nous avons créé quatre classes :
 
-\begin{figure}[h]
-\includegraphics{img/Diagramme_classes/diagramme_classes.pdf} 
+1. La classe `Arret` est la classe qui représente un arrêt de métro tel que défini dans la base de données de la RATP : il dépend donc du numéro de la ligne ainsi que de sa direction. 
+Il y a donc par exemple deux objets `Arret` associés à l'arrêt "Gaîté" (un qui correspond à l'arrêt Gaîté sur la ligne 13 direction Châtillon-Montrouge et un qui correspond à l'arrêt Gaîté sur la ligne 13 direction Saint-Denis/Les Courtilles) et quatre objets `Arret` associés à l'arrêt Denfert-Rochereau (deux sur la ligne 4 et deux sur la ligne 5). 
+Chaque arrêt peut être associé à un ou plusieurs objets `Ligne`.
+
+2. La classe `Ligne` représente un ensemble ordonné d'objets `Arret` associés à une même ligne (même numéro de ligne mais également même direction). 
+Ainsi, pour la ligne 4 il y a deux objets `Ligne` qui correspondent au chemin de la ligne 4 direction Mairie de Montrouge et au chemin de la ligne 4 direction Porte de Clignancourt. 
+De la même façon, pour la ligne 13, il y a quatre objets `Ligne`.
+
+3. La classe `Metro` est la classe qui synthétise le réseau de métro à Paris : elle contient l'ensemble des objets `Arret` et l'ensemble des objets `Ligne`.
+
+## Classes liées à l'algorithme du plus court chemin
+
+Trois classes ont été créées pour implémenter l'algorithme de Dijkstra :
+
+1. La classe `Node` est la classe qui représente un sommet (au sens de la théorie des graphes). Chaque sommet est associé à un identifiant (qui correspond à un identifiant d'un `Arret`) et possède plusieurs paramètres qui seront actualisés pendant l'algorithme de Dijkstra (voir section \ref{sec:algo}).
+
+2. La classe `Edge` est la classe qui représente une arête. C'est-à-dire qu'un `Edge` représente un lien orienté d'un `Node` 1 vers un `Node` 2 avec la distance entre ces deux objets qui vaut : 
+
+  + soit le temps de correspondance/temps de trajet entre deux arrêts si l'on souhaite calculer l'itinéraire le plus court 
+  + soit la valeur de l'indicatrice d'être sur la même ligne si l'on souhaite calculer l'itinéraire avec le moins de correspondances.
+
+3. La classe `Graphe` est la classe qui synthétise le réseau du côté algorithmique : elle contient l'ensemble des `Node` et des `Edge` et permet de calculer le plus court chemin.
+
+<!--\includegraphics{img/Diagramme_classes/diagramme_classes.pdf} --> 
+\begin{figure}[H]
+\includegraphics{img/Diagramme_classes/diagramme.png}
 \captionsetup{margin=0cm,format=hang,justification=justified}
 \caption{Liens entre les classes du projet}\label{fig:diag_classes}
 
@@ -189,41 +242,11 @@ Note de lecture : Les objets de type public sont préfixés d'un "+" et ceux de 
 Les constructeurs ne figurent pas sur ce schéma, à l'exception d'un des constructeurs d'Itineraire. 
 \end{figure}
 
-Des informations supplémentaires sur les méthodes mobilisées dans chaque classe sont disponibles dans le code du projet.
-
-## Classes liées au réseau de métro parisien
-
-À partir des données décrites dans la section \ref{sec:def_donnees}, nous avons créé quatre classes :
-
-1. La classe `Arret` est la classe qui représente un arrêt de métro tel que définit dans la base de données de la RATP : il dépend donc du numéro de la ligne ainsi que de la direction. 
-Il y a donc par exemple deux objets `Arret` associés à l'arrêt "Gaîté" (un qui correspond à l'arrêt Gaîté sur la ligne 13 direction Châtillon-Montrouge et un qui correspond à l'arrêt Gaîté sur la ligne 13 direction Saint-Denis/Les Courtilles) et quatre objets `Arret` associés à l'arrêt Denfert-Rochereau (deux sur la ligne 4 et deux sur la ligne 5). 
-Chaque arrêt peut être associé à un ou plusieurs objets `Ligne`.
-
-2. La classe `Ligne` représente un ensemble ordonné d'objets `Arret` et définissent l'ensemble des arrêts d'une ligne et est associé à une direction. 
-Ainsi, pour la ligne 4 il y a deux objets `Ligne` qui correspondent au chemin de la ligne 4 direction Mairie de Montrouge et au chemin de la ligne 4 direction Porte de Clignancourt. 
-De la même façon pour la ligne 13 il y a quatre objets `Ligne`.
-
-3. La classe `Metro` est la classe qui synthétise le réseau : elle contient l'ensemble des objets `Arret` et l'ensemble des objets `Ligne`.
-
-
-## Classes liées à l'algorithme du plus court chemin
-
-Trois classes ont été créées pour implémenter l'algorithme de Dijkstra :
-
-1. La classe `Node` est la classe qui représente un sommet. Chaque sommet est associé à un identifiant (qui correspond à un identifiant d'un `Arret`) et possède plusieurs paramètres qui seront actualisés pendant l'algorithme de Dijkstra (voir section \ref{sec:algo}).
-
-2. La classe `Edge` est la classe qui représente une arête. C'est-à-dire qu'un `Edge` représente un lien entre un `Node` 1 vers un `Node` avec la distance entre ces deux objets qui vaut : 
-
-  + soit le temps de correspondance/temps de trajet entre deux arrêts si l'on souhaite calculer l'itinéraire le plus court 
-  + soit la valeur de l'indicatrice d'être sur la même ligne si l'on souhaite calculer l'itinéraire avec le moins de changements.
-
-3. La classe `Graphe` est la classe qui synthétise le réseau du côté algorithmique : elle contient l'ensemble des `Node` et des `Edge` et permet de calculer le plus court chemin.
-
 ## Classe faisant le lien entre l'algorithme et les données
 
 La classe `Itineraire` permet de faire le lien entre les données et le résultat de l'algorithme du plus court chemin. Son constructeur utilise le `Node` d'arrivée et le `Metro` pour : 
 
-- retracer l'ensemble des `Node` parcourus dans le plus court chemin et en déduire l'ensemble des `Arret` parcourus pour effectuer l'itinéraire ;
+- retracer l'ensemble des `Node` parcourus dans le plus court chemin et en déduire l'ensemble des `Arret` parcourus durant l'itinéraire ;
 
 - calculer le temps nécessaire pour effectuer le trajet.
 
@@ -248,7 +271,7 @@ L'algorithme de Dijkstra permet de trouver le chemin le plus court entre deux so
 
 Par simplification, l’algorithme est ci-dessous présenté grâce à un exemple fictif, qui fait également référence aux \textcolor{orange}{fonctions}, \textcolor{blue}{paramètres} et \textcolor{purple}{objets} utilisés dans notre code. 
 
-1. En entrée, nous partons d'un graphe (\textcolor{purple}{Graphe}) composé de sommets (\textcolor{purple}{Node}) reliées par des arêtes (\textcolor{purple}{Edge}) auxquelles on associe une distance. 
+1. En entrée, nous partons d'un graphe (\textcolor{purple}{Graphe}) composé de sommets (\textcolor{purple}{Node}) reliés par des arêtes (\textcolor{purple}{Edge}) auxquelles on associe une distance. 
 
 \begin{center}
 \begin{tikzpicture}
@@ -279,7 +302,7 @@ Par simplification, l’algorithme est ci-dessous présenté grâce à un exempl
 
 *Remarque :* Dans l’exemple choisi ici, le graphe n'est pas orienté : si le sommet A est relié au sommet B, cela implique que B est aussi relié à A et la distance de A vers B est égale à celle de B vers A. Dans les données de la RATP que nous utilisons, le graphe est, lui, orienté. Toutefois, l’algorithme fonctionne de la même façon dans ce cadre. 
 
-2.  Choisir un sommet de départ. Lui attribuer un attribut de distance (\textcolor{blue}{Node.distanceFromStart}) égal à 0. Attribuer une valeur infinie à distanceFromStart pour tous les autres sommets.
+2.  Choisir un sommet de départ. Lui attribuer un attribut de distance (\textcolor{blue}{Node.distanceFromStart}) égal à 0. Attribuer une valeur infinie à distanceFromStart pour tous les autres sommets.
 
 
 \begin{center}
@@ -314,8 +337,7 @@ Par simplification, l’algorithme est ci-dessous présenté grâce à un exempl
 \end{adjustwidth}
 
 3. Pour tous les sommets adjacents à ce sommet de départ, actualiser le distanceFromStart du sommet avec la valeur égale à la distance entre le sommet de départ et ce sommet. 
-On note également par où on passe : pour chaque sommet actualisé, on note la valeur du sommet précédent (\textcolor{blue}{Node.previous} est ici égal au sommet de départ).
-
+Pour chaque nouveau sommet parcouru, on enregistre le sommet précédemment parcouru (\textcolor{blue}{Node.previous}) afin de pouvoir, in fine, retracer l'itinéraire parcouru.
 
 
 \begin{center}
@@ -345,21 +367,21 @@ On note également par où on passe : pour chaque sommet actualisé, on note la 
 \end{center}
 \begin{adjustwidth}{50pt}{50pt}
 \begin{center}
-\emph{Ici on actualise donc la valeur du distanceFromStart des deux sommets voisins du sommet de départ à la valeur de 4.}
+\emph{Ici on actualise donc la valeur du distanceFromStart des deux sommets voisins du sommet de départ à la valeur de 4. Le Node.previous de ces deux voisins est égal au sommet de départ.}
 
 \end{center}
 
 \end{adjustwidth}
 
 
-4. Choisir un « sommet voisin » (nous allons voir en étape 6 comment précisément le choisir). Sommer ensuite la valeur de la distanceFromStart du « sommet précédent » à la distance entre ce « sommet précédent » et le « sommet voisin » (dist = \textcolor{orange}{calculerDistance()}). Si l’ancienne distanceFromStart associée au « sommet voisin » est supérieure à « dist » alors on la modifie à « dist ». On passe ensuite au sommet suivant. 
+4. Choisir un « sommet voisin » (nous allons voir en étape 6 comment précisément le choisir). Sommer ensuite la valeur de la distanceFromStart du « sommet précédent » à la distance entre ce «  sommet précédent » et le « sommet voisin » (cette somme vaut dist = \textcolor{orange}{calculerDistance()}). Si l’ancienne distanceFromStart associée au « sommet voisin » est supérieure à «  dist » alors on la modifie à « dist », sinon on la laisse inchangée. Puis, on passe au sommet suivant. 
 
 \begin{center}
 \begin{tikzpicture}
 \begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
     \node (A)[white, thick,draw,fill=black] at (0,0) {0};
-    \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
-    \node (C)[label distance=0.1cm, label={below:\small $4+2>4$}] at (3,-2) {4};
+    \node (B)[white, thick,draw,fill=black,label distance=0.1cm, label={left:\small $0+4=4$}] at (1,-3) {4};
+    \node (C)[label distance=0.1cm, label={below:\small $4+2=6>4$}] at (3,-2) {4};
     \node (D) at (4,0) {$\infty$};
     \node (E) at (7,-3) {$\infty$};
     \node (F) at (9,-1) {$\infty$} ;
@@ -383,7 +405,7 @@ On note également par où on passe : pour chaque sommet actualisé, on note la 
 \begin{center}
 \emph{Ici, on s’intéresse par exemple dans un deuxième temps
 au sommet en bas à gauche puis dans un troisième temps à son voisin
-de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
+de droite. On laisse la valeur de 4 à ce voisin de droite car 4+2=6 > 4.}
 
 \end{center}
 
@@ -391,7 +413,7 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 
 
 
-5. Continuer à parcourir le graphe. 
+5. Continuer à parcourir le graphe. À chaque itération, identifier tout d’abord les voisins restant à parcourir (\textcolor{orange}{adjacentRemainingNodes()}) et choisir le sommet non visité pour lequel la distanceFromStart est la plus petite (\textcolor{orange}{extractSmallest()}). 
  
 
 
@@ -402,7 +424,7 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
     \node (B)[white, thick,draw,fill=black] at (1,-3) {4};
     \node (C)[white, thick,draw,fill=black] at (3,-2) {4};
     \node (D)[label={[label distance=0.1cm]\small $4+3$}] at (4,0) {7};
-    \node (E)[label={[label distance=0.1cm]below:\small $4+5$}] at (7,-3) {5};
+    \node (E)[label={[label distance=0.1cm]below:\small $4+1$}] at (7,-3) {5};
     \node (F)[label={[label distance=0.1cm]right:\small $4+6$}] at (9,-1) {10} ;
 \end{scope}
 
@@ -424,13 +446,12 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 
 \begin{adjustwidth}{50pt}{50pt}
 \begin{center}
-\emph{Ici, on calcule par exemple les distanceFromStart de tous les voisins du sommet central non parcourus.}
+\emph{En troisième étape, on calcule les distanceFromStart de tous les voisins du sommet central non parcourus. Puis en quatrième étape, nous étudions le sommet (5) avant les sommets (7) et (10) (5 < 7 < 10).}
 \end{center}
 \end{adjustwidth}
 
 
-
-6. Àchaque itération, identifier tout d’abord les voisins restant à parcourir (\textcolor{orange}{adjacentRemainingNodes()}) et choisir le sommet non visité pour lequel la distanceFromStart est la plus petite (\textcolor{orange}{extractSmallest()}). 
+6. Continuer à parcourir le graphe. 
 
 
 \begin{center}
@@ -460,12 +481,8 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 \end{center}
 \begin{adjustwidth}{50pt}{50pt}
 \begin{center}
-\emph{En quatrième étape, nous étudions donc le sommet le plus en bas (5) avant celui le plus en haut (7)
-(5 < 7).}\end{center}
+\end{center}
 \end{adjustwidth}
-
-
-7. Continuer à parcourir le graphe. 
 
 \begin{center}
 \begin{tikzpicture}
@@ -500,9 +517,9 @@ de droite. On laisse la valeur de 4 à ce voisin de droite car 6 > 4.}
 \end{adjustwidth}
 
 
-8. Enregistrer les chemins parcourus à chaque étape et répéter jusqu'à ce que toutes les arêtes soient visitées
-^[On pourrait spécialiser l'algorithme en arrêtant de parcourir le graphe une fois le sommet d'arrivée atteint. En revanche, le temps de calcul étant relativement faible le gain serait limité.]. 
-Il est alors possible en choisissant un sommet d’arrivée de retracer le chemin le plus court à parcourir et les distances parcourus entre chaque sommet. 
+7. Enregistrer les chemins parcourus à chaque étape et répéter jusqu'à ce que toutes les arêtes soient visitées
+^[On pourrait spécialiser l'algorithme en arrêtant de parcourir le graphe une fois le sommet d'arrivée atteint. Toutefois, le temps de calcul étant relativement faible, le gain serait alors limité.]. 
+Il est alors possible en choisissant un sommet d’arrivée de retracer le chemin le plus court à parcourir et les distances parcourues entre chaque sommet. 
  
 
 \begin{center}
@@ -539,28 +556,31 @@ Il est alors possible en choisissant un sommet d’arrivée de retracer le chemi
 
 L’implémentation choisie dans le cadre de ce projet reprend ces différentes étapes. Il ne s’agit pas de la méthode la plus optimale en termes de temps de calcul mais, en revanche, de la méthode la plus lisible (classes et fonctions plus facilement compréhensibles). Par ailleurs, du fait de la petite taille du graphe utilisé dans le projet, le gain qui découlerait d’une optimisation du temps de calcul serait négligeable.
 
-# Pistes d'amélioration {#sec:amelioration}
+# Pour conclure et aller plus loin {#sec:amelioration}
 
-Plusieurs points peuvent être améliorés :
+Nous avons tous deux beaucoup apprécié travailler sur ce projet. Nous avions découvert la programmation objet avec Java il y a quelques années mais avons peu eu l'occasion de mobiliser ces connaissances depuis. Ce projet a donc été l'occasion de consolider ces acquis. Par ailleurs, l'objectif du projet nous a semblé très complet puisqu'il nous a permis de travailler à la fois sur un **algorithme**, **une Interface Homme-Machine** et un **diagramme de classes relativement riche**. 
 
-- Le format matriciel utilisé pour stocker les temps de correspondances et de trajet n'est pas optimal puisque cela oblige à lire les informations sur tous les sommets non reliés entre eux et à parcourir deux fois la matrice pour charger les deux types de distance. Le temps de chargement des données pourrait être amélioré de façon conséquente en créant un fichier dont chaque ligne contient deux identifiants d'arrêts et les distances pour le chemin le plus court et le chemin avec le moins de changement.
+Toute bonne chose ayant une fin, voici donc quelques pistes qui pourraient permettre d'aller plus loin :
 
-- Nous n'avons pas pris en compte l'horaire dans notre projet. C'est par exemple ce qui explique que nous n'avons pas intégré les lignes de RER. Une façon de gérer l'heure (et la date) serait de rajouter dans la classe `Edge` un vecteur contenant l'ensemble des horaires de passage. Pendant la mise à jour des distances des `Node` de l'algorithme, il faut alors :
+- Le format matriciel utilisé pour stocker les temps de correspondance et de trajet n'est pas optimal. En effet, ce format conduit à lire des informations inutiles : celles qui concernent les stations de métro non reliées, qui sont nombreuses (matrice creuse). De plus, pour charger les deux types de distance, deux matrices sont alors parcourues. Le temps de chargement des données pourrait être amélioré de façon conséquente en créant un fichier dont chaque ligne contiendrait deux identifiants d'arrêts et les deux distances qui les séparent (le plus court chemin et le moins de correspondance).
 
-  1. mettre à jour la valeur de \textcolor{blue}{Node.distanceFromStart} comme étant égale à la somme entre le temps de correspondance et la différence entre l'horaire du prochain passage et l'horaire actuelle ;
+- Nous n'avons pas pris en compte les horaires des métros dans ce projet. C'est par exemple ce qui explique que nous n'avons pas intégré les lignes de RER. Une façon de gérer l'heure (et la date) de passage des métros serait de rajouter dans la classe `Edge` un vecteur contenant l'ensemble des horaires de passage. Pendant la mise à jour des distances des `Node` de l'algorithme, il faut alors :
+
+  1. mettre à jour la valeur de \textcolor{blue}{Node.distanceFromStart} comme étant égale à la somme entre le temps de correspondance et la différence entre l'horaire du prochain passage et l'horaire actuel ;
   
-  2. incrémenter l'horaire actuelle de cette somme.
+  2. incrémenter l'horaire actuel de cette somme.
   
-- Lorsque deux itinéraires ont un temps de trajet "proche" (par exemple dont le temps de trajet est inférieur à 2 minutes), on pourrait afficher les deux possibilités.
+- Lorsque deux itinéraires ont un temps de trajet "proche" (par exemple quand le temps de trajet est inférieur à 2 minutes), on pourrait proposer les deux possibilités à l'utilisateur.
 
 D'autres informations pourraient être utilisées pour proposer d'autres fonctionnalités. Par exemples les coordonnées GPS (disponibles dans la classe `Arret`) pourraient être utilisées pour :
 
-- Calculer l'itinéraire en prenant en compte le temps de marche nécessaire pour aller au plus proche métro.
+- Calculer l'itinéraire en prenant en compte le temps de marche nécessaire pour aller à la station de métro la plus proche.
 
-- Prendre en compte le réseau de bus.
+- Prendre en compte le réseau de bus, de RER et de tramways.
 
-- Ajouter d'autres types d'itinéraires comme le calcul d'un itinéraire en passant par des toilettes publiques de la RATP : https://dataratp.opendatasoft.com/explore/dataset/sanitaires-reseau-ratp.
+- Ajouter d'autres types d'itinéraires : accessibles aux personnes en situation de handicap, ou encore passant par des toilettes publiques de la RATP (https://dataratp.opendatasoft.com/explore/dataset/sanitaires-reseau-ratp) ! 
 
+\newpage
 
 # Lignes de métro {#sec:lignes_metro}
 
