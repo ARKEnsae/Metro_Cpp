@@ -48,7 +48,10 @@ fontsize: 10pt
 
 ### Description des classes
 
-\includegraphics[height=0.9\textheight]{img/Diagramme_classes/diagramme_mini.png}
+
+<!--\includegraphics[height=0.8\textheight]{img/Diagramme_classes/diagramme_mini.png}--> 
+
+\includegraphics[height=0.95\textheight]{img/Diagramme_classes/diagramme_mini.pdf}
 
 
 # L'algorithme de Dijkstra
@@ -281,7 +284,7 @@ fontsize: 10pt
 
 # Pistes d'amélioration
 
-### Pistes d'amélioration
+### Pistes d'amélioration \bcpanchant
 
 1. Améliorer le chargement des données 
 
@@ -292,7 +295,7 @@ le temps de marche entre deux stations...
 
 4. Proposer plusieurs itinéraires quand ceux-ci ont un temps de trajet proche
 
-5. Ajouter d'autres types d'itinéraires : accessibles aux personnes en situation de handicap, passant par des toilettes publiques ...
+5. Ajouter d'autres types d'itinéraires : accessibles aux personnes en situation de handicap, passant par des toilettes publiques...
 
 
 

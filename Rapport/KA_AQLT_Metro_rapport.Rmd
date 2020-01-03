@@ -231,9 +231,10 @@ Trois classes ont été créées pour implémenter l'algorithme de Dijkstra :
 
 3. La classe `Graphe` est la classe qui synthétise le réseau du côté algorithmique : elle contient l'ensemble des `Node` et des `Edge` et permet de calculer le plus court chemin.
 
-<!--\includegraphics{img/Diagramme_classes/diagramme_classes.pdf} --> 
+<!--\includegraphics{img/Diagramme_classes/diagramme.png} --> 
+
 \begin{figure}[H]
-\includegraphics{img/Diagramme_classes/diagramme.png}
+\includegraphics{img/Diagramme_classes/diagramme_classes.pdf}
 \captionsetup{margin=0cm,format=hang,justification=justified}
 \caption{Liens entre les classes du projet}\label{fig:diag_classes}
 

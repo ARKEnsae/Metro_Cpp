@@ -82,7 +82,7 @@ Edge <- data.frame("column" = c("+node1",
                                 "+node2",
                                 "-distanceCourtChemin",
                                 "-distanceMinChangement",
-                                "+connects(node1 : Node* , node2 : Node*)",
+                                "+connects(node1 : Node*, node2 : Node*)",
                                 "+getDistance(minChangement : bool)"
 ),
 "type" = c("Node*",
@@ -111,7 +111,7 @@ Graphe <- data.frame("column" = c("-nodes",
                                   "-importerEdges(chemin : string, chemin_changement : string)",
                                   "-extractSmallest(&amp;nodes : vector&lt;Node*&gt;, minChangement : bool)",
                                   "-contains(&amp;nodes : vector&lt;Node*&gt;, node : Node*)",
-                                  "-calculerDistance(node1 : Node* , node2 : Node*, minChangement : bool)",
+                                  "-calculerDistance(node1 : Node*, node2 : Node*, minChangement : bool)",
                                   "+dijkstras(entree : string, sortie : string, minChangement : bool)",
                                   "-getIndiceFromNode(identifiant : string, les_noeuds : vector&lt;Node*&gt;)"
                                   
@@ -140,8 +140,8 @@ stringsAsFactors = FALSE
 Metro <- data.frame("column" = c("-arretsMetro",
                                  "-lignesMetro",
                                  "+importerDonnees(wd : string)",
-                                 "+getArret(int idArret)",
-                                 "+getLigne(int route_id)",
+                                 "+getArret(idArret : int)",
+                                 "+getLigne(route_id : int)",
                                  "-setArretsMetro(arret : Arret*)",
                                  "-importerToutesLignesTxt(wd : string)",
                                  "-importerTousStopTxt(wd : string)",
@@ -266,9 +266,17 @@ attr(dm_f_mini,"class") <- c("data_model","list")
 graph_mini <- dm_create_graph(dm_f_mini, rankdir = "BT", col_attr = c("column", "type"))
 
 
-dm_render_graph(graph_mini)
-
-
+dm_render_graph(dm_create_graph(dm_f_mini, rankdir = "LR", col_attr = c("column", "type"),view_type = "title_only"))
+dm_render_graph(dm_create_graph(dm_f_mini, rankdir = "LR", col_attr = c("column", "type"),view_type = "title_only"))
+dm_render_graph(dm_create_graph(dm_f_mini, rankdir = "LR", col_attr = c("column", "type"),
+                                node_attrs = "fontsize = 16, labelfontsize = 40"))
+dm_render_graph(dm_create_graph(dm_f_mini, rankdir = "LR", col_attr = c("column", "type"),
+                                edge_attrs = "arrowsize = 2, weight = 0, minlen=2, fontsize=30"))
+dm_render_graph(dm_create_graph(dm_f_mini, rankdir = "BT", col_attr = c("column", "type"),view_type = "title_only"))
 # Mauvaise taille de police
 # dm_export_graph(graph, file_name = "Rapport/img/Diagramme_classes/diagramme_classes.pdf",width = NULL,height = NULL)
-
+dm_export_graph(graph, file_name = "Rapport/img/Diagramme_classes/diagramme_classes.pdf",width = NULL,height = NULL)
+dm_export_graph(dm_create_graph(dm_f_mini, rankdir = "LR", col_attr = c("column", "type")),
+                file_name = "Rapport/img/Diagramme_classes/diagramme_mini.pdf")
+dm_export_graph(dm_create_graph(dm_f_mini, rankdir = "BT", col_attr = c("column", "type"),view_type = "title_only"),
+                file_name = "Rapport/img/Diagramme_classes/diagramme_mini2.pdf")

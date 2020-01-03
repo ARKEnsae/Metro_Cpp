@@ -1,4 +1,0 @@
-\babel@toc {french}{}
-\beamer@sectionintoc {1}{Description des classes}{4}{0}{1}
-\beamer@sectionintoc {2}{L’algorithme de Dijkstra}{5}{0}{2}
-\beamer@sectionintoc {3}{Pistes d’amélioration}{13}{0}{3}

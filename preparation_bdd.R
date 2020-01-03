@@ -18,7 +18,8 @@ voisins <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                   dimnames = list(stops_id, stops_id))
 voisins_type <- matrix(-1, nrow = length(stops_id), ncol = length(stops_id),
                  dimnames = list(stops_id, stops_id))
-dir = "Data//RATP_GTFS_METRO_10"
+dir = "Data//RATP_GTFS_METRO_13"
+transfers[transfers$from_stop_id%in%1633 | transfers$to_stop_id%in%1633,]
 for (dir in list.dirs("Data/",recursive = FALSE)){
     try(dir.create(sub("Data", "Data projet", dir)))
     list_fichier = list.files(dir)
@@ -45,7 +46,7 @@ for (dir in list.dirs("Data/",recursive = FALSE)){
     trips2 <- merge(trips, routes, by = "route_id")
     i_unique_route_id <- sapply(unique(trips2$route_id), function(i) which(trips2$route_id == i)[1])
     i_export = 0
-    i=i_unique_route_id[2]
+    i=i_unique_route_id[4]
     for (i in i_unique_route_id){
         if (!(i %in% c(1807, 1808) & dir == "Data//RATP_GTFS_METRO_10")){
             trips3 <- trips2[i, ]
@@ -121,6 +122,8 @@ voisins["1899",voisins["1899",]>=0]
 voisins["1827", "2366"]
 voisins["2366", "2363"]
 voisins["2366", "2363"]
+
+1827 2366
 # Ligne 13 Saint-Denis //
 1824
 2366
