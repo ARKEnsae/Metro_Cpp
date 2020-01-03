@@ -50,8 +50,25 @@ fontsize: 10pt
 
 
 <!--\includegraphics[height=0.8\textheight]{img/Diagramme_classes/diagramme_mini.png}--> 
+\begin{columns}
+\begin{column}{0.5\textwidth}
 
+\vspace{0.2cm}
 \includegraphics[height=0.95\textheight]{img/Diagramme_classes/diagramme_mini.pdf}
+\end{column}
+
+\begin{column}{0.5\textwidth} 
+
+\vspace{-2cm}
+8 classes regroupées en 4 groupes modulables :
+\begin{itemize}
+\item<2-> Les données : \highlightbf{Arret}, \highlightbf{Ligne} et \highlightbf{Metro} \vspace{0.2cm}
+\item<3-> L'algorithme : \highlightbf{Nodge}, \highlightbf{Edge} et \highlightbf{Graphe}\vspace{0.2cm}
+\item<4-> Lien entre les données et l'algorithme : \highlightbf{Itineraire}\vspace{0.2cm}
+\item<5-> L'interface : \highlightbf{IHM}
+\end{itemize}
+\end{column}
+\end{columns}
 
 
 # L'algorithme de Dijkstra
