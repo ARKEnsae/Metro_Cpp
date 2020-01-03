@@ -1,4 +1,4 @@
-# Projet C++ sur le calcul d'itinéraire du métro parisien
+# Projet C++ sur le calcul d'itinéraire du métro parisien <img src="Rapport/img/LOGO-ENSAE-avatar.png" align="right" alt=""  width="100"/>
 
 Ce projet a été effectué dans le cadre d'un projet C++ par le binôme [antuki](https://github.com/antuki) et [AQLT](https://github.com/AQLT).
 
