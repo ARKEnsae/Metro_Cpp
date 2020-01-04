@@ -39,14 +39,13 @@ fontsize: 10pt
 
 \includegraphics[trim = 260px 330px 100px 160px, clip, height=\textheight]{img/plan_lignes/Plan-Metro_algo21.pdf}
 
-
 ### Sommaire
 
 \tableofcontents
 
 # Description des classes
 
-### Description des classes
+### Description des classes \bcloupe
 
 
 <!--\includegraphics[height=0.8\textheight]{img/Diagramme_classes/diagramme_mini.png}--> 
@@ -74,7 +73,7 @@ fontsize: 10pt
 # L'algorithme de Dijkstra
 
 
-### L'algorithme de Dijkstra (1/8)
+### L'algorithme de Dijkstra (1/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -103,7 +102,7 @@ fontsize: 10pt
 
 
 
-### L'algorithme de Dijkstra (2/8)
+### L'algorithme de Dijkstra (2/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -130,7 +129,7 @@ fontsize: 10pt
 \end{tikzpicture}
 
 
-### L'algorithme de Dijkstra (3/8)
+### L'algorithme de Dijkstra (3/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -159,7 +158,7 @@ fontsize: 10pt
 
 
 
-### L'algorithme de Dijkstra (4/8)
+### L'algorithme de Dijkstra (4/8) \bcoutil
 
 \begin{tikzpicture}
 \begin{scope}[every node/.style={circle,thick,draw,minimum size=0.7cm}]
@@ -186,7 +185,7 @@ fontsize: 10pt
 \end{tikzpicture}
 
 
-### L'algorithme de Dijkstra (5/8)
+### L'algorithme de Dijkstra (5/8) \bcoutil
 
 
 
@@ -214,7 +213,7 @@ fontsize: 10pt
 \end{scope}
 \end{tikzpicture}
 
-### L'algorithme de Dijkstra (6/8)
+### L'algorithme de Dijkstra (6/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -243,7 +242,7 @@ fontsize: 10pt
 
 
 
-### L'algorithme de Dijkstra (7/8)
+### L'algorithme de Dijkstra (7/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -271,7 +270,7 @@ fontsize: 10pt
 \end{tikzpicture}
 
 
-### L'algorithme de Dijkstra (8/8)
+### L'algorithme de Dijkstra (8/8) \bcoutil
 
 
 \begin{tikzpicture}
@@ -301,18 +300,26 @@ fontsize: 10pt
 
 # Pistes d'amélioration
 
-### Pistes d'amélioration \bcpanchant
+### Pistes d'amélioration \bclampe
 
 1. Améliorer le chargement des données 
 
 2. Prendre en compte l'horaire des métros (ajout des temps de passage dans `Edge`)
 
 3. Prendre en compte le réseau de bus, de RER et de tramways, 
-le temps de marche entre deux stations...
+le temps de marche entre deux stations (coordonnées GPS)...
 
 4. Proposer plusieurs itinéraires quand ceux-ci ont un temps de trajet proche
 
 5. Ajouter d'autres types d'itinéraires : accessibles aux personnes en situation de handicap, passant par des toilettes publiques...
+
+
+### Merci pour votre attention
+
+L'ensemble du projet est disponible sous : https://github.com/AQLT/Metro_Cpp
+
+
+\includegraphics[width = 5cm]{img/LOGO-ENSAE-avatar.png}
 
 
 
