@@ -2,9 +2,9 @@
 
 Ce projet a été effectué dans le cadre d'un projet C++ par le binôme [antuki](https://github.com/antuki) et [AQLT](https://github.com/AQLT).
 
-Le rapport est disponible [ici](https://aqlt.github.io/Metro_Cpp/Rapport/KA_AQLT_Metro_rapport.pdf) et les slides de la présentation [là](https://aqlt.github.io/Metro_Cpp/Rapport/KA_AQLT_Metro_slides.pdf).
+Le rapport est disponible [ici](https://arkensae.github.io/Metro_Cpp/Rapport/KA_AQLT_Metro_rapport.pdf) et les slides de la présentation [là](https://arkensae.github.io/Metro_Cpp/Rapport/KA_AQLT_Metro_slides.pdf).
 
-Pour exécuter le programme, télécharger l'ensemble de l'archive : https://github.com/AQLT/Metro_Cpp/archive/master.zip ou les dossiers `Data projet` et `Code/ratp`.
+Pour exécuter le programme, télécharger l'ensemble de l'archive : https://github.com/ARKEnsae/Metro_Cpp/archive/master.zip ou les dossiers `Data projet` et `Code/ratp`.
 
 Afin de s'assurer que le programme tourne bien sur votre ordinateur. Veillez à effectuer les vérifications suivantes sur le fichier `main.cpp` :
 
